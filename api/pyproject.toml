@@ -1,0 +1,27 @@
+[project]
+name = "build-ai-template-api"
+version = "0.0.1"
+requires-python = ">=3.12"
+description = "Build AI Template API"
+authors = [
+    { name="Open-V2AI", email="admin@open-v2ai.org" }
+]
+
+dependencies = [
+    "fastapi~=0.115.12",
+    "uvicorn~=0.34.2",
+    "pydantic~=2.11.3",
+    "python-dotenv~=1.1.0",
+    "sqlalchemy>=2.0.40",
+    "psycopg2-binary==2.9.5",
+    "email-validator>=2.2.0",
+    "passlib>=1.7.4",
+    "python-jose>=3.4.0",
+    "fastapi-mail>=1.4.2",
+    "alembic>=1.15.2",
+    "bcrypt==3.2",
+    "redis>=6.0.0",
+    "sqlmodel>=0.0.24",
+    "openai>=1.78.0",
+    "openai-agents>=0.0.14",
+]
