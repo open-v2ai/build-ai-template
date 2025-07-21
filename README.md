@@ -2,6 +2,9 @@
 
 Build AI Template 是一个用于快速构建 AI 应用的模板项目，基于 FastAPI 和 Next.js 构建。
 
+> [!IMPORTANT]
+> 🚀 **快速开始**：点击页面右上角的 [Use this template](https://github.com/open-v2ai/build-ai-template/generate) 按钮创建您的新项目！
+
 [English README](README_EN.md)
 
 ## 功能特性
@@ -10,11 +13,10 @@ Build AI Template 是一个用于快速构建 AI 应用的模板项目，基于 
 - [x] 通过网页界面与智能体对话
 - [ ] 通过简单的 yaml 配置文件构建智能体
 
-## 📋 PRD 文档使用指南
-
-> **🎯 AI 协作提示**：使用 Cursor 或其他 AI 工具进行开发时，建议将 PRD 文档内容一同提供给 AI，以获得更准确、更符合项目架构的技术方案和代码实现。
-
 ## 快速开始
+
+> [!IMPORTANT]
+> 🎯 **AI 协作提示**：使用 Cursor 或其他 AI 工具进行开发时，建议将 [PRD.md](PRD.md) 文档内容一同提供给 AI，以获得更准确、更符合项目架构的技术方案和代码实现。
 
 > ⚠️ 最低系统要求：
 > - CPU：2 核

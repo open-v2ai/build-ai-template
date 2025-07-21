@@ -2,6 +2,9 @@
 
 Build AI Template is a template project for quickly building AI applications, based on FastAPI and Next.js.
 
+> [!IMPORTANT]
+> 🚀 **Quick Start**: Click the [Use this template](https://github.com/open-v2ai/build-ai-template/generate) button in the top right corner of the page to create your new project!
+
 [中文 README](README.md)
 
 ## Features
@@ -11,6 +14,9 @@ Build AI Template is a template project for quickly building AI applications, ba
 - [ ] Build agent with simple yaml config
 
 ## Quick Start
+
+> [!IMPORTANT]
+> 🎯 **AI Collaboration Tip**: When developing with Cursor or other AI tools, it's recommended to provide the [PRD_EN.md](PRD_EN.md) document content to the AI to get more accurate technical solutions and code implementations that align with the project architecture.
 
 > ⚠️ Minimum system requirements:
 > - CPU: 2 Cores
