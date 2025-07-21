@@ -1,126 +1,130 @@
 # Build AI Template
 
-Build AI Template is a template project for quickly building AI applications, based on FastAPI and Next.js.
+Build AI Template 是一个用于快速构建 AI 应用的模板项目，基于 FastAPI 和 Next.js 构建。
 
-[中文 README](README_CN.md)
+[English README](README_EN.md)
 
-## Features
+## 功能特性
 
-- [x] Deploy agent with docker and docker-compose
-- [x] Chat with agent via web ui
-- [ ] Build agent with simple yaml config
+- [x] 使用 docker 和 docker-compose 部署智能体
+- [x] 通过网页界面与智能体对话
+- [ ] 通过简单的 yaml 配置文件构建智能体
 
-## Quick Start
+## 📋 PRD 文档使用指南
 
-> ⚠️ Minimum system requirements:
-> - CPU: 2 Cores
-> - Memory: 4 GB
-> - Storage: 20 GB
+> **🎯 AI 协作提示**：使用 Cursor 或其他 AI 工具进行开发时，建议将 PRD 文档内容一同提供给 AI，以获得更准确、更符合项目架构的技术方案和代码实现。
 
-1. Clone the repository
+## 快速开始
+
+> ⚠️ 最低系统要求：
+> - CPU：2 核
+> - 内存：4 GB
+> - 存储：20 GB
+
+1. 克隆仓库
 
 ```bash
 git clone https://github.com/open-v2ai/build-ai-template.git
 ```
 
-2. Run database service
+2. 运行数据库服务
 
 ```bash
 cd build-ai-template/
 
-# run postgres
+# 运行 postgres
 bash api/scripts/run_postgres.sh
 
-# run redis
+# 运行 redis
 bash api/scripts/run_redis.sh
 ```
 
-3. Run the api server
+3. 运行 API 服务器
 
-> ⚠️ Requirements:
-> - Python: >= 3.10 (3.12.10 recommended)
-> - uv: >= 0.6 (0.6.16 recommended)
+> ⚠️ 依赖要求：
+> - Python: >= 3.10（推荐 3.12.10）
+> - uv: >= 0.6（推荐 0.6.16）
 
 ```bash
 cd build-ai-template/api/
 
-# install dependencies
+# 安装依赖
 uv sync
 
-# activate virtual environment
+# 激活虚拟环境
 source venv/bin/activate
 
-# set environment variables
+# 设置环境变量
 cp .env.example .env
 vim .env
-# change all the values to your own
+# 修改为你自己的配置
 
-# run in dev mode in port 8000
+# 开发模式运行，端口 8000
 python -m app.main
 ```
 
-4. Run the web ui
+4. 运行网页界面
 
-> ⚠️ Requirements:
+> ⚠️ 依赖要求：
 > - Node.js: >= 18.19.0
 > - npm: >= 10.8.2
 > - pnpm: >= 10.11.0
 
 ```bash
-# open a new terminal
+# 新开一个终端
 cd build-ai-template/web/
 
-# install dependencies
+# 安装依赖
 pnpm install
 
-# set environment variables
+# 设置环境变量
 cp .env.example .env
 vim .env
-# change all the values to your own
+# 修改为你自己的配置
 
-# run in dev mode in port 3000
+# 开发模式运行，端口 3000
 pnpm dev
 ```
 
-Then, open your browser and navigate to `http://localhost:3000` to see the web ui.
+然后，打开浏览器并访问 `http://localhost:3000` 查看网页界面。
 
-## Deploy
+## 部署
 
-1. Build the docker image
+1. 构建 docker 镜像
 
 ```bash
 cd build-ai-template/
 
-# build the docker image
+# 构建 web 镜像
 make build-web
+# 构建 api 镜像
 make build-api
 ```
 
-2. Use docker compose to deploy
+2. 使用 docker compose 部署
 
-> ⚠️ Requirements:
+> ⚠️ 依赖要求：
 > - Docker: >= 26.0.0
 > - Docker Compose: >= 2.25.0
 
 ```bash
 cd build-ai-template/deploy/
 
-# set environment variables
+# 设置环境变量
 cp .env.example .env
 vim .env
-# change all the values to your own
+# 修改为你自己的配置
 
-# run in background
+# 后台运行
 docker compose up -d
 ```
 
-Then, open your browser and navigate to `http://localhost:3000` to see the web ui.
+然后，打开浏览器并访问 `http://localhost:3000` 查看网页界面。
 
-## Contributing
+## 贡献指南
 
-We welcome contributions to Build AI Template! Please see our [CONTRIBUTING.md](CONTRIBUTING.md) for more information.
+我们欢迎对 Build AI Template 的贡献！更多信息请参阅我们的 [CONTRIBUTING.md](CONTRIBUTING.md)。
 
-## License
+## 许可证
 
-Build AI Template is released under the [Apache License 2.0](LICENSE).
-
+Build AI Template 采用 [Apache License 2.0](LICENSE) 许可证发布。

@@ -1,43 +1,39 @@
-# CONTRIBUTING
+# 贡献指南
 
-Thank you for your interest in contributing to Build AI Template — that’s awesome! We’re truly excited to see the ideas and improvements you’ll bring.
+感谢你有意为 Build AI Template 做出贡献 —— 太棒了！我们非常期待看到你带来的精彩想法和改进。
 
-Build AI Template is an open-source platform for developing conversational agent applications, designed to make building AI agents simpler and more powerful. As we’re still in the early stages, with a small team and limited resources, we’re driven by the vision of creating the best possible agent-building experience. In this journey, every bit of support from the community counts — and we sincerely appreciate yours.
+Build AI Template 是一个开源的对话式智能体应用开发平台，旨在让构建 AI Agent 的流程更简单、更强大。目前我们仍处于早期阶段，团队人手和资源有限，但我们怀揣着打造最佳 Agent 构建体验的愿景。在这个过程中，社区的每一份支持都至关重要，真心感谢你的参与！
 
-While we move fast and stay agile, we also deeply care about making the contribution experience as smooth as possible for developers like you. That’s why we’ve put together this guide — to help you quickly get familiar with Build AI Template’s codebase, development flow, and collaboration process, so you can jump right into the fun part.
+尽管我们需要快速迭代和灵活前行，但我们同样重视每一位贡献者的体验。因此，我们准备了这份贡献指南，帮助你快速熟悉 Build AI Template 的代码结构、开发流程以及协作方式，让你能尽快进入真正有趣的部分。
 
-Like Build AI Template itself, this guide is a work in progress. If you find anything unclear or outdated as you read through, we’d love your feedback and suggestions to help us make it better — together.
+正如 Build AI Template 本身一样，这份文档也会持续演进。若你在阅读过程中发现不清楚或过时的内容，我们非常欢迎你的反馈与建议，共同让这个项目变得更好。
 
-In terms of licensing, please take a minute to read our short [License and Contributor Agreement](./LICENSE). The community also adheres to the [code of conduct](https://github.com/open-v2ai/bat/blob/main/CODE_OF_CONDUCT.md).
+在开始之前，请花点时间阅读我们的[许可协议](./LICENSE)。同时，社区成员也需要遵守[行为准则](https://github.com/open-v2ai/build-ai-template/blob/main/CODE_OF_CONDUCT.md)。
 
-Join the fun, contribute, and let's build something awesome together! 💡✨
+加入我们，一起贡献，让我们共建更棒的 Build AI Template！💡✨
 
-Don't forget to link an existing issue or open a new issue in the PR's description.
+### Bug 反馈
 
-### Bug reports
+> [!重要]
+> 提交 Bug 时请务必包含以下信息：
 
-> [!IMPORTANT]
-> Please make sure to include the following information when submitting a bug report:
+- 清晰且有描述性的标题
+- 详细的 Bug 描述，包括任何错误信息
+- 重现 Bug 的步骤
+- 期望的行为
+- **日志**（如有，后端问题请附 docker-compose 日志）
+- 截图或视频（如适用）
 
-- A clear and descriptive title
-- A detailed description of the bug, including any error messages
-- Steps to reproduce the bug
-- Expected behavior
-- **Logs**, if available, for backend issues, this is really important, you can find them in docker-compose logs
-- Screenshots or videos, if applicable
+关于前端服务的设置，请参考 `web/README.md` 文件中的[详细指南](https://github.com/open-v2ai/build-ai-template/blob/main/web/README.md)。该文档提供了详细的说明，帮助你正确设置前端环境。
 
-How we prioritize:
+关于后端服务的设置，请参考 `api/README.md` 文件中的[详细说明](https://github.com/open-v2ai/build-ai-template/blob/main/api/README.md)。该文档包含分步指南，帮助你顺利启动后端服务。
 
-For setting up the frontend service, please refer to our comprehensive [guide](https://github.com/open-v2ai/bat/blob/main/web/README.md) in the `web/README.md` file. This document provides detailed instructions to help you set up the frontend environment properly.
+#### 其他注意事项
 
-For setting up the backend service, kindly refer to our detailed [instructions](https://github.com/open-v2ai/bat/blob/main/api/README.md) in the `api/README.md` file. This document contains step-by-step guidance to help you get the backend up and running smoothly.
+建议在操作前仔细阅读本指南，内容涵盖：
+- 先决条件和依赖项
+- 安装步骤
+- 配置细节
+- 常见问题排查
 
-#### Other things to note
-
-We recommend reviewing this document carefully before proceeding with the setup, as it contains essential information about:
-- Prerequisites and dependencies
-- Installation steps
-- Configuration details
-- Common troubleshooting tips
-
-Feel free to reach out if you encounter any issues during the setup process.
+如在设置过程中遇到任何问题，欢迎随时联系我们。

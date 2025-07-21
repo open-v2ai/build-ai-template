@@ -39,15 +39,15 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 ```bash
 cd ./web
 
-docker build -t bat-web:0.1.0 .
+docker build -t build-ai-template-web:0.1.0 .
 
 cp .env.example .env
 # Edit .env file
 
-docker run -d --name bat-web \
+docker run -d --name build-ai-template-web \
   -p 3000:3000 \
   -v $(pwd)/.env:/app/.env \
-  bat-web:0.1.0
+  build-ai-template-web:0.1.0
 
 # open http://127.0.0.1:3000
 ```
