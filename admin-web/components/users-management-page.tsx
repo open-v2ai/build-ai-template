@@ -42,37 +42,36 @@ function UserRow({ user, onUpdate, onDelete }: UserRowProps) {
   };
 
   return (
-    <tr className={`border-b hover:bg-gray-50 ${user.is_deleted ? 'opacity-60' : ''}`}>
-      <td className="px-6 py-4 text-sm text-gray-900">{user.id}</td>
-      <td className="px-6 py-4 text-sm text-gray-900">
+    <tr className={`border-b border-border hover:bg-muted/50 ${user.is_deleted ? 'opacity-60' : ''}`}>
+      <td className="px-6 py-4 text-sm text-foreground">{user.id}</td>
+      <td className="px-6 py-4 text-sm text-foreground">
         {isEditing ? (
           <Input
             value={editData.name || ''}
             onChange={(e) => setEditData({ ...editData, name: e.target.value })}
             className="w-full"
-                            placeholder={t('USERNAME_PLACEHOLDER')}
+            placeholder={t('USERNAME_PLACEHOLDER')}
           />
         ) : (
           user.name || t('NOT_SET')
         )}
       </td>
-      <td className="px-6 py-4 text-sm text-gray-900">{user.email}</td>
+      <td className="px-6 py-4 text-sm text-foreground">{user.email}</td>
       <td className="px-6 py-4 text-sm">
         {isEditing ? (
           <select
             value={editData.is_admin ? 'true' : 'false'}
             onChange={(e) => setEditData({ ...editData, is_admin: e.target.value === 'true' })}
-            className="border rounded px-2 py-1"
+            className="border border-border rounded px-2 py-1 bg-background text-foreground"
           >
             <option value="false">{t('NORMAL_USER')}</option>
             <option value="true">{t('ADMIN_USER')}</option>
           </select>
         ) : (
-          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-            user.is_admin 
-              ? 'bg-purple-100 text-purple-800' 
-              : 'bg-gray-100 text-gray-800'
-          }`}>
+          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${user.is_admin
+              ? 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200'
+              : 'bg-muted text-muted-foreground'
+            }`}>
             {user.is_admin ? (
               <><Shield className="w-3 h-3 mr-1" /> {t('ADMIN_USER')}</>
             ) : (
@@ -86,17 +85,16 @@ function UserRow({ user, onUpdate, onDelete }: UserRowProps) {
           <select
             value={editData.is_deleted ? 'true' : 'false'}
             onChange={(e) => setEditData({ ...editData, is_deleted: e.target.value === 'true' })}
-            className="border rounded px-2 py-1"
+            className="border border-border rounded px-2 py-1 bg-background text-foreground"
           >
             <option value="false">{t('NORMAL')}</option>
             <option value="true">{t('DELETED')}</option>
           </select>
         ) : (
-          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-            user.is_deleted 
-              ? 'bg-red-100 text-red-800' 
-              : 'bg-green-100 text-green-800'
-          }`}>
+          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${user.is_deleted
+              ? 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
+              : 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
+            }`}>
             {user.is_deleted ? (
               <><UserX className="w-3 h-3 mr-1" /> {t('DELETED')}</>
             ) : (
@@ -105,14 +103,14 @@ function UserRow({ user, onUpdate, onDelete }: UserRowProps) {
           </span>
         )}
       </td>
-      <td className="px-6 py-4 text-sm text-gray-500">{user.chat_count}</td>
-      <td className="px-6 py-4 text-sm text-gray-500">
+      <td className="px-6 py-4 text-sm text-muted-foreground">{user.chat_count}</td>
+      <td className="px-6 py-4 text-sm text-muted-foreground">
         {user.last_login_at ? formatDateTime(user.last_login_at) : t('NEVER_LOGGED_IN')}
       </td>
-      <td className="px-6 py-4 text-sm text-gray-500">
+      <td className="px-6 py-4 text-sm text-muted-foreground">
         {user.last_active ? formatDate(user.last_active) : t('NEVER_ACTIVE')}
       </td>
-      <td className="px-6 py-4 text-sm text-gray-500">
+      <td className="px-6 py-4 text-sm text-muted-foreground">
         {formatDateTime(user.created_at)}
       </td>
       <td className="px-6 py-4 text-sm">
@@ -181,7 +179,7 @@ export default function UsersManagementPage() {
     try {
       setLoading(true);
       const queryParams = new URLSearchParams();
-      
+
       if (searchParams.email) queryParams.append('email', searchParams.email);
       if (searchParams.is_admin !== undefined) queryParams.append('is_admin', searchParams.is_admin.toString());
       if (searchParams.is_deleted !== undefined) queryParams.append('is_deleted', searchParams.is_deleted.toString());
@@ -194,7 +192,7 @@ export default function UsersManagementPage() {
         method: 'GET',
         auth: true,
       });
-      
+
       const response = data as UserListResponse;
       setUsers(response.users);
       setPaginationInfo({
@@ -234,12 +232,12 @@ export default function UsersManagementPage() {
     <div className="p-6 max-w-7xl mx-auto">
       <div className="flex justify-between items-center mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">{t('USER_MANAGEMENT')}</h1>
-          <p className="text-sm text-gray-600 mt-1">
+          <h1 className="text-2xl font-bold text-foreground">{t('USER_MANAGEMENT')}</h1>
+          <p className="text-sm text-muted-foreground mt-1">
             {t('TOTAL_USERS_COUNT', { count: paginationInfo.total })}
           </p>
         </div>
-        <Button 
+        <Button
           onClick={() => setShowCreateModal(true)}
           className="flex items-center gap-2"
         >
@@ -247,15 +245,15 @@ export default function UsersManagementPage() {
           {t('CREATE_USER')}
         </Button>
       </div>
-      
+
       {/* 搜索和筛选 */}
-      <div className="bg-white rounded-lg p-6 shadow-sm border mb-6">
+      <div className="bg-card rounded-lg p-6 shadow-sm border border-border mb-6">
         <form onSubmit={handleSearch} className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">{t('USER_SEARCH')}</label>
+              <label className="block text-sm font-medium text-foreground mb-2">{t('USER_SEARCH')}</label>
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
                 <Input
                   placeholder={t('SEARCH_EMAIL_PLACEHOLDER')}
                   value={searchParams.email || ''}
@@ -264,16 +262,16 @@ export default function UsersManagementPage() {
                 />
               </div>
             </div>
-            
+
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">{t('USER_TYPE')}</label>
+              <label className="block text-sm font-medium text-foreground mb-2">{t('USER_TYPE')}</label>
               <select
                 value={searchParams.is_admin === undefined ? '' : searchParams.is_admin.toString()}
-                onChange={(e) => setSearchParams({ 
-                  ...searchParams, 
+                onChange={(e) => setSearchParams({
+                  ...searchParams,
                   is_admin: e.target.value === '' ? undefined : e.target.value === 'true'
                 })}
-                className="w-full border border-gray-300 rounded-md px-3 py-2"
+                className="w-full border border-border rounded-md px-3 py-2 bg-background text-foreground"
               >
                 <option value="">{t('ALL')}</option>
                 <option value="false">{t('NORMAL_USER')}</option>
@@ -282,14 +280,14 @@ export default function UsersManagementPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">{t('STATUS')}</label>
+              <label className="block text-sm font-medium text-foreground mb-2">{t('STATUS')}</label>
               <select
                 value={searchParams.is_deleted === undefined ? '' : searchParams.is_deleted.toString()}
-                onChange={(e) => setSearchParams({ 
-                  ...searchParams, 
+                onChange={(e) => setSearchParams({
+                  ...searchParams,
                   is_deleted: e.target.value === '' ? undefined : e.target.value === 'true'
                 })}
-                className="w-full border border-gray-300 rounded-md px-3 py-2"
+                className="w-full border border-border rounded-md px-3 py-2 bg-background text-foreground"
               >
                 <option value="">{t('ALL')}</option>
                 <option value="false">{t('NORMAL')}</option>
@@ -305,24 +303,24 @@ export default function UsersManagementPage() {
       </div>
 
       {/* 用户列表 */}
-      <div className="bg-white rounded-lg shadow-sm border overflow-hidden">
+      <div className="bg-card rounded-lg shadow-sm border border-border overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
+          <table className="min-w-full divide-y divide-border">
+            <thead className="bg-muted/50">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{t('ID')}</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{t('USERNAME')}</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{t('EMAIL')}</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{t('TYPE')}</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{t('STATUS')}</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{t('CHAT_COUNT')}</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{t('LAST_LOGIN')}</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{t('LAST_ACTIVE')}</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{t('REGISTRATION_TIME')}</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{t('ACTIONS')}</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">{t('ID')}</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">{t('USERNAME')}</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">{t('EMAIL')}</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">{t('TYPE')}</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">{t('STATUS')}</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">{t('CHAT_COUNT')}</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">{t('LAST_LOGIN')}</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">{t('LAST_ACTIVE')}</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">{t('REGISTRATION_TIME')}</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">{t('ACTIONS')}</th>
               </tr>
             </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
+            <tbody className="bg-card divide-y divide-border">
               {loading ? (
                 <tr>
                   <td colSpan={10} className="px-6 py-12 text-center">
@@ -331,15 +329,15 @@ export default function UsersManagementPage() {
                 </tr>
               ) : users.length === 0 ? (
                 <tr>
-                  <td colSpan={10} className="px-6 py-12 text-center text-gray-500">
+                  <td colSpan={10} className="px-6 py-12 text-center text-muted-foreground">
                     {t('NO_USER_DATA')}
                   </td>
                 </tr>
               ) : (
                 users.map((user) => (
-                  <UserRow 
-                    key={user.id} 
-                    user={user} 
+                  <UserRow
+                    key={user.id}
+                    user={user}
                     onUpdate={handleUpdateUser}
                     onDelete={setUserToDelete}
                   />
@@ -350,7 +348,7 @@ export default function UsersManagementPage() {
         </div>
 
         {/* 分页 */}
-        <div className="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200">
+        <div className="bg-card px-4 py-3 flex items-center justify-between border-t border-border">
           <div className="flex-1 flex justify-between sm:hidden">
             <Button
               variant="outline"
@@ -359,7 +357,7 @@ export default function UsersManagementPage() {
             >
               {t('PREVIOUS_PAGE')}
             </Button>
-            <div className="text-sm text-gray-700 flex items-center">
+            <div className="text-sm text-muted-foreground flex items-center">
               {t('PAGE_INFO', { current: paginationInfo.current_page, total: paginationInfo.total_pages })}
             </div>
             <Button
@@ -372,20 +370,21 @@ export default function UsersManagementPage() {
           </div>
           <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
             <div>
-              <p className="text-sm text-gray-700">
-                {t('SHOW_RECORDS_WITH_TOTAL', { 
-                  start: (searchParams.offset || 0) + 1, 
+              <p className="text-sm text-muted-foreground">
+                {t('SHOW_RECORDS_WITH_TOTAL', {
+                  start: (searchParams.offset || 0) + 1,
                   end: (searchParams.offset || 0) + users.length,
                   total: paginationInfo.total
                 })}
               </p>
             </div>
             <div className="flex items-center space-x-2">
-              <span className="text-sm text-gray-700">
+              <span className="text-sm text-muted-foreground">
                 {t('PAGE_INFO', { current: paginationInfo.current_page, total: paginationInfo.total_pages })}
               </span>
-              <nav className="relative z-0 inline-flex rounded-md shadow-sm space-x-2">
+              <nav className="relative z-0 inline-flex rounded-md space-x-2">
                 <Button
+                  className="shadow-sm"
                   variant="outline"
                   size="sm"
                   onClick={() => setSearchParams({ ...searchParams, offset: Math.max(0, (searchParams.offset || 0) - (searchParams.limit || 10)) })}
@@ -394,6 +393,7 @@ export default function UsersManagementPage() {
                   {t('PREVIOUS_PAGE')}
                 </Button>
                 <Button
+                  className="shadow-sm"
                   variant="outline"
                   size="sm"
                   onClick={() => setSearchParams({ ...searchParams, offset: (searchParams.offset || 0) + (searchParams.limit || 10) })}
@@ -408,7 +408,7 @@ export default function UsersManagementPage() {
       </div>
 
       {/* 模态框 */}
-      <CreateUserModal 
+      <CreateUserModal
         isOpen={showCreateModal}
         onClose={() => setShowCreateModal(false)}
         onUserCreated={() => {
@@ -416,7 +416,7 @@ export default function UsersManagementPage() {
         }}
       />
 
-      <DeleteUserModal 
+      <DeleteUserModal
         user={userToDelete}
         onClose={() => setUserToDelete(null)}
         onUserUpdated={() => {

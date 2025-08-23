@@ -16,11 +16,11 @@ interface StatCardProps {
 
 function StatCard({ title, value, icon, color }: StatCardProps) {
   return (
-    <div className="bg-white rounded-lg p-6 shadow-sm border">
+    <div className="bg-card rounded-lg p-6 shadow-sm border border-border">
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-sm font-medium text-gray-600">{title}</p>
-          <p className="text-2xl font-bold text-gray-900">{value.toLocaleString()}</p>
+          <p className="text-sm font-medium text-muted-foreground">{title}</p>
+          <p className="text-2xl font-bold text-foreground">{value.toLocaleString()}</p>
         </div>
         <div className={`p-3 rounded-full ${color}`}>
           {icon}
@@ -57,12 +57,12 @@ export default function DashboardPage() {
     return (
       <div className="p-6 max-w-7xl mx-auto">
         <div className="animate-pulse">
-          <div className="h-8 bg-gray-200 rounded w-64 mb-6"></div>
+          <div className="h-8 bg-muted rounded w-64 mb-6"></div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
             {[...Array(8)].map((_, i) => (
-              <div key={i} className="bg-white rounded-lg p-6 shadow-sm border">
-                <div className="h-4 bg-gray-200 rounded w-20 mb-2"></div>
-                <div className="h-8 bg-gray-200 rounded w-16"></div>
+              <div key={i} className="bg-card rounded-lg p-6 shadow-sm border border-border">
+                <div className="h-4 bg-muted rounded w-20 mb-2"></div>
+                <div className="h-8 bg-muted rounded w-16"></div>
               </div>
             ))}
           </div>
@@ -75,7 +75,7 @@ export default function DashboardPage() {
     return (
       <div className="p-6 max-w-7xl mx-auto">
         <div className="text-center py-12">
-          <p className="text-gray-500">{t('FAILED_TO_LOAD_DASHBOARD')}</p>
+          <p className="text-muted-foreground">{t('FAILED_TO_LOAD_DASHBOARD')}</p>
         </div>
       </div>
     );
@@ -83,7 +83,7 @@ export default function DashboardPage() {
 
   return (
     <div className="p-6 max-w-7xl mx-auto">
-      <h1 className="text-2xl font-bold text-gray-900 mb-6">{t('DASHBOARD')}</h1>
+      <h1 className="text-2xl font-bold text-foreground mb-6">{t('DASHBOARD')}</h1>
       
       {/* 用户统计 */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">

@@ -36,7 +36,6 @@ export function AppSidebar({ onSelectChat, onNewChat, chats, currentChatId, ...p
   // Get email from local storage
   useEffect(() => {
     const email = localStorage.getItem('email');
-    console.log('email', email);
     if (email) {
       setEmail(email);
     }

@@ -15,6 +15,7 @@ export interface Chat {
   user_id: number;
   user_email: string;
   title: string;
+  content: string;
   message_count: number;
   created_at: string;
   updated_at: string;
