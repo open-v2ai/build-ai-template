@@ -6,6 +6,8 @@ import uvicorn
 
 from app.routers.v1.auth import auth_router
 from app.routers.v1.chat import chat_router
+from app.routers.v1.admin import admin_router
+from app.routers.v1.system import system_router
 from app.core.config import settings
 from app.db.base import create_db_and_tables
 from app.utils.db import get_redis_client
@@ -40,6 +42,8 @@ app.add_middleware(
 
 app.include_router(auth_router, prefix="/api/v1", tags=["auth"])
 app.include_router(chat_router, prefix="/api/v1", tags=["chat"])
+app.include_router(admin_router, prefix="/api/v1", tags=["admin"])
+app.include_router(system_router, prefix="/api/v1", tags=["system"])
 
 if __name__ == "__main__":
     uvicorn.run("app.main:app", host=settings.API_HOST, port=settings.API_PORT, reload=settings.API_RELOAD)

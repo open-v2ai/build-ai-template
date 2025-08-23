@@ -1,0 +1,58 @@
+version: "3.8"
+
+services:
+  admin-web:
+    build:
+      context: ../admin-web
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3000"
+    environment:
+      - NEXT_PUBLIC_API_BASE_URL=http://localhost:8000/api/v1
+      - NEXT_PUBLIC_APP_NAME=Build AI Template Admin
+      - NEXT_PUBLIC_DEFAULT_LOCALE=zh
+    depends_on:
+      - api
+    networks:
+      - build-ai-network
+
+  api:
+    build:
+      context: ../api
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/build_ai_template
+      - REDIS_URL=redis://redis:6379/0
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - build-ai-network
+
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: build_ai_template
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - build-ai-network
+
+  redis:
+    image: redis:7
+    volumes:
+      - redis_data:/data
+    networks:
+      - build-ai-network
+
+volumes:
+  postgres_data:
+  redis_data:
+
+networks:
+  build-ai-network:
+    driver: bridge

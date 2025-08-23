@@ -11,6 +11,7 @@ Build AI Template 是一个用于快速构建 AI 应用的模板项目，基于 
 
 - [x] 使用 docker 和 docker-compose 部署智能体
 - [x] 通过网页界面与智能体对话
+- [x] 管理员后台，支持用户管理和会话查看
 - [ ] 通过简单的 yaml 配置文件构建智能体
 
 ## 快速开始
@@ -89,6 +90,28 @@ pnpm dev
 ```
 
 然后，打开浏览器并访问 `http://localhost:3000` 查看网页界面。
+
+5. 运行管理员后台（可选）
+
+```bash
+# 新开一个终端
+cd build-ai-template/admin-web/
+
+# 安装依赖
+pnpm install
+
+# 设置环境变量
+cp .env.example .env
+vim .env
+# 修改为你自己的配置
+
+# 开发模式运行，端口 3001
+pnpm dev --port 3001
+```
+
+然后，打开浏览器并访问 `http://localhost:3001` 查看管理员界面。
+
+> 🎉 **自动管理员设置**：第一个通过邮箱验证登录的用户将自动成为管理员，无需手动设置！
 
 ## 部署
 

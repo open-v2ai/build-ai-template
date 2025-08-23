@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException
 
 from app.schemas.user import EmailRequest, VerifyCode, Token, RefreshToken
-from app.services.user_service import verify_user_code, refresh_access_token
+from app.services.user_service import verify_user_code, verify_admin_code, refresh_access_token
 from app.services.email_service import send_verification_code
 from app.dependencies.db import SessionDep, RedisDep
 
@@ -19,15 +19,14 @@ async def send_code(data: EmailRequest, redis: RedisDep) -> dict:
 @auth_router.post("/verify", response_model=Token)
 def verify(data: VerifyCode, session: SessionDep, redis: RedisDep) -> Token:
     """Verify email code and log in"""
-    token = verify_user_code(data.email, data.code, session, redis)
-    if not token:
-        raise HTTPException(status_code=401, detail="Invalid or expired verification code")
-    return token
+    return verify_user_code(data.email, data.code, session, redis)
+
+@auth_router.post("/admin/verify", response_model=Token)
+def admin_verify(data: VerifyCode, session: SessionDep, redis: RedisDep) -> Token:
+    """Verify email code and log in for admin users only"""
+    return verify_admin_code(data.email, data.code, session, redis)
 
 @auth_router.post("/refresh_token", response_model=Token)
 async def refresh_token(data: RefreshToken, session: SessionDep) -> Token:
     """Refresh access token"""
-    token = refresh_access_token(data.refresh_token, session)
-    if not token:
-        raise HTTPException(status_code=401, detail="Invalid or expired refresh token")
-    return token
+    return refresh_access_token(data.refresh_token, session)

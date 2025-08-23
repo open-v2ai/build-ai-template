@@ -72,12 +72,12 @@ export default function ChatContentPage({ chat, taskPanelOpen = true, isNewChat,
           },
           (chunk: string) => {
             if (chunk.startsWith("<answer>")) {
-              if (assistantContent === '任务拆解中...') {
+              if (assistantContent === t('TASK_PROCESSING')) {
                 assistantContent = '';
               }
               assistantContent += chunk.replace(/<answer>|<\/answer>/g, "");
             } else if (chunk.startsWith("<task>")) {
-              assistantContent = "任务拆解中...";
+              assistantContent = t('TASK_PROCESSING');
               taskContent += chunk.replace(/<task>|<\/task>/g, "");
             } else {
               assistantContent += chunk;

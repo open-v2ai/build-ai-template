@@ -1,6 +1,7 @@
 {
   "SLOGAN": "Build AI in minutes",
   "LOGIN": "Login",
+  "LOGIN_BUTTON": "Login",
   "EMAIL": "Email",
   "CODE": "Code",
   "SEND_CODE": "Send Code",
@@ -16,10 +17,10 @@
   "PLEASE_ENTER_THE_CODE": "Please enter the code",
   "GET_STARTED_BY_EDITING": "Get started by editing",
   "SAVE_AND_SEE_YOUR_CHANGES_INSTANTLY": "Save and see your changes instantly.",
-  "LOGIN_PAGE_TITLE": "build-ai-template - Login",
-  "LOGIN_PAGE_DESCRIPTION": "build-ai-template - Login Page",
-  "HOME_PAGE_TITLE": "build-ai-template - Build AI in minutes",
-  "HOME_PAGE_DESCRIPTION": "build-ai-template - Build AI in minutes",
+  "LOGIN_PAGE_TITLE": "BAT - Login",
+  "LOGIN_PAGE_DESCRIPTION": "BAT - Login Page",
+  "HOME_PAGE_TITLE": "BAT - Build AI in minutes",
+  "HOME_PAGE_DESCRIPTION": "BAT - Build AI in minutes",
   "SWITCH_LANGUAGE_SUCCESS": "Language switched successfully",
   "NEW_CHAT_PLACEHOLDER": "Please enter new chat content...",
   "SEND": "Send",
@@ -29,5 +30,8 @@
   "USER": "User",
   "ENTER_QUESTION": "Enter your question...",
   "TASK_EXECUTION": "Task Execution Process and Results",
-  "TASK_EXECUTION_DESC": "This area shows the detailed process and final results of task execution."
+  "TASK_EXECUTION_DESC": "This area shows the detailed process and final results of task execution.",
+  "TASK_PROCESSING": "Task processing...",
+  "SWITCH_TO_ENGLISH": "Switch to English", 
+  "SWITCH_TO_CHINESE": "切换到中文"
 } 
