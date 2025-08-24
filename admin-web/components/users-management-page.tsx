@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
-import { Search, Shield, UserX, User as UserIcon, Edit2, UserPlus, Trash2, RotateCcw } from 'lucide-react';
+import { Search, Shield, UserX, User as UserIcon, Edit2, UserPlus, Trash2, RotateCcw, Crown, Star } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -23,7 +23,8 @@ function UserRow({ user, onUpdate, onDelete }: UserRowProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [editData, setEditData] = useState<UserUpdateRequest>({
     name: user.name || '',
-    is_admin: user.is_admin,
+    user_type: user.user_type,
+    membership_type: user.membership_type,
     is_deleted: user.is_deleted,
   });
 
@@ -35,16 +36,56 @@ function UserRow({ user, onUpdate, onDelete }: UserRowProps) {
   const handleCancel = () => {
     setEditData({
       name: user.name || '',
-      is_admin: user.is_admin,
+      user_type: user.user_type,
+      membership_type: user.membership_type,
       is_deleted: user.is_deleted,
     });
     setIsEditing(false);
   };
 
+  const getUserTypeIcon = (userType: string) => {
+    switch (userType) {
+      case 'super_admin':
+        return <Crown className="w-3 h-3 mr-1" />;
+      case 'admin':
+        return <Shield className="w-3 h-3 mr-1" />;
+      case 'premium':
+        return <Star className="w-3 h-3 mr-1" />;
+      default:
+        return <UserIcon className="w-3 h-3 mr-1" />;
+    }
+  };
+
+  const getUserTypeColor = (userType: string) => {
+    switch (userType) {
+      case 'super_admin':
+        return 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200';
+      case 'admin':
+        return 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200';
+      case 'premium':
+        return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200';
+      default:
+        return 'bg-muted text-muted-foreground';
+    }
+  };
+
+  const getMembershipTypeColor = (membershipType: string) => {
+    switch (membershipType) {
+      case 'lifetime':
+        return 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200';
+      case 'yearly':
+        return 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200';
+      case 'monthly':
+        return 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200';
+      default:
+        return 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200';
+    }
+  };
+
   return (
-    <tr className={`border-b border-border hover:bg-muted/50 ${user.is_deleted ? 'opacity-60' : ''}`}>
-      <td className="px-6 py-4 text-sm text-foreground">{user.id}</td>
-      <td className="px-6 py-4 text-sm text-foreground">
+    <tr className={`border-b border-border hover:bg-muted/50 h-16 ${user.is_deleted ? 'opacity-60' : ''}`}>
+      <td className="px-6 py-4 text-sm text-foreground leading-tight max-h-16 overflow-hidden">{user.id}</td>
+      <td className="px-6 py-4 text-sm text-foreground leading-tight max-h-16 overflow-hidden">
         {isEditing ? (
           <Input
             value={editData.name || ''}
@@ -53,34 +94,54 @@ function UserRow({ user, onUpdate, onDelete }: UserRowProps) {
             placeholder={t('USERNAME_PLACEHOLDER')}
           />
         ) : (
-          user.name || t('NOT_SET')
+          <div className="truncate max-w-32" title={user.name || t('NOT_SET')}>
+            {user.name || t('NOT_SET')}
+          </div>
         )}
       </td>
-      <td className="px-6 py-4 text-sm text-foreground">{user.email}</td>
-      <td className="px-6 py-4 text-sm">
+      <td className="px-6 py-4 text-sm text-foreground leading-tight max-h-16 overflow-hidden">
+        <div className="truncate max-w-48" title={user.email}>
+          {user.email}
+        </div>
+      </td>
+      <td className="px-6 py-4 text-sm leading-tight max-h-16 overflow-hidden">
         {isEditing ? (
           <select
-            value={editData.is_admin ? 'true' : 'false'}
-            onChange={(e) => setEditData({ ...editData, is_admin: e.target.value === 'true' })}
+            value={editData.user_type}
+            onChange={(e) => setEditData({ ...editData, user_type: e.target.value as any })}
             className="border border-border rounded px-2 py-1 bg-background text-foreground"
           >
-            <option value="false">{t('NORMAL_USER')}</option>
-            <option value="true">{t('ADMIN_USER')}</option>
+            <option value="normal">{t('NORMAL_USER')}</option>
+            <option value="premium">{t('PREMIUM_USER')}</option>
+            <option value="admin">{t('ADMIN_USER')}</option>
+            <option value="super_admin">{t('SUPER_ADMIN_USER')}</option>
           </select>
         ) : (
-          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${user.is_admin
-              ? 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200'
-              : 'bg-muted text-muted-foreground'
-            }`}>
-            {user.is_admin ? (
-              <><Shield className="w-3 h-3 mr-1" /> {t('ADMIN_USER')}</>
-            ) : (
-              <><UserIcon className="w-3 h-3 mr-1" /> {t('NORMAL_USER')}</>
-            )}
+          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getUserTypeColor(user.user_type)}`}>
+            {getUserTypeIcon(user.user_type)}
+            <span className="truncate">{t(user.user_type.toUpperCase() + '_USER')}</span>
           </span>
         )}
       </td>
-      <td className="px-6 py-4 text-sm">
+      <td className="px-6 py-4 text-sm leading-tight max-h-16 overflow-hidden">
+        {isEditing ? (
+          <select
+            value={editData.membership_type}
+            onChange={(e) => setEditData({ ...editData, membership_type: e.target.value as any })}
+            className="border border-border rounded px-2 py-1 bg-background text-foreground"
+          >
+            <option value="free">{t('FREE_MEMBERSHIP')}</option>
+            <option value="monthly">{t('MONTHLY_MEMBERSHIP')}</option>
+            <option value="yearly">{t('YEARLY_MEMBERSHIP')}</option>
+            <option value="lifetime">{t('LIFETIME_MEMBERSHIP')}</option>
+          </select>
+        ) : (
+          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getMembershipTypeColor(user.membership_type)}`}>
+            <span className="truncate">{t(user.membership_type.toUpperCase() + '_MEMBERSHIP')}</span>
+          </span>
+        )}
+      </td>
+      <td className="px-6 py-4 text-sm leading-tight max-h-16 overflow-hidden">
         {isEditing ? (
           <select
             value={editData.is_deleted ? 'true' : 'false'}
@@ -96,24 +157,24 @@ function UserRow({ user, onUpdate, onDelete }: UserRowProps) {
               : 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
             }`}>
             {user.is_deleted ? (
-              <><UserX className="w-3 h-3 mr-1" /> {t('DELETED')}</>
+              <><UserX className="w-3 h-3 mr-1" /> <span className="truncate">{t('DELETED')}</span></>
             ) : (
-              <>{t('NORMAL')}</>
+              <span className="truncate">{t('NORMAL')}</span>
             )}
           </span>
         )}
       </td>
-      <td className="px-6 py-4 text-sm text-muted-foreground">{user.chat_count}</td>
-      <td className="px-6 py-4 text-sm text-muted-foreground">
+      <td className="px-6 py-4 text-sm text-muted-foreground leading-tight max-h-16 overflow-hidden w-32 text-center">{user.chat_count}</td>
+      <td className="px-6 py-4 text-sm text-muted-foreground leading-tight max-h-16 overflow-hidden whitespace-nowrap">
         {user.last_login_at ? formatDateTime(user.last_login_at) : t('NEVER_LOGGED_IN')}
       </td>
-      <td className="px-6 py-4 text-sm text-muted-foreground">
+      <td className="px-6 py-4 text-sm text-muted-foreground leading-tight max-h-16 overflow-hidden whitespace-nowrap">
         {user.last_active ? formatDate(user.last_active) : t('NEVER_ACTIVE')}
       </td>
-      <td className="px-6 py-4 text-sm text-muted-foreground">
+      <td className="px-6 py-4 text-sm text-muted-foreground leading-tight max-h-16 overflow-hidden whitespace-nowrap">
         {formatDateTime(user.created_at)}
       </td>
-      <td className="px-6 py-4 text-sm">
+      <td className="px-6 py-4 text-sm leading-tight max-h-16 overflow-hidden">
         <div className="flex space-x-2">
           {isEditing ? (
             <>
@@ -147,8 +208,6 @@ function UserRow({ user, onUpdate, onDelete }: UserRowProps) {
   );
 }
 
-
-
 export default function UsersManagementPage() {
   const t = useTranslations();
   const [users, setUsers] = useState<User[]>([]);
@@ -181,7 +240,8 @@ export default function UsersManagementPage() {
       const queryParams = new URLSearchParams();
 
       if (searchParams.email) queryParams.append('email', searchParams.email);
-      if (searchParams.is_admin !== undefined) queryParams.append('is_admin', searchParams.is_admin.toString());
+      if (searchParams.user_type) queryParams.append('user_type', searchParams.user_type);
+      if (searchParams.membership_type) queryParams.append('membership_type', searchParams.membership_type);
       if (searchParams.is_deleted !== undefined) queryParams.append('is_deleted', searchParams.is_deleted.toString());
       queryParams.append('limit', (searchParams.limit || 10).toString());
       queryParams.append('offset', (searchParams.offset || 0).toString());
@@ -229,7 +289,7 @@ export default function UsersManagementPage() {
   };
 
   return (
-    <div className="p-6 max-w-7xl mx-auto">
+    <div className="p-6 max-w-full mx-auto overflow-x-hidden">
       <div className="flex justify-between items-center mb-6">
         <div>
           <h1 className="text-2xl font-bold text-foreground">{t('USER_MANAGEMENT')}</h1>
@@ -249,7 +309,7 @@ export default function UsersManagementPage() {
       {/* 搜索和筛选 */}
       <div className="bg-card rounded-lg p-6 shadow-sm border border-border mb-6">
         <form onSubmit={handleSearch} className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
             <div>
               <label className="block text-sm font-medium text-foreground mb-2">{t('USER_SEARCH')}</label>
               <div className="relative">
@@ -266,16 +326,36 @@ export default function UsersManagementPage() {
             <div>
               <label className="block text-sm font-medium text-foreground mb-2">{t('USER_TYPE')}</label>
               <select
-                value={searchParams.is_admin === undefined ? '' : searchParams.is_admin.toString()}
+                value={searchParams.user_type || ''}
                 onChange={(e) => setSearchParams({
                   ...searchParams,
-                  is_admin: e.target.value === '' ? undefined : e.target.value === 'true'
+                  user_type: e.target.value as 'normal' | 'premium' | 'admin' | 'super_admin' | undefined
                 })}
                 className="w-full border border-border rounded-md px-3 py-2 bg-background text-foreground"
               >
                 <option value="">{t('ALL')}</option>
-                <option value="false">{t('NORMAL_USER')}</option>
-                <option value="true">{t('ADMIN_USER')}</option>
+                <option value="normal">{t('NORMAL_USER')}</option>
+                <option value="premium">{t('PREMIUM_USER')}</option>
+                <option value="admin">{t('ADMIN_USER')}</option>
+                <option value="super_admin">{t('SUPER_ADMIN_USER')}</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-foreground mb-2">{t('MEMBERSHIP_TYPE')}</label>
+              <select
+                value={searchParams.membership_type || ''}
+                onChange={(e) => setSearchParams({
+                  ...searchParams,
+                  membership_type: e.target.value as 'free' | 'monthly' | 'yearly' | 'lifetime' | undefined
+                })}
+                className="w-full border border-border rounded-md px-3 py-2 bg-background text-foreground"
+              >
+                <option value="">{t('ALL')}</option>
+                <option value="free">{t('FREE_MEMBERSHIP')}</option>
+                <option value="monthly">{t('MONTHLY_MEMBERSHIP')}</option>
+                <option value="yearly">{t('YEARLY_MEMBERSHIP')}</option>
+                <option value="lifetime">{t('LIFETIME_MEMBERSHIP')}</option>
               </select>
             </div>
 
@@ -305,31 +385,32 @@ export default function UsersManagementPage() {
       {/* 用户列表 */}
       <div className="bg-card rounded-lg shadow-sm border border-border overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-border">
+          <table className="w-full min-w-[1400px] divide-y divide-border">
             <thead className="bg-muted/50">
               <tr>
                 <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">{t('ID')}</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">{t('USERNAME')}</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">{t('EMAIL')}</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">{t('TYPE')}</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">{t('USER_TYPE')}</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">{t('MEMBERSHIP')}</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">{t('STATUS')}</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">{t('CHAT_COUNT')}</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">{t('LAST_LOGIN')}</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">{t('LAST_ACTIVE')}</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">{t('REGISTRATION_TIME')}</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider w-32">{t('CHAT_COUNT')}</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider w-48">{t('LAST_LOGIN')}</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider w-40">{t('LAST_ACTIVE')}</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider w-48">{t('REGISTRATION_TIME')}</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">{t('ACTIONS')}</th>
               </tr>
             </thead>
             <tbody className="bg-card divide-y divide-border">
               {loading ? (
                 <tr>
-                  <td colSpan={10} className="px-6 py-12 text-center">
+                  <td colSpan={11} className="px-6 py-12 text-center">
                     <div className="animate-pulse">{t('LOADING')}</div>
                   </td>
                 </tr>
               ) : users.length === 0 ? (
                 <tr>
-                  <td colSpan={10} className="px-6 py-12 text-center text-muted-foreground">
+                  <td colSpan={11} className="px-6 py-12 text-center text-muted-foreground">
                     {t('NO_USER_DATA')}
                   </td>
                 </tr>

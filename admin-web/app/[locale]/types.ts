@@ -2,7 +2,8 @@ export interface User {
   id: number;
   name?: string;
   email: string;
-  is_admin: boolean;
+  user_type: 'normal' | 'premium' | 'admin' | 'super_admin';
+  membership_type: 'free' | 'monthly' | 'yearly' | 'lifetime';
   is_deleted: boolean;
   created_at: string;
   last_login_at?: string;
@@ -24,9 +25,9 @@ export interface Chat {
 export interface Message {
   id: number;
   chat_id: number;
-  content: string;
-  role: string;
+  role: 'user' | 'assistant' | 'system';
   model_conf?: any;
+  content: string;
   created_at: string;
 }
 
@@ -34,6 +35,7 @@ export interface DashboardStats {
   total_users: number;
   active_users: number;
   admin_users: number;
+  super_admin_users: number;
   deleted_users: number;
   total_chats: number;
   active_chats: number;
@@ -44,7 +46,8 @@ export interface DashboardStats {
 
 export interface UserSearchParams {
   email?: string;
-  is_admin?: boolean;
+  user_type?: 'normal' | 'premium' | 'admin' | 'super_admin';
+  membership_type?: 'free' | 'monthly' | 'yearly' | 'lifetime';
   is_deleted?: boolean;
   limit?: number;
   offset?: number;
@@ -63,11 +66,13 @@ export interface ChatSearchParams {
 export interface UserCreateRequest {
   email: string;
   name?: string;
-  is_admin: boolean;
+  user_type: 'normal' | 'premium' | 'admin' | 'super_admin';
+  membership_type: 'free' | 'monthly' | 'yearly' | 'lifetime';
 }
 
 export interface UserUpdateRequest {
-  is_admin?: boolean;
+  user_type?: 'normal' | 'premium' | 'admin' | 'super_admin';
+  membership_type?: 'free' | 'monthly' | 'yearly' | 'lifetime';
   is_deleted?: boolean;
   name?: string;
 }

@@ -26,7 +26,7 @@ export default function DeleteUserModal({ user, onClose, onUserUpdated }: Delete
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [deleteInfo, setDeleteInfo] = useState<DeleteCheckResponse | null>(null);
-  const [reason, setReason] = useState('');
+
 
   useEffect(() => {
     if (user && !user.is_deleted) {
@@ -57,7 +57,6 @@ export default function DeleteUserModal({ user, onClose, onUserUpdated }: Delete
     try {
       const requestData: UserActionRequest = {
         action,
-        reason: reason || undefined,
       };
 
       await fetcher(`/admin/users/${user.id}/actions`, {
@@ -79,7 +78,6 @@ export default function DeleteUserModal({ user, onClose, onUserUpdated }: Delete
 
   const handleClose = () => {
     setError(null);
-    setReason('');
     setDeleteInfo(null);
     onClose();
   };
@@ -165,18 +163,7 @@ export default function DeleteUserModal({ user, onClose, onUserUpdated }: Delete
             </div>
           )}
 
-          {/* 操作原因 */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              {isDeleted ? t('RESTORE_REASON') : t('DELETE_REASON')}
-            </label>
-            <Input
-              value={reason}
-              onChange={(e) => setReason(e.target.value)}
-              placeholder={isDeleted ? t('RESTORE_REASON_PLACEHOLDER') : t('DELETE_REASON_PLACEHOLDER')}
-              className="w-full"
-            />
-          </div>
+
 
           {/* 确认提示 */}
           <div className="p-3 bg-gray-50 border border-gray-200 rounded-md">

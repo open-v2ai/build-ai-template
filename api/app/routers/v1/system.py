@@ -2,7 +2,7 @@ from fastapi import APIRouter
 from sqlmodel import select, func
 
 from app.dependencies.db import SessionDep
-from app.models.user import User
+from app.models.user import User, UserType
 
 system_router = APIRouter(prefix="/system")
 
@@ -15,7 +15,9 @@ def get_system_status(session: SessionDep):
     
     # 检查是否有管理员
     admin_count = session.exec(
-        select(func.count(User.id)).where(User.is_admin == True)
+        select(func.count(User.id)).where(
+            (User.user_type == UserType.ADMIN) | (User.user_type == UserType.SUPER_ADMIN)
+        )
     ).first() or 0
     
     return {

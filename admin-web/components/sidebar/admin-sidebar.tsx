@@ -79,17 +79,19 @@ export function AdminSidebar({ currentPage, onNavigate, ...props }: AdminSidebar
         </SidebarMenu>
       </SidebarHeader>
       
-      <SidebarContent className="border-y">
+      <SidebarContent className="border-y p-2">
         <SidebarMenu>
           {navigationItems.map((item) => (
             <SidebarMenuItem key={item.id}>
               <SidebarMenuButton
+                size="lg"
                 onClick={() => onNavigate(item.id)}
                 isActive={currentPage === item.id}
-                className="w-full justify-start"
+                className="group-data-[collapsible=icon]:!justify-center"
+                tooltip={item.label}
               >
                 {item.icon}
-                <span>{item.label}</span>
+                <span className="group-data-[collapsible=icon]:hidden">{item.label}</span>
               </SidebarMenuButton>
             </SidebarMenuItem>
           ))}

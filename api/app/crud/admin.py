@@ -2,7 +2,7 @@ from typing import List, Optional
 from datetime import datetime, timedelta
 from sqlmodel import Session, select, func, and_
 
-from app.models.user import User
+from app.models.user import User, UserType
 from app.models.chat import Chat
 from app.models.message import Message
 from app.schemas.admin import (
@@ -23,7 +23,12 @@ def get_dashboard_stats(session: Session) -> AdminDashboard:
     ).first() or 0
     admin_users = session.exec(
         select(func.count(User.id)).where(
-            and_(User.is_admin == True, User.is_deleted == False)
+            and_(User.user_type == UserType.ADMIN, User.is_deleted == False)
+        )
+    ).first() or 0
+    super_admin_users = session.exec(
+        select(func.count(User.id)).where(
+            and_(User.user_type == UserType.SUPER_ADMIN, User.is_deleted == False)
         )
     ).first() or 0
     deleted_users = session.exec(
@@ -57,6 +62,7 @@ def get_dashboard_stats(session: Session) -> AdminDashboard:
         total_users=total_users,
         active_users=active_users,
         admin_users=admin_users,
+        super_admin_users=super_admin_users,
         deleted_users=deleted_users,
         total_chats=total_chats,
         active_chats=active_chats,
@@ -72,7 +78,8 @@ def get_users_with_stats(session: Session, params: UserSearchParams) -> List[Adm
         User.id,
         User.name,
         User.email,
-        User.is_admin,
+        User.user_type,
+        User.membership_type,
         User.is_deleted,
         User.created_at,
         User.last_login_at,
@@ -83,8 +90,10 @@ def get_users_with_stats(session: Session, params: UserSearchParams) -> List[Adm
     # 应用筛选条件
     if params.email:
         query = query.where(User.email.contains(params.email))
-    if params.is_admin is not None:
-        query = query.where(User.is_admin == params.is_admin)
+    if params.user_type is not None:
+        query = query.where(User.user_type == params.user_type)
+    if params.membership_type is not None:
+        query = query.where(User.membership_type == params.membership_type)
     if params.is_deleted is not None:
         query = query.where(User.is_deleted == params.is_deleted)
     
@@ -111,7 +120,8 @@ def get_users_with_stats(session: Session, params: UserSearchParams) -> List[Adm
             id=row.id,
             name=row.name,
             email=row.email,
-            is_admin=row.is_admin,
+            user_type=row.user_type,
+            membership_type=row.membership_type,
             is_deleted=row.is_deleted,
             created_at=row.created_at,
             last_login_at=row.last_login_at,
@@ -131,8 +141,10 @@ def get_users_with_pagination(session: Session, params: UserSearchParams) -> Use
     filters = []
     if params.email:
         filters.append(User.email.contains(params.email))
-    if params.is_admin is not None:
-        filters.append(User.is_admin == params.is_admin)
+    if params.user_type is not None:
+        filters.append(User.user_type == params.user_type)
+    if params.membership_type is not None:
+        filters.append(User.membership_type == params.membership_type)
     if params.is_deleted is not None:
         filters.append(User.is_deleted == params.is_deleted)
     
@@ -153,7 +165,8 @@ def get_users_with_pagination(session: Session, params: UserSearchParams) -> Use
         User.id,
         User.name,
         User.email,
-        User.is_admin,
+        User.user_type,
+        User.membership_type,
         User.is_deleted,
         User.created_at,
         User.last_login_at,
@@ -188,7 +201,8 @@ def get_users_with_pagination(session: Session, params: UserSearchParams) -> Use
             id=row.id,
             name=row.name,
             email=row.email,
-            is_admin=row.is_admin,
+            user_type=row.user_type,
+            membership_type=row.membership_type,
             is_deleted=row.is_deleted,
             created_at=row.created_at,
             last_login_at=row.last_login_at,
@@ -264,8 +278,10 @@ def update_user(session: Session, user_id: int, update_data: UserUpdateRequest) 
     if not user:
         return None
     
-    if update_data.is_admin is not None:
-        user.is_admin = update_data.is_admin
+    if update_data.user_type is not None:
+        user.user_type = update_data.user_type
+    if update_data.membership_type is not None:
+        user.membership_type = update_data.membership_type
     if update_data.is_deleted is not None:
         user.is_deleted = update_data.is_deleted
     if update_data.name is not None:
@@ -305,7 +321,8 @@ def create_user_by_admin(session: Session, user_data: UserCreateRequest) -> User
     new_user = User(
         email=user_data.email,
         name=user_data.name,
-        is_admin=user_data.is_admin,
+        user_type=user_data.user_type,
+        membership_type=user_data.membership_type,
         is_deleted=False,
         last_login_at=None  # 管理员创建的用户初始没有登录时间
     )
@@ -368,6 +385,6 @@ def check_user_can_be_deleted(session: Session, user_id: int) -> dict:
         "can_delete": True,  # 总是可以删除（软删除）
         "chat_count": chat_count,
         "message_count": message_count,
-        "is_admin": user.is_admin,
+        "user_type": user.user_type,
         "warning": "删除用户将保留其数据，但用户无法登录" if chat_count > 0 or message_count > 0 else None
     }

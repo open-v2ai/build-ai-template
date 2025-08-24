@@ -4,7 +4,7 @@ from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from sqlmodel import Session
 
 from app.db.base import get_session
-from app.models.user import User
+from app.models.user import User, UserType
 from app.core.security import decode_token
 
 security = HTTPBearer()
@@ -61,10 +61,20 @@ async def get_current_user(
 
 
 def verify_admin_user(current_user: User = Depends(get_current_user)) -> User:
-    """验证当前用户是否为管理员"""
-    if not current_user.is_admin:
+    """验证当前用户是否为管理员或超级管理员"""
+    if current_user.user_type not in [UserType.ADMIN, UserType.SUPER_ADMIN]:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN, 
             detail="Admin access required"
+        )
+    return current_user
+
+
+def verify_super_admin_user(current_user: User = Depends(get_current_user)) -> User:
+    """验证当前用户是否为超级管理员"""
+    if current_user.user_type != UserType.SUPER_ADMIN:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN, 
+            detail="Super admin access required"
         )
     return current_user

@@ -27,7 +27,8 @@ export default function CreateUserModal({ isOpen, onClose, onUserCreated }: Crea
   const [formData, setFormData] = useState<UserCreateRequest>({
     email: '',
     name: '',
-    is_admin: false,
+    user_type: 'normal',
+    membership_type: 'free',
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -54,7 +55,8 @@ export default function CreateUserModal({ isOpen, onClose, onUserCreated }: Crea
       setFormData({
         email: '',
         name: '',
-        is_admin: false,
+        user_type: 'normal',
+        membership_type: 'free',
       });
       
       onUserCreated();
@@ -71,7 +73,8 @@ export default function CreateUserModal({ isOpen, onClose, onUserCreated }: Crea
     setFormData({
       email: '',
       name: '',
-      is_admin: false,
+      user_type: 'normal',
+      membership_type: 'free',
     });
     setError(null);
     onClose();
@@ -133,21 +136,41 @@ export default function CreateUserModal({ isOpen, onClose, onUserCreated }: Crea
               />
             </div>
 
-            {/* 管理员权限 */}
-            <div className="flex items-center gap-2">
-              <input
-                type="checkbox"
-                id="is_admin"
-                checked={formData.is_admin}
-                onChange={(e) => setFormData({ ...formData, is_admin: e.target.checked })}
-                className="rounded"
-              />
-              <label htmlFor="is_admin" className="text-sm font-medium text-gray-700">
-                {t('SET_AS_ADMIN')}
+            {/* 用户类型 */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                {t('USER_TYPE')}
               </label>
+              <select
+                value={formData.user_type}
+                onChange={(e) => setFormData({ ...formData, user_type: e.target.value as any })}
+                className="w-full border border-gray-300 rounded-md px-3 py-2 bg-white text-gray-900"
+              >
+                <option value="normal">{t('NORMAL_USER')}</option>
+                <option value="premium">{t('PREMIUM_USER')}</option>
+                <option value="admin">{t('ADMIN_USER')}</option>
+                <option value="super_admin">{t('SUPER_ADMIN_USER')}</option>
+              </select>
             </div>
 
-            {formData.is_admin && (
+            {/* 会员类型 */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                {t('MEMBERSHIP_TYPE')}
+              </label>
+              <select
+                value={formData.membership_type}
+                onChange={(e) => setFormData({ ...formData, membership_type: e.target.value as any })}
+                className="w-full border border-gray-300 rounded-md px-3 py-2 bg-white text-gray-900"
+              >
+                <option value="free">{t('FREE_MEMBERSHIP')}</option>
+                <option value="monthly">{t('MONTHLY_MEMBERSHIP')}</option>
+                <option value="yearly">{t('YEARLY_MEMBERSHIP')}</option>
+                <option value="lifetime">{t('LIFETIME_MEMBERSHIP')}</option>
+              </select>
+            </div>
+
+            {(formData.user_type === 'admin' || formData.user_type === 'super_admin') && (
               <div className="p-3 bg-yellow-50 border border-yellow-200 rounded-md">
                 <p className="text-sm text-yellow-800">
                   {t('ADMIN_WARNING')}

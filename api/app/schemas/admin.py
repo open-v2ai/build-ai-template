@@ -1,13 +1,15 @@
 from typing import Optional, List
 from datetime import datetime
 from pydantic import BaseModel
+from app.models.user import UserType, MembershipType
 
 
 class AdminUserList(BaseModel):
     id: int
     name: Optional[str] = None
     email: str
-    is_admin: bool
+    user_type: UserType
+    membership_type: MembershipType
     is_deleted: bool
     created_at: datetime
     last_login_at: Optional[datetime] = None
@@ -29,6 +31,7 @@ class AdminDashboard(BaseModel):
     total_users: int
     active_users: int
     admin_users: int
+    super_admin_users: int
     deleted_users: int
     total_chats: int
     active_chats: int
@@ -40,11 +43,13 @@ class AdminDashboard(BaseModel):
 class UserCreateRequest(BaseModel):
     email: str
     name: Optional[str] = None
-    is_admin: bool = False
+    user_type: UserType = UserType.NORMAL
+    membership_type: MembershipType = MembershipType.FREE
 
 
 class UserUpdateRequest(BaseModel):
-    is_admin: Optional[bool] = None
+    user_type: Optional[UserType] = None
+    membership_type: Optional[MembershipType] = None
     is_deleted: Optional[bool] = None
     name: Optional[str] = None
 
@@ -64,7 +69,8 @@ class ChatSearchParams(BaseModel):
 
 class UserSearchParams(BaseModel):
     email: Optional[str] = None
-    is_admin: Optional[bool] = None
+    user_type: Optional[UserType] = None
+    membership_type: Optional[MembershipType] = None
     is_deleted: Optional[bool] = None
     limit: int = 10
     offset: int = 0

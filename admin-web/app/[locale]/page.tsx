@@ -72,7 +72,7 @@ export default function Page() {
         currentPage={currentPage}
         onNavigate={setCurrentPage}
       />
-      <SidebarInset>
+      <SidebarInset className="overflow-x-hidden">
         <header className="sticky top-0 z-20 bg-background border-b flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
           <div className="flex items-center gap-2 px-4">
             <SidebarTrigger className="-ml-1" />
@@ -95,8 +95,8 @@ export default function Page() {
             <LanguageSwitchButton />
           </div>
         </header>
-        <div className="flex flex-1 flex-col gap-4 pt-0">
-          <div className="bg-muted/50 min-h-[100vh] flex flex-1 rounded-xl md:min-h-min">
+        <div className="flex flex-1 flex-col gap-4 pt-0 overflow-x-hidden">
+          <div className="bg-muted/50 min-h-[100vh] flex flex-1 rounded-xl md:min-h-min overflow-x-hidden">
             {renderCurrentPage()}
           </div>
         </div>

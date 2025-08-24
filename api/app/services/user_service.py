@@ -4,7 +4,7 @@ from redis import Redis
 from fastapi import HTTPException
 
 from app.schemas.user import Token
-from app.models.user import User
+from app.models.user import User, UserType
 from app.crud.user import get_user_by_email, create_user
 from app.core.security import create_access_token, create_refresh_token, decode_token
 from app.services.email_service import verify_code
@@ -54,7 +54,7 @@ def verify_admin_code(email: str, code: str, session: Session, redis: Redis) -> 
         raise HTTPException(status_code=403, detail="该用户状态异常，请联系管理员")
     
     # 检查用户是否是管理员
-    if not user.is_admin:
+    if user.user_type not in [UserType.ADMIN, UserType.SUPER_ADMIN]:
         raise HTTPException(status_code=403, detail="该邮箱不是管理员用户，无权限访问管理后台")
     
     # 更新最后登录时间

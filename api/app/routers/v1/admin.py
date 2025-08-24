@@ -5,7 +5,7 @@ from sqlmodel import Session
 from app.dependencies.db import SessionDep
 from app.db.base import get_session
 from app.dependencies.auth import verify_admin_user
-from app.models.user import User
+from app.models.user import User, UserType, MembershipType
 from app.schemas.admin import (
     AdminUserList, AdminChatList, AdminDashboard,
     UserSearchParams, ChatSearchParams, UserUpdateRequest,
@@ -34,7 +34,8 @@ def get_users(
     *,
     session: SessionDep,
     email: Optional[str] = None,
-    is_admin: Optional[bool] = None,
+    user_type: Optional[UserType] = None,
+    membership_type: Optional[MembershipType] = None,
     is_deleted: Optional[bool] = None,
     limit: int = 10,
     offset: int = 0,
@@ -45,7 +46,8 @@ def get_users(
     """获取用户列表（带分页信息）"""
     params = UserSearchParams(
         email=email,
-        is_admin=is_admin,
+        user_type=user_type,
+        membership_type=membership_type,
         is_deleted=is_deleted,
         limit=limit,
         offset=offset,
