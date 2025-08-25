@@ -177,8 +177,8 @@ export default function ChatContentPage({ chat, taskPanelOpen = true, isNewChat,
               className={`group flex mb-2 items-end ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
             >
               {msg.role === 'assistant' && (
-                <div className="w-8 h-8 rounded-full mr-2 mb-6 flex items-center justify-center">
-                  <Bot className="w-5 h-5 text-foreground" />
+                <div className="w-10 h-10 rounded-full mr-2 mb-6 flex items-center justify-center">
+                  <Bot className="w-7 h-7 text-foreground" />
                 </div>
               )}
               <div className="flex flex-col items-end max-w-[80%]">
@@ -218,8 +218,8 @@ export default function ChatContentPage({ chat, taskPanelOpen = true, isNewChat,
                 </div>
               </div>
               {msg.role === 'user' && (
-                <div className="w-8 h-8 rounded-full ml-2 mb-6 flex items-center justify-center">
-                  <User className="w-5 h-5 text-foreground" />
+                <div className="w-10 h-10 rounded-full ml-2 mb-6 flex items-center justify-center">
+                  <User className="w-7 h-7 text-foreground" />
                 </div>
               )}
             </div>
