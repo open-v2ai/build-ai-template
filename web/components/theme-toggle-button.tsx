@@ -46,9 +46,9 @@ export default function ThemeToggleButton() {
       title={theme === 'light' ? '切换到深色模式' : '切换到浅色模式'}
     >
       {theme === 'light' ? (
-        <Moon className="w-5 h-5 text-neutral-500" />
+        <Moon className="w-5 h-5 text-foreground" />
       ) : (
-        <Sun className="w-5 h-5 text-neutral-500" />
+        <Sun className="w-5 h-5 text-foreground" />
       )}
     </Button>
   );

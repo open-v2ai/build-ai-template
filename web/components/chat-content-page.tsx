@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import Image from "next/image";
-import { Send } from 'lucide-react';
+import { Send, Bot, User } from 'lucide-react';
 import type { Chat, Message } from '@/app/[locale]/types';
 import { fetcher } from '@/util/fetcher';
 import { useTranslations } from 'next-intl';
@@ -114,7 +113,7 @@ export default function ChatContentPage({ chat, taskPanelOpen = true, isNewChat,
   return (
     <div className="flex flex-row w-full h-full min-h-0">
       {/* Left chat area */}
-      <div className={`flex flex-col ${taskPanelOpen ? 'flex-[2_2_0%]' : 'flex-1'} h-full min-h-0 bg-white rounded-l p-0 transition-all duration-300`}>
+      <div className={`flex flex-col ${taskPanelOpen ? 'flex-[2_2_0%]' : 'flex-1'} h-full min-h-0 bg-background rounded-l p-0 transition-all duration-300`}>
         {/* Scrollable message history */}
         <div className="flex-1 min-h-0 overflow-y-auto px-4 py-2">
           {messages.map((msg, idx) => (
@@ -123,20 +122,16 @@ export default function ChatContentPage({ chat, taskPanelOpen = true, isNewChat,
               className={`flex mb-2 items-end ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
             >
               {msg.role === 'assistant' && (
-                <Image
-                  src="/bot.svg"
-                  alt={t('ASSISTANT')}
-                  width={32}
-                  height={32}
-                  className="w-8 h-8 rounded-full mr-2 mb-6"
-                />
+                <div className="w-8 h-8 rounded-full mr-2 mb-6 flex items-center justify-center">
+                  <Bot className="w-5 h-5 text-foreground" />
+                </div>
               )}
               <div className="flex flex-col items-end max-w-[80%]">
                 <div
                   className={`px-4 py-2 rounded-lg break-words shadow ${
                     msg.role === 'user'
                       ? 'bg-blue-500 text-white self-end'
-                      : 'bg-gray-200 text-gray-900 self-start'
+                      : 'bg-muted text-foreground self-start'
                   }`}
                 >
                   {msg.role === 'assistant' ? (
@@ -145,23 +140,19 @@ export default function ChatContentPage({ chat, taskPanelOpen = true, isNewChat,
                     msg.content
                   )}
                 </div>
-                <span className="text-xs text-gray-400 mt-1 self-end">{formatTime(msg.created_at!)}</span>
+                <span className="text-xs text-muted-foreground mt-1 self-end">{formatTime(msg.created_at!)}</span>
               </div>
               {msg.role === 'user' && (
-                <Image
-                  src="/user.svg"
-                  alt={t('USER')}
-                  width={32}
-                  height={32}
-                  className="w-8 h-8 rounded-full ml-2 mb-6"
-                />
+                <div className="w-8 h-8 rounded-full ml-2 mb-6 flex items-center justify-center">
+                  <User className="w-5 h-5 text-foreground" />
+                </div>
               )}
             </div>
           ))}
           <div ref={messagesEndRef} />
         </div>
         {/* Fixed bottom input area */}
-        <div className="px-4 py-3 border-t bg-white sticky bottom-0 z-10">
+        <div className="px-4 py-3 border-t bg-background sticky bottom-0 z-10">
           <div className="flex w-full gap-2">
             <input
               className="flex-1 border rounded px-2 py-2 h-10"
@@ -179,7 +170,7 @@ export default function ChatContentPage({ chat, taskPanelOpen = true, isNewChat,
               }}
             />
             <button
-              className="bg-blue-500 text-white px-4 py-1 rounded"
+              className="bg-primary text-primary-foreground hover:bg-primary/90 px-4 py-1 rounded transition-colors"
               onClick={async () => {
                 const content = input.trim();
                 if (content) {
@@ -193,11 +184,11 @@ export default function ChatContentPage({ chat, taskPanelOpen = true, isNewChat,
         </div>
       </div>
       {/* Right task execution area, can be expanded/collapsed */}
-      <div className={`relative flex flex-col ${taskPanelOpen ? 'flex-[1_1_0%] max-w-xl' : 'w-0 min-w-0 p-0 border-0'} h-full min-h-0 bg-gray-50 rounded-r border-l border-gray-200 transition-all duration-300`}> 
+      <div className={`relative flex flex-col ${taskPanelOpen ? 'flex-[1_1_0%] max-w-xl' : 'w-0 min-w-0 p-0 border-0'} h-full min-h-0 bg-muted/30 rounded-r border-l border-border transition-all duration-300`}> 
         {taskPanelOpen ? (
           <div className="sticky top-0 p-4 overflow-y-auto">
             <div className="text-lg font-bold mb-4">{t('TASK_EXECUTION')}</div>
-            <div className="text-gray-500">
+            <div className="text-muted-foreground">
               <ReactMarkdown remarkPlugins={[remarkGfm]}>{taskContent ? taskContent : t('TASK_EXECUTION_DESC')}</ReactMarkdown>
             </div>
           </div>
