@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Send, Bot, User } from 'lucide-react';
+import { Send, Bot, User, Copy, RefreshCw } from 'lucide-react';
 import type { Chat, Message } from '@/app/[locale]/types';
 import { fetcher } from '@/util/fetcher';
 import { useTranslations } from 'next-intl';
@@ -46,6 +46,61 @@ export default function ChatContentPage({ chat, taskPanelOpen = true, isNewChat,
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages.length]);
+
+  // Copy to clipboard function
+  const handleCopy = async (content: string) => {
+    try {
+      await navigator.clipboard.writeText(content);
+    } catch (err) {
+      console.error('Failed to copy: ', err);
+    }
+  };
+
+  // Refresh message function
+  const handleRefresh = async (messageIndex: number) => {
+    const userMessage = messages[messageIndex];
+    if (userMessage && userMessage.role === 'user') {
+      // Remove messages after the user message (including the assistant's response)
+      setMessages(prev => prev.slice(0, messageIndex + 1));
+      
+      // Resend the user message
+      const now = new Date().toUTCString().slice(0, 25);
+      const assistantMsg = { id: 0, content: '...', role: 'assistant', created_at: now, updated_at: now };
+      setMessages(prev => [...prev, assistantMsg]);
+      setTaskContent('');
+
+      let assistantContent = '';
+      let taskContent = '';
+      await fetcher('/chat/message?stream=true',
+        {
+          method: 'POST',
+          auth: true,
+          body: JSON.stringify({ content: userMessage.content, chat_id: chat.id, role: 'user' }),
+          headers: { 'Content-Type': 'application/json' },
+          stream: true,
+        },
+        (chunk: string) => {
+          if (chunk.startsWith("<answer>")) {
+            if (assistantContent === t('TASK_PROCESSING')) {
+              assistantContent = '';
+            }
+            assistantContent += chunk.replace(/<answer>|<\/answer>/g, "");
+          } else if (chunk.startsWith("<task>")) {
+            assistantContent = t('TASK_PROCESSING');
+            taskContent += chunk.replace(/<task>|<\/task>/g, "");
+          } else {
+            assistantContent += chunk;
+          }
+          setMessages(prev => {
+            const newMsgs = [...prev];
+            newMsgs[newMsgs.length - 1] = { ...assistantMsg, content: assistantContent };
+            return newMsgs;
+          });
+          setTaskContent(taskContent);
+        }
+      );
+    }
+  };
 
   // Extract message sending logic
   const handleSend = async (content: string, stream: boolean = false) => {
@@ -119,7 +174,7 @@ export default function ChatContentPage({ chat, taskPanelOpen = true, isNewChat,
           {messages.map((msg, idx) => (
             <div
               key={idx}
-              className={`flex mb-2 items-end ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
+              className={`group flex mb-2 items-end ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
             >
               {msg.role === 'assistant' && (
                 <div className="w-8 h-8 rounded-full mr-2 mb-6 flex items-center justify-center">
@@ -140,7 +195,27 @@ export default function ChatContentPage({ chat, taskPanelOpen = true, isNewChat,
                     msg.content
                   )}
                 </div>
-                <span className="text-xs text-muted-foreground mt-1 self-end">{formatTime(msg.created_at!)}</span>
+                <div className={`flex items-center gap-1 mt-1 ${msg.role === 'user' ? 'self-end flex-row-reverse' : 'self-start'}`}>
+                  <span className="text-xs text-muted-foreground">{formatTime(msg.created_at!)}</span>
+                  <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <button
+                      onClick={() => handleCopy(msg.content)}
+                      className="p-1 hover:bg-muted rounded"
+                      title={t('COPY') || 'Copy'}
+                    >
+                      <Copy className="w-3 h-3 text-muted-foreground hover:text-foreground" />
+                    </button>
+                    {msg.role === 'user' && (
+                      <button
+                        onClick={() => handleRefresh(idx)}
+                        className="p-1 hover:bg-muted rounded"
+                        title={t('REFRESH') || 'Refresh'}
+                      >
+                        <RefreshCw className="w-3 h-3 text-muted-foreground hover:text-foreground" />
+                      </button>
+                    )}
+                  </div>
+                </div>
               </div>
               {msg.role === 'user' && (
                 <div className="w-8 h-8 rounded-full ml-2 mb-6 flex items-center justify-center">
