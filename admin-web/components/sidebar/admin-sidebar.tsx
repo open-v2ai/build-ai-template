@@ -71,7 +71,7 @@ export function AdminSidebar({ currentPage, onNavigate, ...props }: AdminSidebar
                   />
                 </Avatar>
                 <div className="text-xl font-light relative">
-                  <span className="text-black">{t('ADMIN')}</span>
+                  <span className="text-black dark:text-white">{t('ADMIN')}</span>
                 </div>
               </div>
             </SidebarMenuButton>
@@ -87,7 +87,7 @@ export function AdminSidebar({ currentPage, onNavigate, ...props }: AdminSidebar
                 size="lg"
                 onClick={() => onNavigate(item.id)}
                 isActive={currentPage === item.id}
-                className="group-data-[collapsible=icon]:!justify-center"
+                className="group-data-[collapsible=icon]:!justify-center px-4"
                 tooltip={item.label}
               >
                 {item.icon}

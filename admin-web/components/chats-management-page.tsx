@@ -181,8 +181,6 @@ export default function ChatsManagementPage() {
 
   return (
     <div className="p-6 max-w-7xl mx-auto">
-      <h1 className="text-2xl font-bold text-foreground mb-6">{t('CHAT_MANAGEMENT')}</h1>
-      
       {/* 搜索和筛选 */}
       <div className="bg-card rounded-lg p-6 shadow-sm border border-border mb-6">
         <form onSubmit={handleSearch} className="space-y-4">

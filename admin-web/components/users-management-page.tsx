@@ -16,9 +16,10 @@ interface UserRowProps {
   user: User;
   onUpdate: (userId: number, updates: UserUpdateRequest) => void;
   onDelete: (user: User) => void;
+  onCreate: () => void;
 }
 
-function UserRow({ user, onUpdate, onDelete }: UserRowProps) {
+function UserRow({ user, onUpdate, onDelete, onCreate }: UserRowProps) {
   const t = useTranslations();
   const [isEditing, setIsEditing] = useState(false);
   const [editData, setEditData] = useState<UserUpdateRequest>({
@@ -200,6 +201,15 @@ function UserRow({ user, onUpdate, onDelete }: UserRowProps) {
               >
                 {user.is_deleted ? <RotateCcw className="w-4 h-4" /> : <Trash2 className="w-4 h-4" />}
               </Button>
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={onCreate}
+                title={t('CREATE_USER')}
+                className="text-blue-600 hover:text-blue-700"
+              >
+                <UserPlus className="w-4 h-4" />
+              </Button>
             </>
           )}
         </div>
@@ -290,22 +300,6 @@ export default function UsersManagementPage() {
 
   return (
     <div className="p-6 max-w-full mx-auto overflow-x-hidden">
-      <div className="flex justify-between items-center mb-6">
-        <div>
-          <h1 className="text-2xl font-bold text-foreground">{t('USER_MANAGEMENT')}</h1>
-          <p className="text-sm text-muted-foreground mt-1">
-            {t('TOTAL_USERS_COUNT', { count: paginationInfo.total })}
-          </p>
-        </div>
-        <Button
-          onClick={() => setShowCreateModal(true)}
-          className="flex items-center gap-2"
-        >
-          <UserPlus className="w-4 h-4" />
-          {t('CREATE_USER')}
-        </Button>
-      </div>
-
       {/* 搜索和筛选 */}
       <div className="bg-card rounded-lg p-6 shadow-sm border border-border mb-6">
         <form onSubmit={handleSearch} className="space-y-4">
@@ -421,6 +415,7 @@ export default function UsersManagementPage() {
                     user={user}
                     onUpdate={handleUpdateUser}
                     onDelete={setUserToDelete}
+                    onCreate={() => setShowCreateModal(true)}
                   />
                 ))
               )}
