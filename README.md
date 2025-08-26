@@ -1,6 +1,6 @@
-# Build AI Template
+# BAT: Build AI Template
 
-Build AI Template 是一个用于快速构建 AI 应用的模板项目，基于 FastAPI 和 Next.js 构建。
+Build AI Template 是一个用于快速构建 AI 应用的模板项目，基于 `FastAPI` 和 `Next.js` 构建。
 
 > [!IMPORTANT]
 > 🚀 **快速开始**：点击页面右上角的 [Use this template](https://github.com/open-v2ai/build-ai-template/generate) 按钮创建您的新项目！
@@ -9,9 +9,10 @@ Build AI Template 是一个用于快速构建 AI 应用的模板项目，基于 
 
 ## 功能特性
 
-- [x] 使用 docker 和 docker-compose 部署智能体
-- [x] 通过网页界面与智能体对话
-- [ ] 通过简单的 yaml 配置文件构建智能体
+- [x] 使用 docker 和 docker-compose 部署智能体；
+- [x] 通过网页界面与智能体对话；
+- [x] 管理员后台，支持用户管理、会话查看、智能体管理等；
+- [ ] 一键接入 Dify API；
 
 ## 快速开始
 
@@ -84,11 +85,33 @@ cp .env.example .env
 vim .env
 # 修改为你自己的配置
 
-# 开发模式运行，端口 3000
+# 开发模式运行，默认端口 3000
 pnpm dev
 ```
 
 然后，打开浏览器并访问 `http://localhost:3000` 查看网页界面。
+
+5. 运行管理员后台
+
+```bash
+# 新开一个终端
+cd build-ai-template/admin-web/
+
+# 安装依赖
+pnpm install
+
+# 设置环境变量
+cp .env.example .env
+vim .env
+# 修改为你自己的配置
+
+# 开发模式运行，默认端口 3001
+pnpm dev
+```
+
+然后，打开浏览器并访问 `http://localhost:3001` 查看管理员界面。
+
+> 🎉 **自动管理员设置**：第一个通过邮箱验证登录的用户将自动成为管理员，无需手动设置！
 
 ## 部署
 
@@ -97,10 +120,12 @@ pnpm dev
 ```bash
 cd build-ai-template/
 
-# 构建 web 镜像
-make build-web
 # 构建 api 镜像
 make build-api
+# 构建 web 镜像
+make build-web
+# 构建 admin-web 镜像
+make build-admin-web
 ```
 
 2. 使用 docker compose 部署
@@ -121,7 +146,7 @@ vim .env
 docker compose up -d
 ```
 
-然后，打开浏览器并访问 `http://localhost:3000` 查看网页界面。
+然后，打开浏览器并访问 `http://localhost:3000` 查看应用的网页界面，访问 `http://localhost:3001` 查看管理员后台。
 
 ## 贡献指南
 

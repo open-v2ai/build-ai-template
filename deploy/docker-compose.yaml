@@ -1,7 +1,8 @@
 services:
   # API service
   api:
-    image: v2ai/build-ai-template-api:latest
+    container_name: bat-api
+    image: v2ai/bat-api:latest
     restart: always
     environment:
       POSTGRES_URL: ${POSTGRES_URL:-postgresql://postgres:123456@postgres:5432/build-ai-template}
@@ -26,18 +27,30 @@ services:
       timeout: 3s
       retries: 5
     networks:
-      - bridge
+      - bat-network
 
   web:
-    image: v2ai/build-ai-template-web:latest
+    container_name: bat-web
+    image: v2ai/bat-web:latest
     restart: always
     environment:
       HOSTNAME: ${HOSTNAME:-0.0.0.0}
       PORT: ${PORT:-3000}
     networks:
-      - bridge
+      - bat-network
+
+  admin-web:
+    container_name: bat-admin-web
+    image: v2ai/bat-admin-web:latest
+    restart: always
+    environment:
+      HOSTNAME: ${HOSTNAME:-0.0.0.0}
+      PORT: ${PORT:-3001}
+    networks:
+      - bat-network
 
   nginx:
+    container_name: bat-nginx
     image: nginx:1.27.5-alpine3.21
     restart: always
     environment:
@@ -51,9 +64,10 @@ services:
       api:
         condition: service_healthy
     networks:
-      - bridge
+      - bat-network
 
   postgres:
+    container_name: bat-postgres
     image: postgres:17.4-bookworm
     restart: always
     environment:
@@ -69,10 +83,11 @@ services:
       timeout: 3s
       retries: 5
     networks:
-      - bridge
+      - bat-network
 
   # The redis cache.
   redis:
+    container_name: bat-redis
     image: redis:7.2.4-alpine
     restart: always
     environment:
@@ -83,8 +98,8 @@ services:
     healthcheck:
       test: [ 'CMD', 'redis-cli', 'ping' ]
     networks:
-      - bridge
+      - bat-network
 
 networks:
-  bridge:
+  bat-network:
     driver: bridge

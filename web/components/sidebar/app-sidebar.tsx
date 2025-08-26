@@ -74,8 +74,8 @@ export function AppSidebar({ onSelectChat, onNewChat, chats, currentChatId, ...p
                   />
                 </Avatar>
                 <div className="text-xl font-light relative">
-                  <span className="text-black">Build AI Template</span>
-                  <span className="absolute -top-1 -right-7 text-[8px] text-gray-500 px-2 py-0.5 rounded font-light ml-2 select-none">BETA</span>
+                  <span className="text-foreground">Build AI Template</span>
+                  <span className="absolute -top-1 -right-7 text-[8px] text-muted-foreground px-2 py-0.5 rounded font-light ml-2 select-none">BETA</span>
                 </div>
               </div>
             </SidebarMenuButton>
@@ -89,9 +89,9 @@ export function AppSidebar({ onSelectChat, onNewChat, chats, currentChatId, ...p
               className="text-purple-500 text-lg duration-200 hover:text-purple-800"
               onClick={onNewChat}
             >
-              <PlusCircleIcon />
+              <PlusCircleIcon className="text-foreground" />
               <span>{t('NEW_CHAT')}</span>
-              <SidebarMenuBadge className="ml-2 flex items-center gap-1 text-xs text-gray-300">
+              <SidebarMenuBadge className="ml-2 flex items-center gap-1 text-xs text-muted-foreground">
                 <Command className="w-3 h-3" />
                 <span>I</span>
               </SidebarMenuBadge>

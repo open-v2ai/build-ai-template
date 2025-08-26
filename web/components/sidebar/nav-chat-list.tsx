@@ -26,14 +26,14 @@ export function NavChatList({
       <SidebarGroupContent>
         {isCollapsed ? (
           <div className="flex items-center justify-center p-4">
-            <MoreHorizontal className="w-4 h-4 text-gray-500" />
+            <MoreHorizontal className="w-4 h-4 text-muted-foreground" />
           </div>
         ) : (
           chats.map((chat, idx) => (
             <a
               href="#"
               key={idx}
-              className={`flex flex-col items-start gap-2 whitespace-nowrap border-b p-4 text-sm leading-tight last:border-b-0 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground ${currentChatId === chat.id ? 'bg-purple-50 z-10 border-r-4 border-r-purple-400' : 'border-r-0'}`}
+              className={`flex flex-col items-start gap-2 whitespace-nowrap border-b p-4 text-sm leading-tight last:border-b-0 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground ${currentChatId === chat.id ? 'bg-sidebar-accent text-sidebar-accent-foreground z-10 border-r-4 border-r-sidebar-primary' : 'border-r-0'}`}
               onClick={e => {
                 e.preventDefault();
                 if (onSelectChat) {
@@ -43,7 +43,7 @@ export function NavChatList({
             >
               <div className="flex w-full items-center gap-2 relative">
                 <span className="font-medium truncate max-w-[72%]">{chat.title}</span>
-                <span className="absolute right-0 top-0 text-xs whitespace-nowrap text-gray-500">{
+                <span className="absolute right-0 top-0 text-xs whitespace-nowrap text-muted-foreground">{
                   (() => {
                     const date = new Date(chat.updated_at);
                     const localDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000);

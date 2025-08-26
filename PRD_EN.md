@@ -13,6 +13,8 @@ Build AI Template is an open-source template project for rapidly building AI app
 
 ### 1.3 Technical Architecture
 - **Frontend**: Next.js + TypeScript + Tailwind CSS + Shadcn UI + Lucide Icons
+  - **User Frontend**: web/ - Chat interface for end users
+  - **Admin Frontend**: admin-web/ - System management interface for administrators
 - **Backend**: FastAPI + Python
 - **Database**: PostgreSQL + Redis
 - **AI Models**: OpenAI GPT series / Compatible models
@@ -67,9 +69,10 @@ Build AI Template is an open-source template project for rapidly building AI app
 - **User Profiling**: Record user preferences and usage habits
 
 #### 4.1.2 User Permissions
-- Basic Users: Standard conversation functionality
-- Premium Users: More model choices, longer conversation history
-- Administrators: System configuration, user management
+- **Basic Users**: Standard conversation functionality
+- **Premium Users**: More model choices, longer conversation history
+- **Administrators**: System configuration, user management, data statistics
+- **Super Administrators**: Complete system management permissions, including administrator account management
 
 ### 4.2 Chat with Agent Core System
 #### 4.2.1 Basic Conversation Features
@@ -117,9 +120,41 @@ Build AI Template is an open-source template project for rapidly building AI app
 - **User Behavior**: User usage habits and preference analysis
 - **System Monitoring**: System resource usage monitoring
 
+### 4.5 Admin Management System
+#### 4.5.1 User Management
+- **User List**: View all registered user information with search and filtering support
+- **User Details**: View user detailed information, login history, conversation records
+- **User Status Management**: Enable/disable user accounts, reset user passwords
+- **User Permission Management**: Assign and modify user permission levels
+
+#### 4.5.2 Conversation Management
+- **Conversation List**: View all user conversation records with filtering by user and time
+- **Conversation Content View**: View detailed content of specific conversations
+- **Conversation Statistics**: Statistics on conversation count, duration, user activity, etc.
+- **Sensitive Content Monitoring**: Automatically detect and flag sensitive conversation content
+
+#### 4.5.3 System Monitoring
+- **Real-time Monitoring**: Real-time monitoring of system operation status and resource usage
+- **Performance Metrics**: Key metrics such as API response time, error rate, concurrency
+- **Log Viewing**: System logs, error logs, access logs viewing
+- **Alert Configuration**: Set system alert rules and notification methods
+
+#### 4.5.4 Data Statistics
+- **User Growth**: Statistics on user registration, active users, retention rate, etc.
+- **Usage Statistics**: Usage statistics on conversation count, message count, file uploads, etc.
+- **Model Usage**: Usage statistics and performance comparison of different AI models
+- **Geographic Distribution**: User geographic distribution and usage analysis
+
+#### 4.5.5 System Configuration
+- **Basic Configuration**: Basic configuration such as system name, logo, theme
+- **Email Configuration**: Email service configuration for verification code sending
+- **AI Model Configuration**: Configure available AI models and API keys
+- **Security Configuration**: Security settings such as password policies, login restrictions, IP whitelist
+
 ## 5. Technical Architecture Design
 
 ### 5.1 Frontend Architecture
+#### 5.1.1 User Frontend Architecture (web/)
 ```
 web/
 ├── app/                    # Next.js App Router
@@ -129,6 +164,24 @@ web/
 ├── components/            # Reusable components
 │   ├── chat-content-page.tsx
 │   ├── sidebar/           # Sidebar components
+│   └── ui/               # Basic UI components
+├── hooks/                # Custom React Hooks
+├── i18n/                 # Internationalization configuration
+└── util/                 # Utility functions
+```
+
+#### 5.1.2 Admin Frontend Architecture (admin-web/)
+```
+admin-web/
+├── app/                    # Next.js App Router
+│   ├── [locale]/          # Internationalization routing
+│   ├── globals.css        # Global styles
+│   └── types.ts           # TypeScript type definitions
+├── components/            # Admin-specific components
+│   ├── dashboard-page.tsx # Dashboard page
+│   ├── users-management-page.tsx # User management page
+│   ├── chats-management-page.tsx # Conversation management page
+│   ├── sidebar/           # Admin sidebar
 │   └── ui/               # Basic UI components
 ├── hooks/                # Custom React Hooks
 ├── i18n/                 # Internationalization configuration
@@ -156,6 +209,8 @@ api/
 - id: Primary key
 - email: Email address
 - is_active: Account status
+- is_admin: Administrator flag
+- last_login_at: Last login time
 - created_at/updated_at: Timestamps
 
 #### 5.3.2 Chats Table (chats)
@@ -204,22 +259,53 @@ api/
 6. Agent provides continuous intelligent services based on context
 
 ### 6.3 Key Page Design
-#### 6.3.1 Login Page
+#### 6.3.1 User Frontend Pages
+##### 6.3.1.1 Login Page
 - Simple email login form
 - Multi-language switch button
 - Brand logo and slogan display
 
-#### 6.3.2 Main Page
+##### 6.3.1.2 Main Page
 - Left sidebar with Agent conversation history
 - Central main Chat with Agent area
 - Right task execution process panel (collapsible display of Agent work process)
 - Top navigation bar (current Agent session, settings, etc.)
 
-#### 6.3.3 New Agent Session Page
+##### 6.3.1.3 New Agent Session Page
 - Build AI Template welcome message and product introduction
 - "Build AI applications in minutes" slogan display
 - File upload area (support Agent document processing)
 - Quick start button and Agent example questions
+
+#### 6.3.2 Admin Frontend Pages
+##### 6.3.2.1 Admin Login Page
+- Administrator-specific login interface
+- Security verification mechanism
+- System management entry
+
+##### 6.3.2.2 Admin Dashboard
+- System overview data display
+- Real-time monitoring metrics
+- Quick operation entry
+- Data visualization charts
+
+##### 6.3.2.3 User Management Page
+- User list table display
+- Search and filtering functionality
+- User details popup
+- Batch operation functionality
+
+##### 6.3.2.4 Conversation Management Page
+- Conversation list display
+- Conversation content viewing
+- Sensitive content flagging
+- Conversation statistical analysis
+
+##### 6.3.2.5 System Configuration Page
+- Basic configuration forms
+- Email service configuration
+- AI model configuration
+- Security policy settings
 
 ## 7. Security and Privacy
 
@@ -248,12 +334,15 @@ api/
 - **Local Development**: Support rapid local setup
 - **Hot Reload**: Automatic service restart after code modifications
 - **Debug Tools**: Integrated development debugging tools
+- **Multi-frontend Development**: Independent development environment for user frontend and admin frontend
 
 #### 8.1.2 Production Environment
 - **Docker Containerization**: Standardized deployment solution
+- **Multi-service Deployment**: Independent deployment of user frontend, admin frontend, and API services
 - **Load Balancing**: Support multi-instance load balancing
 - **CDN Acceleration**: Static resource distribution acceleration
 - **SSL Certificates**: HTTPS secure transmission
+- **Domain Separation**: User frontend and admin frontend use different domains
 
 ### 8.2 Monitoring and Operations
 - **System Monitoring**: CPU, memory, disk and other resource monitoring

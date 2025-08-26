@@ -40,8 +40,15 @@ export async function fetcher<T>(
     });
 
     if (!res.ok) {
-        const error = await res.json().catch(() => ({}));
-        throw new Error(error.message || 'Request failed');
+        let errorMessage = 'Request failed';
+        try {
+            const error = await res.json();
+            errorMessage = error.detail || error.message || `HTTP ${res.status}: ${res.statusText}`;
+        } catch (e) {
+            // 如果无法解析JSON，使用HTTP状态信息
+            errorMessage = `HTTP ${res.status}: ${res.statusText}`;
+        }
+        throw new Error(errorMessage);
     }
 
     if (options.stream) {

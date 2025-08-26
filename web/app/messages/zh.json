@@ -1,6 +1,7 @@
 {
   "SLOGAN": "分分钟构建 AI 应用",
   "LOGIN": "登录",
+  "LOGIN_BUTTON": "登录",
   "EMAIL": "邮箱",
   "CODE": "验证码",
   "SEND_CODE": "发送验证码",
@@ -16,10 +17,10 @@
   "PLEASE_ENTER_THE_CODE": "请输入验证码",
   "GET_STARTED_BY_EDITING": "开始编辑",
   "SAVE_AND_SEE_YOUR_CHANGES_INSTANTLY": "保存并立即查看更改。",
-  "LOGIN_PAGE_TITLE": "build-ai-template - 登录",
-  "LOGIN_PAGE_DESCRIPTION": "build-ai-template - 登录页面",
-  "HOME_PAGE_TITLE": "build-ai-template - 分分钟构建 AI 应用",
-  "HOME_PAGE_DESCRIPTION": "build-ai-template - 分分钟构建 AI 应用",
+  "LOGIN_PAGE_TITLE": "BAT - 登录",
+  "LOGIN_PAGE_DESCRIPTION": "BAT - 登录页面",
+  "HOME_PAGE_TITLE": "BAT - 分分钟构建 AI 应用",
+  "HOME_PAGE_DESCRIPTION": "BAT - 分分钟构建 AI 应用",
   "SWITCH_LANGUAGE_SUCCESS": "切换语言成功",
   "NEW_CHAT_PLACEHOLDER": "请输入新的对话内容...",
   "SEND": "发送",
@@ -29,5 +30,8 @@
   "USER": "用户",
   "ENTER_QUESTION": "请输入你的问题...",
   "TASK_EXECUTION": "任务执行过程与结果",
-  "TASK_EXECUTION_DESC": "这里展示任务执行的详细过程和最终结果。"
+  "TASK_EXECUTION_DESC": "这里展示任务执行的详细过程和最终结果。",
+  "TASK_PROCESSING": "任务拆解中...",
+  "SWITCH_TO_ENGLISH": "Switch to English",
+  "SWITCH_TO_CHINESE": "切换到中文"
 } 

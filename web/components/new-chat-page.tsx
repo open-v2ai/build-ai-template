@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { Send } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
@@ -23,28 +22,16 @@ export default function NewChatPage({ onChatCreated }: NewChatPageProps) {
         <div className="text-[48px] font-light">{t('HELLO_WORLD')}</div>
       </div>
       <textarea
-        className="w-full min-h-[3rem] h-[6rem] max-h-40 text-lg px-4 py-2 rounded-md border border-input bg-white shadow-xs focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] outline-none resize-none"
+        className="w-full min-h-[3rem] h-[8rem] max-h-40 text-lg px-4 py-2 rounded-md border border-input bg-background shadow-xs focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] outline-none resize-none"
         placeholder={t('NEW_CHAT_PLACEHOLDER')}
         value={inputValue}
         onChange={e => setInputValue(e.target.value)}
-        rows={4}
+        rows={6}
         autoFocus
       />
-      <div className="w-full flex flex-col mt-4 justify-between">
-        <div className="flex gap-2 bg-white">
-          <Input
-            type="file"
-            accept=".pdf,.xlsx,.csv,.txt"
-            multiple
-            onChange={e => {
-              if (e.target.files) {
-                console.log(e.target.files);
-              }
-            }}
-          />
+        <div className="flex gap-2 justify-end mt-2">
           <Button
-            variant="outline"
-            className="px-6 py-2 rounded bg-[#9900FF] text-white hover:bg-[#7a00cc]"
+            className="px-6 py-2 rounded bg-primary text-primary-foreground hover:bg-primary/90"
             onClick={async () => {
               setLoading(true);
               try {
@@ -74,7 +61,6 @@ export default function NewChatPage({ onChatCreated }: NewChatPageProps) {
             <span className="ml-1">{loading ? t('SENDING') : t('SEND')}</span>
           </Button>
         </div>
-      </div>
     </div>
   );
 } 

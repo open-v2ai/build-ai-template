@@ -1,4 +1,4 @@
-# Build AI Template
+# BAT: Build AI Template
 
 Build AI Template is a template project for quickly building AI applications, based on FastAPI and Next.js.
 
@@ -9,9 +9,10 @@ Build AI Template is a template project for quickly building AI applications, ba
 
 ## Features
 
-- [x] Deploy agent with docker and docker-compose
-- [x] Chat with agent via web ui
-- [ ] Build agent with simple yaml config
+- [x] Deploy agent with docker and docker-compose;
+- [x] Chat with agent via web interface;
+- [x] Admin dashboard with user management, chat viewing, agent management and more;
+- [ ] One-click integration with Dify API;
 
 ## Quick Start
 
@@ -90,6 +91,28 @@ pnpm dev
 
 Then, open your browser and navigate to `http://localhost:3000` to see the web ui.
 
+5. Run the admin dashboard
+
+```bash
+# open a new terminal
+cd build-ai-template/admin-web/
+
+# install dependencies
+pnpm install
+
+# set environment variables
+cp .env.example .env
+vim .env
+# change all the values to your own
+
+# run in dev mode in port 3001
+pnpm dev
+```
+
+Then, open your browser and navigate to `http://localhost:3001` to see the admin dashboard.
+
+> 🎉 **Automatic Admin Setup**: The first user who logs in via email verification will automatically become an administrator, no manual setup required!
+
 ## Deploy
 
 1. Build the docker image
@@ -97,9 +120,12 @@ Then, open your browser and navigate to `http://localhost:3000` to see the web u
 ```bash
 cd build-ai-template/
 
-# build the docker image
-make build-web
+# build api image
 make build-api
+# build web image
+make build-web
+# build admin-web image
+make build-admin-web
 ```
 
 2. Use docker compose to deploy
@@ -120,7 +146,7 @@ vim .env
 docker compose up -d
 ```
 
-Then, open your browser and navigate to `http://localhost:3000` to see the web ui.
+Then, open your browser and navigate to `http://localhost:3000` to see the web ui, and visit `http://localhost:3001` to see the admin dashboard.
 
 ## Contributing
 

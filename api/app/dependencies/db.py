@@ -25,7 +25,13 @@ def get_user(token: str = Depends(scheme), session: Session = Depends(get_sessio
     print(payload)
     if not payload or 'sub' not in payload:
         raise HTTPException(status_code=401, detail="Invalid access token")
-    user = get_user_by_email(payload['sub'], session)
+    
+    try:
+        user_id = int(payload['sub'])
+    except ValueError:
+        raise HTTPException(status_code=401, detail="Invalid access token")
+    
+    user = session.get(User, user_id)
     if not user:
         raise HTTPException(status_code=401, detail="User not found")
     return user

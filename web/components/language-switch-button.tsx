@@ -27,9 +27,9 @@ export default function LanguageSwitchButton() {
       variant="ghost"
       size="icon"
       className="rounded-full hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
-      title={locale === 'zh' ? 'Switch to English' : '切换到中文'}
+      title={locale === 'zh' ? t('SWITCH_TO_ENGLISH') : t('SWITCH_TO_CHINESE')}
     >
-      <Languages className="w-5 h-5 text-neutral-500" />
+      <Languages className="w-5 h-5 text-foreground" />
     </Button>
   )
 }

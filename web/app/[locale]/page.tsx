@@ -23,6 +23,7 @@ import {
 
 import { getValidAccessToken } from '@/util/token';
 import LanguageSwitchButton from "@/components/language-switch-button"
+import ThemeToggleButton from "@/components/theme-toggle-button"
 
 import { fetcher } from '@/util/fetcher';
 import type { Chat } from '@/app/[locale]/types';
@@ -80,7 +81,7 @@ export default function Page() {
         currentChatId={currentChat?.id}
       />
       <SidebarInset>
-        <header className="sticky top-0 z-20 bg-white border-b flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
+        <header className="sticky top-0 z-20 bg-background border-b flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
           <div className="flex items-center gap-2 px-4">
             <SidebarTrigger className="-ml-1" />
             <Separator
@@ -98,6 +99,7 @@ export default function Page() {
             </Breadcrumb>
           </div>
           <div className="ml-auto justify-end pr-4 flex items-center gap-2">
+            <ThemeToggleButton />
             <LanguageSwitchButton />
             {currentPage === 'chat' && currentChat !== null && (
               <div className="flex items-center gap-2">
@@ -108,7 +110,7 @@ export default function Page() {
                   className="rounded-full p-1 transition-all duration-200"
                   onClick={() => setTaskPanelOpen(open => !open)}
                 >
-                  <PanelRight className="w-4 h-4" /> 
+                  <PanelRight className="w-4 h-4 text-foreground" /> 
                 </button>
               </div>
             )}

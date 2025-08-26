@@ -8,6 +8,7 @@ import Image from "next/image";
 import { useTranslations, useLocale } from 'next-intl';
 import { useRouter } from '@/i18n/navigation';
 import LangSwitchButton from '@/components/language-switch-button';
+import ThemeToggleButton from '@/components/theme-toggle-button';
 import { toast } from "sonner";
 import { fetcher } from '@/util/fetcher';
 
@@ -100,10 +101,11 @@ export default function LoginPage() {
         onSubmit={handleLogin}
         className="relative w-full max-w-sm space-y-6 bg-white dark:bg-black/80 p-8 rounded-lg shadow-md border border-gray-100 dark:border-gray-800"
       >
-        <div className="flex items-center justify-end mb-2">
+        <div className="absolute top-4 right-4 z-10 flex gap-2">
+          <ThemeToggleButton />
           <LangSwitchButton />
         </div>
-        <div className="flex items-center justify-center mt-0 mb-4">
+        <div className="flex items-center justify-center mt-12 mb-6">
           <Image src="/logo.svg" alt="Logo" width={88} height={88} />
         </div>
         <h1 className="text-2xl font-bold mb-4 text-center">{t('LOGIN')}</h1>
@@ -148,7 +150,7 @@ export default function LoginPage() {
           </div>
         </div>
         <Button type="submit" className="w-full" disabled={loading || !isValidEmail(email) || !isValidCode(code)}>
-          {loading ? t('LOGGING_IN') : t('LOGIN')}
+          {loading ? t('LOGGING_IN') : t('LOGIN_BUTTON')}
         </Button>
       </form>
     </div>
