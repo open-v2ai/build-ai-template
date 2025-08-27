@@ -14,10 +14,10 @@ Build AI Template is an open-source template project for rapidly building AI app
 ### 1.3 Technical Architecture
 - **Frontend**: Next.js + TypeScript + Tailwind CSS + Shadcn UI + Lucide Icons
   - **User Frontend**: web/ - Chat interface for end users
-  - **Admin Frontend**: admin-web/ - System management interface for administrators
-- **Backend**: FastAPI + Python
+  - **Admin Frontend**: web/app/[locale]/admin/ - Integrated admin interface
+- **Backend**: FastAPI + Python + SQLModel
 - **Database**: PostgreSQL + Redis
-- **AI Models**: OpenAI GPT series / Compatible models
+- **AI Agent Framework**: Intelligent agent system based on openai-agents
 - **Deployment**: Docker + Docker Compose
 
 ## 2. Market Analysis
@@ -94,18 +94,18 @@ Build AI Template is an open-source template project for rapidly building AI app
 - **Conversation Sharing**: Support sharing and exporting conversation content
 - **Conversation Settings**: Personalized conversation parameter configuration
 
-### 4.3 File Processing Capabilities
-#### 4.3.1 File Upload
-- **Supported Formats**: PDF, Excel, CSV, TXT and other common formats
-- **Batch Upload**: Support simultaneous upload and processing of multiple files
-- **File Parsing**: Intelligent extraction of file content and structural information
-- **Content Integration**: Integrate file content into conversation context
+### 4.3 Intelligent Agent System
+#### 4.3.1 Task Recognition and Decomposition
+- **Task Type Judgment**: Agent intelligently determines whether user input is a task-oriented question
+- **Task Decomposition**: Break down complex tasks into detailed execution steps
+- **Streaming Response**: Real-time display of Agent thinking and decomposition process
+- **Step Display**: Show task decomposition results in Markdown todo list format
 
-#### 4.3.2 Knowledge Base Management
-- **Document Indexing**: Build search indexes for file content
-- **Semantic Retrieval**: Content retrieval based on semantic similarity
-- **Knowledge Graph**: Build association relationships between documents
-- **Version Management**: Support document version control and updates
+#### 4.3.2 Task Execution and Feedback
+- **Task Executor**: Execute specific tasks based on decomposed steps
+- **Real-time Feedback**: Stream task execution progress and results
+- **Intelligent Answers**: Provide direct intelligent answers for non-task questions
+- **Context Maintenance**: Maintain conversation context continuity
 
 ### 4.4 Advanced Features
 #### 4.4.1 Model Configuration
@@ -170,22 +170,22 @@ web/
 └── util/                 # Utility functions
 ```
 
-#### 5.1.2 Admin Frontend Architecture (admin-web/)
+#### 5.1.2 Admin Frontend Architecture (Integrated in web/)
 ```
-admin-web/
-├── app/                    # Next.js App Router
-│   ├── [locale]/          # Internationalization routing
-│   ├── globals.css        # Global styles
-│   └── types.ts           # TypeScript type definitions
-├── components/            # Admin-specific components
+web/
+├── app/[locale]/admin/    # Admin dashboard pages
+│   ├── page.tsx          # Admin main page
+│   └── types.ts          # Admin type definitions
+├── components/admin/      # Admin-specific components
 │   ├── dashboard-page.tsx # Dashboard page
 │   ├── users-management-page.tsx # User management page
-│   ├── chats-management-page.tsx # Conversation management page
+│   ├── chats-management-page.tsx # Chat management page
+│   ├── create-user-modal.tsx # Create user modal
+│   ├── delete-user-modal.tsx # Delete user modal
+│   ├── first-admin-notice.tsx # First admin notice
 │   ├── sidebar/           # Admin sidebar
 │   └── ui/               # Basic UI components
-├── hooks/                # Custom React Hooks
-├── i18n/                 # Internationalization configuration
-└── util/                 # Utility functions
+└── Other user frontend files...
 ```
 
 ### 5.2 Backend Architecture
@@ -229,11 +229,14 @@ api/
 - created_at/updated_at: Timestamps
 
 ### 5.4 AI Agent Architecture
-- **Multi-model Support**: OpenAI, Claude, local models, etc.
 - **Agents Framework**: Intelligent agent system based on openai-agents
-- **Task Decomposition Engine**: TaskTypeJudge + TaskDecomposer + TaskExecutor
+- **Task Decomposition Engine**:
+  - TaskTypeJudge: Determine question type (task-oriented/non-task-oriented)
+  - TaskDecomposer: Break down task-oriented questions into detailed steps
+  - TaskExecutor: Execute tasks based on steps and return results
+  - AnswerAgent: Directly answer non-task-oriented questions
 - **Agent Runtime**: Runner responsible for Agent execution and management
-- **Streaming Response**: Real-time return of Agent thinking and execution process
+- **Streaming Response**: Real-time return of Agent thinking and execution process with <task> and <answer> tag classification
 
 ## 6. User Experience Design
 
@@ -338,11 +341,11 @@ api/
 
 #### 8.1.2 Production Environment
 - **Docker Containerization**: Standardized deployment solution
-- **Multi-service Deployment**: Independent deployment of user frontend, admin frontend, and API services
+- **Service Deployment**: Independent deployment of Web frontend and API backend services
 - **Load Balancing**: Support multi-instance load balancing
 - **CDN Acceleration**: Static resource distribution acceleration
 - **SSL Certificates**: HTTPS secure transmission
-- **Domain Separation**: User frontend and admin frontend use different domains
+- **Unified Domain**: User frontend and admin frontend use the same domain with different routes
 
 ### 8.2 Monitoring and Operations
 - **System Monitoring**: CPU, memory, disk and other resource monitoring
@@ -358,36 +361,40 @@ api/
 
 ## 9. Project Plan
 
-### 9.1 Development Phases
-#### Phase 1: Core Feature Development (4-6 weeks)
-- User authentication system
-- Basic conversation functionality
-- Database design and API development
-- Frontend basic interface
+### 9.1 Development Phases (Completed)
+#### Phase 1: Core Feature Development ✓
+- ✓ User authentication system (email verification code login)
+- ✓ Basic conversation functionality (with streaming response)
+- ✓ Database design and API development (SQLModel + FastAPI)
+- ✓ Frontend basic interface (Next.js + Tailwind CSS)
 
-#### Phase 2: Advanced Feature Development (3-4 weeks)
-- Task decomposition functionality
-- File upload processing
-- Streaming response optimization
-- Multi-language support
+#### Phase 2: Advanced Feature Development ✓
+- ✓ Agent task decomposition functionality (TaskTypeJudge + TaskDecomposer + TaskExecutor)
+- ✓ Streaming response optimization (real-time Agent thinking process display)
+- ✓ Multi-language support (Chinese and English internationalization)
+- ✓ Admin dashboard system (user management, chat management, system monitoring)
 
-#### Phase 3: Testing and Optimization (2-3 weeks)
-- Functional testing and performance optimization
-- Security testing and hardening
-- User experience optimization
-- Documentation improvement
+#### Phase 3: Testing and Optimization ✓
+- ✓ Functional testing and performance optimization
+- ✓ Security testing and hardening (JWT authentication, data validation)
+- ✓ User experience optimization (responsive design, theme switching)
+- ✓ Documentation improvement (PRD, README, deployment guides)
 
-#### Phase 4: Deployment and Launch (1-2 weeks)
-- Production environment deployment
-- Monitoring and alerting configuration
-- User training and support
-- Official release
+#### Phase 4: Deployment and Release ✓
+- ✓ Docker containerized deployment solution
+- ✓ Production environment configuration (Nginx + Docker Compose)
+- ✓ Open source release (Apache License 2.0)
+- ✓ Community support (GitHub Issues, Discussions)
 
-### 9.2 Milestones
-- **MVP Version**: Basic Chat with Agent functionality completed
-- **Beta Version**: Task decomposition and execution tracking functionality complete, community testing begins
-- **Release 1.0**: Complete template functionality, official open source release
-- **Release 2.0**: YAML configuration and multi-Agent support
+### 9.2 Milestones (Current Status)
+- **✓ MVP Version**: Basic Chat with Agent functionality completed
+- **✓ Beta Version**: Agent task decomposition and execution tracking functionality complete, admin dashboard finished
+- **✓ Release 1.0**: Complete template functionality, officially open sourced
+- **Planned Release 2.0**:
+  - File upload and knowledge base management
+  - YAML configuration and multi-Agent support
+  - One-click Dify API integration
+  - Multimodal support (images, voice)
 
 ## 10. Success Metrics
 
@@ -397,17 +404,17 @@ api/
 - **Error Rate**: API error rate < 0.1%
 - **Concurrency Capability**: Support 1000+ concurrent users
 
-### 10.2 Business Metrics
-- **Open Source Community Metrics**: GitHub Stars, Forks, Contributors count
-- **Deployment Usage**: Template download and deployment frequency
-- **Developer Satisfaction**: Developer user experience rating > 4.5/5
-- **Community Activity**: Issue response time, PR merge rate
+### 10.2 Business Metrics (Current Status)
+- **Open Source Community Metrics**: Released on GitHub, continuously growing
+- **Deployment Usage**: Docker Compose one-click deployment solution provided
+- **Developer Experience**: Complete development documentation and quick start guide
+- **Template Completeness**: Full technology stack with user frontend + admin dashboard + API
 
-### 10.3 Product Metrics
-- **Feature Completeness**: Core feature coverage 100%
-- **Performance Optimization**: Homepage load time < 3 seconds
-- **Mobile Adaptation**: Mobile users account for > 40%
-- **Internationalization**: Support Chinese and English bilingual
+### 10.3 Product Metrics (Current Status)
+- **✓ Feature Completeness**: Core Agent conversation functionality 100% complete
+- **✓ Performance Optimization**: Streaming response support, real-time feedback
+- **✓ Responsive Design**: Fully compatible with mobile and desktop
+- **✓ Internationalization**: Complete Chinese and English bilingual support
 
 ## 11. Risk Assessment
 
@@ -428,19 +435,25 @@ api/
 
 ## 12. Future Planning
 
-### 12.1 Template Feature Extensions
-- **Agent Plugin System**: Support custom Agent capability extensions
+### 12.1 Implemented Template Features
+- **✓ Intelligent Agent System**: Complete task recognition, decomposition, and execution workflow
+- **✓ Streaming Response**: Real-time display of Agent thinking and execution process
+- **✓ Multi-turn Conversation**: Context-aware continuous conversation capability
+- **✓ User Permission Management**: Basic users, premium users, admin permission system
+
+### 12.2 Planned Feature Extensions
+- **File Processing**: PDF, Excel document upload and parsing
 - **YAML Configuration**: Build Agents through simple configuration files
 - **Multi-Agent Collaboration**: Support collaborative work of multiple Agents
-- **Agent Marketplace**: Provide pre-built Agent templates
+- **Dify API Integration**: One-click integration with Dify platform
 
-### 12.2 Technical Architecture Upgrades
+### 12.3 Technical Architecture Upgrades
 - **Multimodal Agents**: Support image, voice and other multimodal interactions
-- **Local Deployment Agents**: Support local models and edge computing
+- **Local Model Support**: Support local models and edge computing
 - **Agent Performance Optimization**: Model compression and inference acceleration
-- **Distributed Agents**: Support large-scale Agent cluster deployment
+- **Knowledge Base Integration**: Vector database and semantic search
 
-### 12.3 Open Source Ecosystem Building
+### 12.4 Open Source Ecosystem Building
 - **Build AI Community**: Build an active developer community
 - **Agent Template Library**: Rich Agent template ecosystem
 - **Developer Documentation**: Comprehensive development and deployment guides

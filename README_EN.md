@@ -9,10 +9,15 @@ Build AI Template is a template project for quickly building AI applications, ba
 
 ## Features
 
-- [x] Deploy agent with docker and docker-compose;
-- [x] Chat with agent via web interface;
-- [x] Admin dashboard with user management, chat viewing, agent management and more;
-- [ ] One-click integration with Dify API;
+- [x] **Intelligent Agent System**: Support task recognition, automatic decomposition and execution tracking
+- [x] **Streaming Conversation**: Real-time display of Agent thinking and execution process
+- [x] **User Management**: Email verification code login with multi-level user permissions
+- [x] **Admin Dashboard**: Integrated admin interface with user management, chat management, system monitoring
+- [x] **Multi-language Support**: Complete Chinese and English internationalization
+- [x] **Responsive Design**: Fully compatible with desktop and mobile devices
+- [x] **Docker Deployment**: One-click containerized deployment solution
+- [ ] **File Processing**: Support PDF, Excel document upload and parsing
+- [ ] **Dify Integration**: One-click integration with Dify API
 
 ## Quick Start
 
@@ -91,27 +96,12 @@ pnpm dev
 
 Then, open your browser and navigate to `http://localhost:3000` to see the web ui.
 
-5. Run the admin dashboard
+5. Access the admin dashboard
 
-```bash
-# open a new terminal
-cd build-ai-template/admin-web/
-
-# install dependencies
-pnpm install
-
-# set environment variables
-cp .env.example .env
-vim .env
-# change all the values to your own
-
-# run in dev mode in port 3001
-pnpm dev
-```
-
-Then, open your browser and navigate to `http://localhost:3001` to see the admin dashboard.
+The admin dashboard is integrated into the user frontend. Visit `http://localhost:3000/admin` to access the admin interface.
 
 > 🎉 **Automatic Admin Setup**: The first user who logs in via email verification will automatically become an administrator, no manual setup required!
+> 📊 **Agent Task Decomposition**: The system automatically recognizes task-oriented questions and performs intelligent decomposition, displaying the execution process in real-time!
 
 ## Deploy
 
@@ -124,8 +114,6 @@ cd build-ai-template/
 make build-api
 # build web image
 make build-web
-# build admin-web image
-make build-admin-web
 ```
 
 2. Use docker compose to deploy
@@ -146,7 +134,7 @@ vim .env
 docker compose up -d
 ```
 
-Then, open your browser and navigate to `http://localhost:3000` to see the web ui, and visit `http://localhost:3001` to see the admin dashboard.
+Then, open your browser and navigate to `http://localhost:3000` to see the web ui, and visit `http://localhost:3000/admin` to see the admin dashboard.
 
 ## Contributing
 
