@@ -39,16 +39,6 @@ services:
     networks:
       - bat-network
 
-  admin-web:
-    container_name: bat-admin-web
-    image: v2ai/bat-admin-web:latest
-    restart: always
-    environment:
-      HOSTNAME: ${HOSTNAME:-0.0.0.0}
-      PORT: ${PORT:-3001}
-    networks:
-      - bat-network
-
   nginx:
     container_name: bat-nginx
     image: nginx:1.27.5-alpine3.21

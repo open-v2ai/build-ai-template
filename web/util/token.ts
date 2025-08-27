@@ -38,19 +38,22 @@ export async function getValidAccessToken() {
 
   // If access_token is expired, try to refresh using refresh_token
   if (refreshToken) {
-    await fetch(`${API_URL_V1}/auth/refresh_token`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ refresh_token: refreshToken }),
-    }).then(async (res) => {
-      const data = await res.json() as { access_token: string; refresh_token: string };
-      localStorage.setItem('access_token', data.access_token);
-      localStorage.setItem('refresh_token', data.refresh_token);
-      return data.access_token;
-    }).catch((err) => {
-      console.error(err);
-      return null;
-    });
+    try {
+      const res = await fetch(`${API_URL_V1}/auth/refresh_token`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ refresh_token: refreshToken }),
+      });
+      
+      if (res.ok) {
+        const data = await res.json() as { access_token: string; refresh_token: string };
+        localStorage.setItem('access_token', data.access_token);
+        localStorage.setItem('refresh_token', data.refresh_token);
+        return data.access_token;
+      }
+    } catch (err) {
+      console.error('Token refresh failed:', err);
+    }
   }
 
   return null;

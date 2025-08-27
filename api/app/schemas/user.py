@@ -1,4 +1,7 @@
 from pydantic import BaseModel, EmailStr
+from typing import Optional
+from datetime import datetime
+from app.models.user import UserType, MembershipType
 
 class EmailRequest(BaseModel):
     email: EmailStr
@@ -15,3 +18,13 @@ class Token(BaseModel):
 
 class RefreshToken(BaseModel):
     refresh_token: str
+
+
+class UserProfile(BaseModel):
+    id: int
+    name: Optional[str]
+    email: str
+    user_type: UserType
+    membership_type: MembershipType
+    last_login_at: Optional[datetime]
+    created_at: datetime

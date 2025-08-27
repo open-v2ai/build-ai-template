@@ -5,10 +5,15 @@ import {
   ChevronsUpDown,
   LogOut,
   User,
+  Shield,
+  Crown,
+  Star,
+  User as UserIcon,
 } from "lucide-react"
 import { useRouter } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 import { toast } from 'sonner'
+import { useState, useEffect } from 'react'
 
 import {
   Avatar
@@ -40,6 +45,89 @@ export function NavUser({
   const { isMobile } = useSidebar()
   const router = useRouter()
   const t = useTranslations()
+  const [isAdmin, setIsAdmin] = useState(false)
+  const [userType, setUserType] = useState<string>('normal')
+
+  // 检查用户是否是管理员
+  useEffect(() => {
+    const checkAdminStatus = () => {
+      // 检查 localStorage 中的用户类型
+      const storedUserType = localStorage.getItem('user_type') || 'normal';
+      
+      // 检查多种可能的管理员标识
+      const isAdminUser = storedUserType === 'admin' || 
+                         storedUserType === 'super_admin';
+      
+      setIsAdmin(isAdminUser);
+      setUserType(storedUserType);
+    };
+
+    if (user.email) {
+      checkAdminStatus();
+    }
+    
+    // 也监听 localStorage 的变化
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === 'user_type') {
+        checkAdminStatus();
+      }
+    };
+    
+    // 监听自定义事件（用于同一个页面内的状态变化）
+    const handleUserTypeChange = () => {
+      checkAdminStatus();
+    };
+    
+    window.addEventListener('storage', handleStorageChange);
+    window.addEventListener('user-type-changed', handleUserTypeChange);
+    
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener('user-type-changed', handleUserTypeChange);
+    };
+  }, [user.email])
+
+  // 获取用户类型图标
+  const getUserTypeIcon = (type: string) => {
+    switch (type) {
+      case 'super_admin':
+        return <Crown className="w-2.5 h-2.5" />;
+      case 'admin':
+        return <Shield className="w-2.5 h-2.5" />;
+      case 'premium':
+        return <Star className="w-2.5 h-2.5" />;
+      default:
+        return <UserIcon className="w-2.5 h-2.5" />;
+    }
+  };
+
+  // 获取用户类型颜色
+  const getUserTypeColor = (type: string) => {
+    switch (type) {
+      case 'super_admin':
+        return 'bg-red-50 text-red-400 dark:bg-red-950 dark:text-red-500';
+      case 'admin':
+        return 'bg-purple-50 text-purple-400 dark:bg-purple-950 dark:text-purple-500';
+      case 'premium':
+        return 'bg-yellow-50 text-yellow-500 dark:bg-yellow-950 dark:text-yellow-600';
+      default:
+        return 'bg-slate-50 text-slate-400 dark:bg-slate-900 dark:text-slate-500';
+    }
+  };
+
+  // 获取用户类型显示文本
+  const getUserTypeText = (type: string) => {
+    switch (type) {
+      case 'super_admin':
+        return t('SUPER_ADMIN_USER');
+      case 'admin':
+        return t('ADMIN_USER');
+      case 'premium':
+        return t('PREMIUM_USER');
+      default:
+        return t('NORMAL_USER');
+    }
+  };
 
   return (
     <SidebarMenu>
@@ -54,7 +142,15 @@ export function NavUser({
                 <User className="h-5 w-5 text-foreground" />
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-medium">{user.name}</span>
+                <div className="flex items-center justify-between gap-2 min-w-0">
+                  <span className="truncate font-medium flex-1 min-w-0">{user.name}</span>
+                  <span 
+                    className={`inline-flex items-center justify-center w-5 h-5 rounded-full text-xs font-medium flex-shrink-0 ${getUserTypeColor(userType)}`}
+                    title={getUserTypeText(userType)}
+                  >
+                    {getUserTypeIcon(userType)}
+                  </span>
+                </div>
                 <span className="truncate text-xs">{user.email}</span>
               </div>
               <ChevronsUpDown className="ml-auto size-4" />
@@ -72,7 +168,15 @@ export function NavUser({
                   <User className="h-5 w-5 text-foreground" />
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">{user.name}</span>
+                  <div className="flex items-center justify-between gap-2 min-w-0">
+                    <span className="truncate font-medium flex-1 min-w-0">{user.name}</span>
+                    <span 
+                      className={`inline-flex items-center justify-center w-5 h-5 rounded-full text-xs font-medium flex-shrink-0 ${getUserTypeColor(userType)}`}
+                      title={getUserTypeText(userType)}
+                    >
+                      {getUserTypeIcon(userType)}
+                    </span>
+                  </div>
                   <span className="truncate text-xs">{user.email}</span>
                 </div>
               </div>
@@ -81,8 +185,20 @@ export function NavUser({
             <DropdownMenuGroup>
               <DropdownMenuItem>
                 <Settings />
-                Settings
+                {t('SETTINGS')}
               </DropdownMenuItem>
+
+              {/* 只有管理员才显示管理后台按钮 */}
+              {isAdmin && (
+                <DropdownMenuItem
+                  onClick={() => {
+                    router.push('/admin')
+                  }}
+                >
+                  <Shield />
+                  {t('ENTER_ADMIN_PANEL')}
+                </DropdownMenuItem>
+              )}
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem
@@ -90,6 +206,7 @@ export function NavUser({
                 localStorage.removeItem('email');
                 localStorage.removeItem('access_token');
                 localStorage.removeItem('refresh_token');
+                localStorage.removeItem('user_type');
                 setTimeout(() => {
                   router.push('/login');
                 }, 1000);

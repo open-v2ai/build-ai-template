@@ -7,6 +7,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "../globals.css";
 import { Toaster } from "sonner";
 import ThemeProvider from "@/components/theme-provider";
+import { ThemeProvider as NextThemeProvider } from "next-themes";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -44,13 +45,15 @@ export default async function LocaleLayout({
   }
   setRequestLocale(locale);
   return (
-    <html lang={locale}>
+    <html lang={locale} suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <ThemeProvider />
-        <NextIntlClientProvider locale={locale}>
-          {children}
-        </NextIntlClientProvider>
-        <Toaster />
+        <NextThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <ThemeProvider />
+          <NextIntlClientProvider locale={locale}>
+            {children}
+          </NextIntlClientProvider>
+          <Toaster />
+        </NextThemeProvider>
       </body>
     </html>
   );

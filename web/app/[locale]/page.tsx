@@ -42,7 +42,11 @@ export default function Page() {
       const accessToken = await getValidAccessToken();
       if (!accessToken) {
         router.push('/login');
+        return;
       }
+      
+      // Don't auto-redirect admin users to admin panel from main app
+      // Let them choose when to go to admin panel via the user menu
     };
     checkToken();
   }, [router]);

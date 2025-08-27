@@ -3,9 +3,11 @@
 import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Moon, Sun } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 export default function ThemeToggleButton() {
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
+  const t = useTranslations();
 
   // 初始化主题
   useEffect(() => {
@@ -43,7 +45,7 @@ export default function ThemeToggleButton() {
       variant="ghost"
       size="icon"
       className="rounded-full hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
-      title={theme === 'light' ? '切换到深色模式' : '切换到浅色模式'}
+      title={theme === 'light' ? t('SWITCH_TO_DARK_MODE') : t('SWITCH_TO_LIGHT_MODE')}
     >
       {theme === 'light' ? (
         <Moon className="w-5 h-5 text-foreground" />
