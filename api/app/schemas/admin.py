@@ -6,7 +6,7 @@ from app.models.user import UserType, MembershipType
 
 class AdminUserList(BaseModel):
     id: int
-    name: Optional[str] = None
+    username: Optional[str] = None
     email: str
     user_type: UserType
     membership_type: MembershipType
@@ -42,7 +42,7 @@ class AdminDashboard(BaseModel):
 
 class UserCreateRequest(BaseModel):
     email: str
-    name: Optional[str] = None
+    username: Optional[str] = None
     user_type: UserType = UserType.NORMAL
     membership_type: MembershipType = MembershipType.FREE
 
@@ -51,7 +51,7 @@ class UserUpdateRequest(BaseModel):
     user_type: Optional[UserType] = None
     membership_type: Optional[MembershipType] = None
     is_deleted: Optional[bool] = None
-    name: Optional[str] = None
+    username: Optional[str] = None
 
 
 class UserActionRequest(BaseModel):

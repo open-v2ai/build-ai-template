@@ -1,4 +1,4 @@
-# BAT: Build AI Template
+# BAIT: Build AI Template
 
 Build AI Template 是一个用于快速构建 AI 应用的模板项目，基于 `FastAPI` 和 `Next.js` 构建。
 

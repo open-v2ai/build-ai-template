@@ -1,10 +1,10 @@
 [project]
-name = "bat-api"
+name = "bait-api"
 version = "0.0.1"
 requires-python = ">=3.12"
 description = "Build AI Template API"
 authors = [
-    { name="Open-V2AI", email="admin@open-v2ai.org" }
+    { name="bait", email="bait@v2ai.org" }
 ]
 
 dependencies = [

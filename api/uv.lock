@@ -49,7 +49,7 @@ wheels = [
 ]
 
 [[package]]
-name = "bat-api"
+name = "bait-api"
 version = "0.0.1"
 source = { virtual = "." }
 dependencies = [

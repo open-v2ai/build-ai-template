@@ -11,9 +11,9 @@ from app.routers.v1.system import system_router
 from app.core.config import settings
 from app.db.base import create_db_and_tables
 from app.utils.db import get_redis_client
-from app.db.init_db import create_database_if_not_exists
+from app.db.init_db import init_db
 
-create_database_if_not_exists()
+init_db()
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -46,4 +46,10 @@ app.include_router(admin_router, prefix="/api/v1", tags=["admin"])
 app.include_router(system_router, prefix="/api/v1", tags=["system"])
 
 if __name__ == "__main__":
-    uvicorn.run("app.main:app", host=settings.API_HOST, port=settings.API_PORT, reload=settings.API_RELOAD)
+    uvicorn.run(
+        "app.main:app", 
+        host=settings.API_HOST, 
+        port=settings.API_PORT, 
+        reload=settings.API_RELOAD,
+        reload_dirs=["app"]
+    )

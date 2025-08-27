@@ -1,7 +1,7 @@
 # Variables
 DOCKER_REGISTRY=v2ai
-API_IMAGE=$(DOCKER_REGISTRY)/bat-api
-WEB_IMAGE=$(DOCKER_REGISTRY)/bat-web
+API_IMAGE=$(DOCKER_REGISTRY)/bait-api
+WEB_IMAGE=$(DOCKER_REGISTRY)/bait-web
 VERSION=latest
 
 # Build Docker images
@@ -28,14 +28,14 @@ push-web:
 # Run Docker images
 run-api:
 	@echo "Running API Docker image: $(API_IMAGE):$(VERSION)..."
-	docker rm -f bat-api
-	docker run -d -p 8000:8000 --name bat-api -v $(PWD)/../api/.env:/app/api/.env $(API_IMAGE):$(VERSION)
+	docker rm -f bait-api
+	docker run -d -p 8000:8000 --name bait-api -v $(PWD)/../api/.env:/app/api/.env $(API_IMAGE):$(VERSION)
 	@echo "API Docker image running successfully: $(API_IMAGE):$(VERSION)"
 
 run-web:
 	@echo "Running web Docker image: $(WEB_IMAGE):$(VERSION)..."
-	docker rm -f bat-web
-	docker run -d -p 3000:3000 --name bat-web -v $(PWD)/../web/.env:/app/web/.env $(WEB_IMAGE):$(VERSION)
+	docker rm -f bait-web
+	docker run -d -p 3000:3000 --name bait-web -v $(PWD)/../web/.env:/app/web/.env $(WEB_IMAGE):$(VERSION)
 	@echo "Web Docker image running successfully: $(WEB_IMAGE):$(VERSION)"
 
 # Build all images

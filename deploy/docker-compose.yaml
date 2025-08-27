@@ -1,8 +1,8 @@
 services:
   # API service
   api:
-    container_name: bat-api
-    image: v2ai/bat-api:latest
+    container_name: bait-api
+    image: v2ai/bait-api:latest
     restart: always
     environment:
       POSTGRES_URL: ${POSTGRES_URL:-postgresql://postgres:123456@postgres:5432/build-ai-template}
@@ -16,6 +16,8 @@ services:
       OPENAI_API_KEY: ${OPENAI_API_KEY:-sk-proj-1234567890}
       OPENAI_BASE_URL: ${OPENAI_BASE_URL:-https://api.openai.com/v1}
       OPENAI_MODEL: ${OPENAI_MODEL:-gpt-4o-mini}
+      DEFAULT_ADMIN_EMAIL: ${DEFAULT_ADMIN_EMAIL:-admin@v2ai.org}
+      DEFAULT_ADMIN_PASSWORD: ${DEFAULT_ADMIN_PASSWORD:-admin1234}
     depends_on:
       postgres:
         condition: service_healthy
@@ -27,20 +29,20 @@ services:
       timeout: 3s
       retries: 5
     networks:
-      - bat-network
+      - bait-network
 
   web:
-    container_name: bat-web
-    image: v2ai/bat-web:latest
+    container_name: bait-web
+    image: v2ai/bait-web:latest
     restart: always
     environment:
       HOSTNAME: ${HOSTNAME:-0.0.0.0}
       PORT: ${PORT:-3000}
     networks:
-      - bat-network
+      - bait-network
 
   nginx:
-    container_name: bat-nginx
+    container_name: bait-nginx
     image: nginx:1.27.5-alpine3.21
     restart: always
     environment:
@@ -54,10 +56,10 @@ services:
       api:
         condition: service_healthy
     networks:
-      - bat-network
+      - bait-network
 
   postgres:
-    container_name: bat-postgres
+    container_name: bait-postgres
     image: postgres:17.4-bookworm
     restart: always
     environment:
@@ -73,11 +75,11 @@ services:
       timeout: 3s
       retries: 5
     networks:
-      - bat-network
+      - bait-network
 
   # The redis cache.
   redis:
-    container_name: bat-redis
+    container_name: bait-redis
     image: redis:7.2.4-alpine
     restart: always
     environment:
@@ -88,8 +90,8 @@ services:
     healthcheck:
       test: [ 'CMD', 'redis-cli', 'ping' ]
     networks:
-      - bat-network
+      - bait-network
 
 networks:
-  bat-network:
+  bait-network:
     driver: bridge

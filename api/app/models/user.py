@@ -23,8 +23,9 @@ class MembershipType(str, Enum):
 
 class User(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
-    name: Optional[str] = Field(default=None)
+    username: str = Field(index=True, unique=True)  # 用户名：不可为空，不可重复
     email: str = Field(index=True, unique=True)
+    password_hash: Optional[str] = Field(default=None)  # 密码哈希
     user_type: UserType = Field(default=UserType.NORMAL)  # 用户类型
     membership_type: MembershipType = Field(default=MembershipType.FREE)  # 会员类型
     is_deleted: bool = Field(default=False)

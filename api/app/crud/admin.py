@@ -76,7 +76,7 @@ def get_users_with_stats(session: Session, params: UserSearchParams) -> List[Adm
     """获取用户列表和统计信息"""
     query = select(
         User.id,
-        User.name,
+        User.username,
         User.email,
         User.user_type,
         User.membership_type,
@@ -118,7 +118,7 @@ def get_users_with_stats(session: Session, params: UserSearchParams) -> List[Adm
     return [
         AdminUserList(
             id=row.id,
-            name=row.name,
+            username=row.username,
             email=row.email,
             user_type=row.user_type,
             membership_type=row.membership_type,
@@ -163,7 +163,7 @@ def get_users_with_pagination(session: Session, params: UserSearchParams) -> Use
     # 获取用户列表和统计信息
     query = select(
         User.id,
-        User.name,
+        User.username,
         User.email,
         User.user_type,
         User.membership_type,
@@ -199,7 +199,7 @@ def get_users_with_pagination(session: Session, params: UserSearchParams) -> Use
     users = [
         AdminUserList(
             id=row.id,
-            name=row.name,
+            username=row.username,
             email=row.email,
             user_type=row.user_type,
             membership_type=row.membership_type,
@@ -284,8 +284,8 @@ def update_user(session: Session, user_id: int, update_data: UserUpdateRequest) 
         user.membership_type = update_data.membership_type
     if update_data.is_deleted is not None:
         user.is_deleted = update_data.is_deleted
-    if update_data.name is not None:
-        user.name = update_data.name
+    if update_data.username is not None:
+        user.username = update_data.username
     
     user.updated_at = datetime.utcnow()
     session.add(user)
@@ -320,7 +320,7 @@ def create_user_by_admin(session: Session, user_data: UserCreateRequest) -> User
     # 创建新用户
     new_user = User(
         email=user_data.email,
-        name=user_data.name,
+        username=user_data.username,
         user_type=user_data.user_type,
         membership_type=user_data.membership_type,
         is_deleted=False,
