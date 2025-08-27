@@ -41,7 +41,7 @@ export type MembershipType = 'free' | 'monthly' | 'yearly' | 'lifetime';
 
 export interface User {
   id: number;
-  name?: string;
+  username: string;
   email: string;
   user_type: UserType;
   membership_type: MembershipType;
@@ -69,7 +69,8 @@ export interface UserSearchParams {
 
 export interface UserCreateRequest {
   email: string;
-  name?: string;
+  username: string;
+  password: string;
   user_type: UserType;
   membership_type: MembershipType;
 }
@@ -77,7 +78,7 @@ export interface UserCreateRequest {
 export interface UserUpdateRequest {
   user_type?: UserType;
   membership_type?: MembershipType;
-  name?: string;
+  username?: string;
   is_deleted?: boolean;
 }
 

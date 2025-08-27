@@ -17,7 +17,7 @@ cd ./web
 # Install dependencies
 pnpm install
 
-cp .env.example .env
+cp env.example .env
 # Edit .env file
 
 pnpm dev
@@ -41,7 +41,7 @@ cd ./web
 
 docker build -t build-ai-template-web:0.1.0 .
 
-cp .env.example .env
+cp env.example .env
 # Edit .env file
 
 docker run -d --name build-ai-template-web \

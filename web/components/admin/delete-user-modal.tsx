@@ -111,25 +111,25 @@ export default function DeleteUserModal({ user, onClose, onUserUpdated }: Delete
 
         <div className="space-y-4">
           {error && (
-            <div className="p-3 bg-red-50 border border-red-200 rounded-md">
-              <p className="text-sm text-red-600">{error}</p>
+            <div className="p-3 bg-destructive/10 border border-destructive/20 rounded-md">
+              <p className="text-sm text-destructive">{error}</p>
             </div>
           )}
 
           {/* 用户信息 */}
-          <div className="p-3 bg-gray-50 rounded-md">
-            <p className="font-medium">{user.name || t('NOT_SET')}</p>
-            <p className="text-sm text-gray-600">{user.email}</p>
+          <div className="p-3 bg-muted rounded-md">
+            <p className="font-medium text-foreground">{user.username || t('NOT_SET')}</p>
+            <p className="text-sm text-muted-foreground">{user.email}</p>
             <div className="flex items-center gap-2 mt-1">
               {(user.user_type === 'admin' || user.user_type === 'super_admin') && (
-                <span className="text-xs bg-purple-100 text-purple-800 px-2 py-0.5 rounded">
+                <span className="text-xs bg-primary/10 text-primary px-2 py-0.5 rounded">
                   {t('ADMIN_USER')}
                 </span>
               )}
               <span className={`text-xs px-2 py-0.5 rounded ${
                 user.is_deleted 
-                  ? 'bg-red-100 text-red-800' 
-                  : 'bg-green-100 text-green-800'
+                  ? 'bg-destructive/10 text-destructive' 
+                  : 'bg-green-500/10 text-green-600 dark:text-green-400'
               }`}>
                 {user.is_deleted ? t('DELETED') : t('NORMAL')}
               </span>
@@ -140,32 +140,31 @@ export default function DeleteUserModal({ user, onClose, onUserUpdated }: Delete
           {!isDeleted && deleteInfo && (
             <div className="space-y-3">
               {deleteInfo.warning && (
-                <div className="p-3 bg-yellow-50 border border-yellow-200 rounded-md">
+                <div className="p-3 bg-yellow-500/10 border border-yellow-500/20 rounded-md">
                   <div className="flex items-start gap-2">
-                    <AlertTriangle className="w-4 h-4 text-yellow-600 mt-0.5 flex-shrink-0" />
-                    <p className="text-sm text-yellow-800">{deleteInfo.warning}</p>
+                    <AlertTriangle className="w-4 h-4 text-yellow-600 dark:text-yellow-400 mt-0.5 flex-shrink-0" />
+                    <p className="text-sm text-yellow-800 dark:text-yellow-200">{deleteInfo.warning}</p>
                   </div>
                 </div>
               )}
 
               <div className="grid grid-cols-2 gap-3 text-sm">
-                <div className="bg-blue-50 p-2 rounded">
-                  <p className="text-gray-600">{t('CHAT_COUNT')}</p>
-                  <p className="font-medium">{deleteInfo.chat_count}</p>
+                <div className="bg-secondary p-2 rounded">
+                  <p className="text-muted-foreground">{t('CHAT_COUNT')}</p>
+                  <p className="font-medium text-foreground">{deleteInfo.chat_count}</p>
                 </div>
-                <div className="bg-blue-50 p-2 rounded">
-                  <p className="text-gray-600">{t('MESSAGE_COUNT')}</p>
-                  <p className="font-medium">{deleteInfo.message_count}</p>
+                <div className="bg-secondary p-2 rounded">
+                  <p className="text-muted-foreground">{t('MESSAGE_COUNT')}</p>
+                  <p className="font-medium text-foreground">{deleteInfo.message_count}</p>
                 </div>
               </div>
             </div>
           )}
 
 
-
           {/* 确认提示 */}
-          <div className="p-3 bg-gray-50 border border-gray-200 rounded-md">
-            <p className="text-sm text-gray-700">
+          <div className="p-3 bg-muted border border-border rounded-md">
+            <p className="text-sm text-muted-foreground">
               {isDeleted 
                 ? t('RESTORE_CONFIRM')
                 : t('DELETE_CONFIRM')

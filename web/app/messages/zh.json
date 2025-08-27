@@ -36,6 +36,8 @@
   "TASK_PROCESSING": "任务拆解中...",
   "SWITCH_TO_ENGLISH": "Switch to English",
   "SWITCH_TO_CHINESE": "切换到中文",
+  "POWERED_BY": "开源在 GitHub",
+  "GITHUB_REPOSITORY": "GitHub 仓库",
 
   "ADMIN": "BAIT - 管理后台",
   "LOGIN_DESCRIPTION": "请输入您的邮箱和验证码来登录管理后台",

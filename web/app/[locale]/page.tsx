@@ -121,7 +121,7 @@ export default function Page() {
           </div>
         </header>
         <div className="flex flex-1 flex-col gap-4 pt-0">
-          <div className="bg-muted/50 min-h-[100vh] flex flex-1 rounded-xl md:min-h-min items-center justify-center">
+          <div className="bg-muted/50 min-h-[100vh] flex flex-1 md:min-h-min items-center justify-center">
             {currentPage === 'new' && (
               <NewChatPage
                 onChatCreated={async (chat) => {

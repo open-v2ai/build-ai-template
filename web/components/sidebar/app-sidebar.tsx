@@ -5,6 +5,7 @@ import { useState, useEffect, useCallback } from "react"
 import Image from "next/image"
 import { PlusCircleIcon, Command } from "lucide-react"
 import { useTranslations } from 'next-intl';
+import { getUserProfile } from '@/util/auth';
 
 import { NavChatList } from "@/components/sidebar/nav-chat-list"
 import { NavUser } from "@/components/sidebar/nav-user"
@@ -32,14 +33,36 @@ export interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
 export function AppSidebar({ onSelectChat, onNewChat, chats, currentChatId, ...props }: AppSidebarProps) {
   const t = useTranslations();
   const [email, setEmail] = useState('not_found@example.com');
+  const [username, setUsername] = useState('用户');
 
-  // Get email from local storage
+  // Get user info from API
   useEffect(() => {
-    const email = localStorage.getItem('email');
-    console.log('email', email);
-    if (email) {
-      setEmail(email);
-    }
+    const fetchUserInfo = async () => {
+      try {
+        const userProfile = await getUserProfile();
+        if (userProfile) {
+          setEmail(userProfile.email);
+          setUsername(userProfile.username);
+        } else {
+          // Fallback to localStorage
+          const storedEmail = localStorage.getItem('email');
+          if (storedEmail) {
+            setEmail(storedEmail);
+            setUsername(storedEmail.split('@')[0]);
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching user profile:', error);
+        // Fallback to localStorage
+        const storedEmail = localStorage.getItem('email');
+        if (storedEmail) {
+          setEmail(storedEmail);
+          setUsername(storedEmail.split('@')[0]);
+        }
+      }
+    };
+
+    fetchUserInfo();
   }, []);
 
   // Handle new chat shortcut
@@ -63,7 +86,13 @@ export function AppSidebar({ onSelectChat, onNewChat, chats, currentChatId, ...p
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
-              <div className="flex items-center justify-left h-10">
+              <a
+                href="https://github.com/open-v2ai/build-ai-template"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-left h-10 cursor-pointer"
+                title="Visit GitHub Repository"
+              >
                 <Avatar className="h-10 w-10 rounded-lg">
                   <Image
                     src="/logo.svg"
@@ -77,7 +106,7 @@ export function AppSidebar({ onSelectChat, onNewChat, chats, currentChatId, ...p
                   <span className="text-foreground">Build AI Template</span>
                   <span className="absolute -top-1 -right-7 text-[8px] text-muted-foreground px-2 py-0.5 rounded font-light ml-2 select-none">BETA</span>
                 </div>
-              </div>
+              </a>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
@@ -108,7 +137,7 @@ export function AppSidebar({ onSelectChat, onNewChat, chats, currentChatId, ...p
         />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={{ name: email.split('@')[0], email: email }} />
+        <NavUser user={{ name: username, email: email }} />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

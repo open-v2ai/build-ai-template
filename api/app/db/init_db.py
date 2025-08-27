@@ -1,16 +1,12 @@
+import os
 from urllib.parse import urlparse
 
 import psycopg2
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
-from sqlmodel import Session
-
-from app.core.config import settings
-from app.db.base import engine
-from app.crud.user import create_default_admin_if_not_exists
 
 
 def create_database_if_not_exists():
-    url = urlparse(settings.POSTGRES_URL)
+    url = urlparse(os.getenv("POSTGRES_URL"))
     db_name = url.path[1:]  # Remove leading /
     db_user = url.username
     db_password = url.password
@@ -40,23 +36,6 @@ def create_database_if_not_exists():
     conn.close()
 
 
-def init_default_admin():
-    """初始化默认管理员用户"""
-    try:
-        with Session(engine) as session:
-            admin_user = create_default_admin_if_not_exists(
-                email=settings.DEFAULT_ADMIN_EMAIL, 
-                session=session
-            )
-            if admin_user:
-                print(f"Default admin user created: {admin_user.email} with username: {admin_user.username}")
-            else:
-                print(f"Default admin user already exists: {settings.DEFAULT_ADMIN_EMAIL}")
-    except Exception as e:
-        print(f"Error creating default admin user: {e}")
-
-
 def init_db():
     """初始化数据库"""
     create_database_if_not_exists()
-    init_default_admin()

@@ -10,6 +10,7 @@ from app.core.i18n import Language
 class EmailRequest(BaseModel):
     email: EmailStr
     lang: str
+    purpose: str = "login"  # login, register, reset
 
 class VerifyCode(BaseModel):
     email: EmailStr

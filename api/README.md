@@ -37,7 +37,7 @@ Build AI Template API is the core component of Build AI Template, responsible fo
 │   ├── templates/           # Email templates
 ├── alembic/                  # Database migration directory (if using Alembic)
 ├── scripts/                  # Scripts directory
-├── .env.example             # Environment variables file
+├── env.example             # Environment variables file
 ├── pyproject.toml           # Project configuration file
 ├── uv.lock                  # Dependency lock file
 ├── README.md
@@ -61,7 +61,7 @@ bash scripts/run_redis.sh
 ### Configuration
 
 ```bash
-cp .env.example .env
+cp env.example .env
 # Edit .env file
 ```
 
@@ -84,7 +84,7 @@ python -m app.main
 ```bash
 docker build -t build-ai-template-api:0.1.0 .
 
-cp .env.example .env
+cp env.example .env
 # Edit .env file
 
 docker run -d --name build-ai-template-api \

@@ -43,19 +43,6 @@ def create_user(email: str, session: Session, username: str, password: Optional[
     return user
 
 
-def create_admin_user(email: str, session: Session, username: str = "Default Admin") -> User:
-    """创建管理员用户"""
-    user = User(
-        email=email,
-        username=username,
-        user_type=UserType.SUPER_ADMIN
-    )
-    session.add(user)
-    session.commit()
-    session.refresh(user)
-    return user
-
-
 def update_user_password(user: User, new_password: str, session: Session) -> User:
     """更新用户密码"""
     user.password_hash = hash_password(new_password)
@@ -64,12 +51,3 @@ def update_user_password(user: User, new_password: str, session: Session) -> Use
     session.commit()
     session.refresh(user)
     return user
-
-
-def create_default_admin_if_not_exists(email: str, session: Session) -> Optional[User]:
-    """如果默认管理员用户不存在则创建"""
-    existing_user = get_user_by_email(email, session)
-    if existing_user:
-        return None  # User already exists, no need to create
-    
-    return create_admin_user(email, session)

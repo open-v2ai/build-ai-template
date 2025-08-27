@@ -13,7 +13,7 @@ from app.core.i18n import get_message, create_response_message
 
 def verify_user_code(email: str, code: str, session: Session, redis: Redis, lang: str = "zh") -> Token:
     """验证邮箱验证码并登录已存在的用户"""
-    if not verify_code(email, code, redis):
+    if not verify_code(email, code, redis, "login"):
         error_msg = get_message("verification_code_invalid", lang)
         raise HTTPException(status_code=401, detail=error_msg)
     
@@ -42,7 +42,7 @@ def verify_user_code(email: str, code: str, session: Session, redis: Redis, lang
 
 def verify_admin_code(email: str, code: str, session: Session, redis: Redis, lang: str = "zh") -> Token:
     """验证管理员登录代码，只允许管理员用户登录"""
-    if not verify_code(email, code, redis):
+    if not verify_code(email, code, redis, "login"):
         error_msg = get_message("verification_code_invalid", lang)
         raise HTTPException(status_code=401, detail=error_msg)
     
@@ -73,10 +73,10 @@ def verify_admin_code(email: str, code: str, session: Session, redis: Redis, lan
     refresh_token = create_refresh_token({"sub": str(user.id)})
     return Token(access_token=token, refresh_token=refresh_token)
 
+
 def register_user(email: str, username: str, password: str, code: str, session: Session, redis: Redis, lang: str = "zh") -> Token:
-    """用户注册"""
-    # Verify email verification code
-    if not verify_code(email, code, redis):
+    """用户注册 - 只能通过密码注册，验证码仅用于验证邮箱"""
+    if not verify_code(email, code, redis, "register"):
         error_msg = get_message("verification_code_invalid", lang)
         raise HTTPException(status_code=401, detail=error_msg)
     
@@ -141,7 +141,7 @@ def login_with_password(email: str, password: str, session: Session, lang: str =
 def reset_password(email: str, code: str, new_password: str, session: Session, redis: Redis, lang: str = "zh") -> dict:
     """重置密码"""
     # Verify email verification code
-    if not verify_code(email, code, redis):
+    if not verify_code(email, code, redis, "reset"):
         error_msg = get_message("verification_code_invalid", lang)
         raise HTTPException(status_code=401, detail=error_msg)
     

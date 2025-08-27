@@ -36,6 +36,8 @@
   "TASK_PROCESSING": "Task processing...",
   "SWITCH_TO_ENGLISH": "Switch to English",
   "SWITCH_TO_CHINESE": "切换到中文",
+  "POWERED_BY": "Open Source on GitHub",
+  "GITHUB_REPOSITORY": "GitHub Repository",
 
   "ADMIN": "BAIT - Admin Panel",
   "LOGIN_DESCRIPTION": "Enter your email and verification code to login to admin panel",

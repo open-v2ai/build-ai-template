@@ -23,7 +23,7 @@ function UserRow({ user, onUpdate, onDelete, onCreate }: UserRowProps) {
   const t = useTranslations();
   const [isEditing, setIsEditing] = useState(false);
   const [editData, setEditData] = useState<UserUpdateRequest>({
-    name: user.name || '',
+    username: user.username || '',
     user_type: user.user_type,
     membership_type: user.membership_type,
     is_deleted: user.is_deleted,
@@ -36,7 +36,7 @@ function UserRow({ user, onUpdate, onDelete, onCreate }: UserRowProps) {
 
   const handleCancel = () => {
     setEditData({
-      name: user.name || '',
+      username: user.username || '',
       user_type: user.user_type,
       membership_type: user.membership_type,
       is_deleted: user.is_deleted,
@@ -89,14 +89,14 @@ function UserRow({ user, onUpdate, onDelete, onCreate }: UserRowProps) {
       <td className="px-6 py-4 text-sm text-foreground leading-tight max-h-16 overflow-hidden">
         {isEditing ? (
           <Input
-            value={editData.name || ''}
-            onChange={(e) => setEditData({ ...editData, name: e.target.value })}
+            value={editData.username || ''}
+            onChange={(e) => setEditData({ ...editData, username: e.target.value })}
             className="w-full"
             placeholder={t('USERNAME_PLACEHOLDER')}
           />
         ) : (
-          <div className="truncate max-w-32" title={user.name || t('NOT_SET')}>
-            {user.name || t('NOT_SET')}
+          <div className="truncate max-w-32" title={user.username || t('NOT_SET')}>
+            {user.username || t('NOT_SET')}
           </div>
         )}
       </td>

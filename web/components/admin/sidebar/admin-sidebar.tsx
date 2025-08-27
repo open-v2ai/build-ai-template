@@ -5,6 +5,7 @@ import { useState, useEffect } from "react"
 import Image from "next/image"
 import { BarChart3, Users, MessageSquare } from "lucide-react"
 import { useTranslations } from 'next-intl';
+import { getUserProfile } from '@/util/auth';
 
 import { NavUser } from "@/components/admin/sidebar/nav-user"
 import { Avatar } from "@/components/ui/avatar"
@@ -27,13 +28,36 @@ export interface AdminSidebarProps extends React.ComponentProps<typeof Sidebar> 
 export function AdminSidebar({ currentPage, onNavigate, ...props }: AdminSidebarProps) {
   const t = useTranslations();
   const [email, setEmail] = useState('admin@example.com');
+  const [username, setUsername] = useState('管理员');
 
-  // Get email from local storage
+  // Get user info from API
   useEffect(() => {
-    const email = localStorage.getItem('email');
-    if (email) {
-      setEmail(email);
-    }
+    const fetchUserInfo = async () => {
+      try {
+        const userProfile = await getUserProfile();
+        if (userProfile) {
+          setEmail(userProfile.email);
+          setUsername(userProfile.username || userProfile.email.split('@')[0]);
+        } else {
+          // Fallback to localStorage
+          const storedEmail = localStorage.getItem('email');
+          if (storedEmail) {
+            setEmail(storedEmail);
+            setUsername(storedEmail.split('@')[0]);
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching user profile:', error);
+        // Fallback to localStorage
+        const storedEmail = localStorage.getItem('email');
+        if (storedEmail) {
+          setEmail(storedEmail);
+          setUsername(storedEmail.split('@')[0]);
+        }
+      }
+    };
+
+    fetchUserInfo();
   }, []);
 
   const navigationItems = [
@@ -60,7 +84,13 @@ export function AdminSidebar({ currentPage, onNavigate, ...props }: AdminSidebar
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
-              <div className="flex items-center justify-left h-10">
+              <a
+                href="https://github.com/open-v2ai/build-ai-template"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-left h-10 cursor-pointer"
+                title="Visit GitHub Repository"
+              >
                 <Avatar className="h-10 w-10 rounded-lg">
                   <Image
                     src="/logo.svg"
@@ -73,7 +103,7 @@ export function AdminSidebar({ currentPage, onNavigate, ...props }: AdminSidebar
                 <div className="text-xl font-light relative">
                   <span className="text-black dark:text-white">{t('ADMIN')}</span>
                 </div>
-              </div>
+              </a>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
@@ -99,7 +129,7 @@ export function AdminSidebar({ currentPage, onNavigate, ...props }: AdminSidebar
       </SidebarContent>
       
       <SidebarFooter>
-        <NavUser user={{ name: email.split('@')[0], email: email }} />
+        <NavUser user={{ name: username, email: email }} />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

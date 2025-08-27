@@ -12,9 +12,9 @@ auth_router = APIRouter(prefix="/auth")
 
 @auth_router.post("/send_code")
 async def send_code(data: EmailRequest, redis: RedisDep) -> dict:
-    """Send verification code to the specified email"""
+    """Send verification code to the specified email for different purposes"""
     try:
-        await send_verification_code(data.email, data.lang, redis)
+        await send_verification_code(data.email, data.lang, redis, data.purpose)
         return create_response_message("verification_code_sent", data.lang)
     except Exception as e:
         error_msg = get_message("internal_error", data.lang)

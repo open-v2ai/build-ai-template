@@ -127,16 +127,32 @@ export default function LoginPage() {
   const sendCode = async () => {
     setSending(true);
     try {
+      // Determine the purpose of the verification code
+      let purpose = 'login';
+      if (mode === 'register') {
+        purpose = 'register';
+      } else if (mode === 'reset-password') {
+        purpose = 'reset';
+      }
+      
       await fetcher('/auth/send_code', {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, lang }),
+        body: JSON.stringify({ email, lang, purpose }),
       }).then(() => {
-        toast.success(
-          mode === 'register' ? t('VERIFICATION_CODE_FOR_REGISTER') : 
-          mode === 'reset-password' ? t('VERIFICATION_CODE_FOR_RESET') : 
-          t('VERIFICATION_CODE_SENT')
-        );
+        let message = '';
+        switch (purpose) {
+          case 'register':
+            message = t('VERIFICATION_CODE_FOR_REGISTER');
+            break;
+          case 'reset':
+            message = t('VERIFICATION_CODE_FOR_RESET');
+            break;
+          default:
+            message = t('VERIFICATION_CODE_SENT');
+        }
+        
+        toast.success(message);
         setCountdown(60);
       }).catch(err => {
         toast.error(err.message || t('LOGIN_FAILED'));
@@ -322,7 +338,7 @@ export default function LoginPage() {
     setLoading(false);
   };
 
-  // Login with fallback to admin check (for code login)
+  // Login with verification code (only for existing users)
   const handleCodeLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -786,6 +802,21 @@ export default function LoginPage() {
               </div>
             </form>
           </div>
+        </div>
+      </div>
+      
+      {/* Source attribution */}
+      <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 text-center">
+        <div className="flex items-center gap-2 text-xs text-muted-foreground">
+          <span>{t('POWERED_BY')}</span>
+          <a 
+            href="https://github.com/open-v2ai/build-ai-template" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="font-medium hover:text-foreground transition-colors hover:underline"
+          >
+            {t('NAME')}
+          </a>
         </div>
       </div>
     </div>

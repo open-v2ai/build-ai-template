@@ -17,7 +17,7 @@ export default function NewChatPage({ onChatCreated }: NewChatPageProps) {
   const [loading, setLoading] = useState(false);
   const t = useTranslations();
   return (
-    <div className="flex flex-col w-full max-w-xl mx-auto">
+    <div className="flex flex-col w-full max-w-xl mx-auto h-full justify-center">
       <div className="flex flex-col w-full max-w-xl mx-auto mb-2">
         <div className="text-[48px] font-light">{t('HELLO_WORLD')}</div>
       </div>

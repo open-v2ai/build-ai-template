@@ -9,6 +9,7 @@ import {
   Crown,
   Star,
   User as UserIcon,
+  Github,
 } from "lucide-react"
 import { useRouter } from 'next/navigation'
 import { useTranslations } from 'next-intl'
@@ -131,37 +132,39 @@ export function NavUser({
 
   return (
     <SidebarMenu>
-      <SidebarMenuItem>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <SidebarMenuButton
-              size="lg"
-              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
-            >
-              <Avatar className="h-8 w-8 rounded-lg justify-center items-center">
-                <User className="h-5 w-5 text-foreground" />
-              </Avatar>
-              <div className="grid flex-1 text-left text-sm leading-tight">
-                <div className="flex items-center justify-between gap-2 min-w-0">
-                  <span className="truncate font-medium flex-1 min-w-0">{user.name}</span>
-                  <span 
-                    className={`inline-flex items-center justify-center w-5 h-5 rounded-full text-xs font-medium flex-shrink-0 ${getUserTypeColor(userType)}`}
-                    title={getUserTypeText(userType)}
-                  >
-                    {getUserTypeIcon(userType)}
-                  </span>
-                </div>
-                <span className="truncate text-xs">{user.email}</span>
-              </div>
-              <ChevronsUpDown className="ml-auto size-4" />
-            </SidebarMenuButton>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent
-            className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
-            side={isMobile ? "bottom" : "right"}
-            align="end"
-            sideOffset={4}
-          >
+      <SidebarMenuItem className="relative">
+        <div className="flex items-center gap-1">
+          <div className="flex-1">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <SidebarMenuButton
+                  size="lg"
+                  className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground w-full"
+                >
+                  <Avatar className="h-8 w-8 rounded-lg justify-center items-center">
+                    <User className="h-5 w-5 text-foreground" />
+                  </Avatar>
+                  <div className="grid flex-1 text-left text-sm leading-tight">
+                    <div className="flex items-center justify-between gap-2 min-w-0">
+                      <span className="truncate font-medium flex-1 min-w-0">{user.name}</span>
+                      <span 
+                        className={`inline-flex items-center justify-center w-5 h-5 rounded-full text-xs font-medium flex-shrink-0 ${getUserTypeColor(userType)}`}
+                        title={getUserTypeText(userType)}
+                      >
+                        {getUserTypeIcon(userType)}
+                      </span>
+                    </div>
+                    <span className="truncate text-xs">{user.email}</span>
+                  </div>
+                  <ChevronsUpDown className="ml-auto size-4" />
+                </SidebarMenuButton>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent
+                className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
+                side={isMobile ? "bottom" : "right"}
+                align="end"
+                sideOffset={4}
+              >
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg justify-center items-center">
@@ -201,6 +204,17 @@ export function NavUser({
               )}
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
+            <DropdownMenuItem asChild>
+              <a
+                href="https://github.com/open-v2ai/build-ai-template"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="cursor-pointer"
+              >
+                <Github />
+                {t('GITHUB_REPOSITORY')}
+              </a>
+            </DropdownMenuItem>
             <DropdownMenuItem
               onClick={() => {
                 localStorage.removeItem('email');
@@ -214,10 +228,22 @@ export function NavUser({
               }}
             >
               <LogOut />
-              Log out
+              {t('LOG_OUT')}
             </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+          <div className="w-px h-6 bg-border mx-1"></div>
+          <a
+            href="https://github.com/open-v2ai/build-ai-template"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center w-8 h-8 rounded-lg hover:bg-sidebar-accent hover:text-sidebar-accent-foreground transition-colors flex-shrink-0"
+            title="GitHub Repository"
+          >
+            <Github className="w-4 h-4" />
+          </a>
+        </div>
       </SidebarMenuItem>
     </SidebarMenu>
   )

@@ -2,14 +2,16 @@ import { getValidAccessToken } from './token';
 import { fetcher } from './fetcher';
 
 export type UserType = 'normal' | 'premium' | 'admin' | 'super_admin';
+export type MembershipType = 'free' | 'monthly' | 'yearly' | 'lifetime';
 
 export interface UserProfile {
-  id: string;
+  id: number;
+  username: string;
   email: string;
   user_type: UserType;
-  is_admin: boolean;
+  membership_type: MembershipType;
+  last_login_at: string | null;
   created_at: string;
-  updated_at: string;
 }
 
 /**
