@@ -1,7 +1,10 @@
 from typing import Optional, List
 from datetime import datetime
+
 from pydantic import BaseModel
+
 from app.models.user import UserType, MembershipType
+from app.core.i18n import Language
 
 
 class AdminUserList(BaseModel):
@@ -45,6 +48,7 @@ class UserCreateRequest(BaseModel):
     username: Optional[str] = None
     user_type: UserType = UserType.NORMAL
     membership_type: MembershipType = MembershipType.FREE
+    lang: str = Language.ZH
 
 
 class UserUpdateRequest(BaseModel):
@@ -52,11 +56,13 @@ class UserUpdateRequest(BaseModel):
     membership_type: Optional[MembershipType] = None
     is_deleted: Optional[bool] = None
     username: Optional[str] = None
+    lang: str = Language.ZH
 
 
 class UserActionRequest(BaseModel):
     action: str  # "delete" 或 "restore"
     reason: Optional[str] = None  # 操作原因
+    lang: str = Language.ZH
 
 
 class ChatSearchParams(BaseModel):

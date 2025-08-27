@@ -16,6 +16,7 @@ from app.crud.admin import (
     update_user, get_user_detail, get_chat_messages,
     create_user_by_admin, delete_or_restore_user, check_user_can_be_deleted
 )
+from app.core.i18n import get_message, create_response_message
 
 admin_router = APIRouter(prefix="/admin")
 
@@ -84,12 +85,14 @@ def get_user(
     user_id: int,
     *,
     session: SessionDep,
+    lang: str = "zh",
     admin_user: User = Depends(verify_admin_user)
 ):
     """获取用户详细信息"""
     user = get_user_detail(session, user_id)
     if not user:
-        raise HTTPException(status_code=404, detail="User not found")
+        error_msg = get_message("user_not_found", lang)
+        raise HTTPException(status_code=404, detail=error_msg)
     return user
 
 
@@ -104,8 +107,9 @@ def update_user_info(
     """更新用户信息"""
     user = update_user(session, user_id, update_data)
     if not user:
-        raise HTTPException(status_code=404, detail="User not found")
-    return {"message": "User updated successfully", "user": user}
+        error_msg = get_message("user_not_found", update_data.lang)
+        raise HTTPException(status_code=404, detail=error_msg)
+    return create_response_message("user_updated", update_data.lang, user=user)
 
 
 @admin_router.get("/chats/{chat_id}/messages")
@@ -130,9 +134,10 @@ def create_user(
     """管理员创建新用户"""
     try:
         new_user = create_user_by_admin(session, user_data)
-        return {"message": "用户创建成功", "user": new_user}
+        return create_response_message("user_created", user_data.lang, user=new_user)
     except ValueError as e:
-        raise HTTPException(status_code=400, detail=str(e))
+        error_msg = get_message("error", user_data.lang)
+        raise HTTPException(status_code=400, detail=error_msg)
 
 
 @admin_router.post("/users/{user_id}/actions")
@@ -146,14 +151,16 @@ def user_action(
     """用户操作：删除或恢复"""
     # 防止管理员删除自己
     if user_id == admin_user.id and action_data.action == "delete":
-        raise HTTPException(status_code=400, detail="不能删除自己的账户")
+        error_msg = get_message("cannot_delete_self", action_data.lang)
+        raise HTTPException(status_code=400, detail=error_msg)
     
     try:
         updated_user = delete_or_restore_user(session, user_id, action_data)
-        action_name = "删除" if action_data.action == "delete" else "恢复"
-        return {"message": f"用户{action_name}成功", "user": updated_user}
+        action_key = "user_deleted" if action_data.action == "delete" else "user_restored"
+        return create_response_message(action_key, action_data.lang, user=updated_user)
     except ValueError as e:
-        raise HTTPException(status_code=400, detail=str(e))
+        error_msg = get_message("error", action_data.lang)
+        raise HTTPException(status_code=400, detail=error_msg)
 
 
 @admin_router.get("/users/{user_id}/delete-check")
@@ -161,10 +168,12 @@ def check_user_deletion(
     user_id: int,
     *,
     session: SessionDep,
+    lang: str = "zh",
     admin_user: User = Depends(verify_admin_user)
 ):
     """检查用户删除的影响"""
     try:
         return check_user_can_be_deleted(session, user_id)
     except ValueError as e:
-        raise HTTPException(status_code=404, detail=str(e))
+        error_msg = get_message("user_not_found", lang)
+        raise HTTPException(status_code=404, detail=error_msg)

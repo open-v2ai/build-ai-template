@@ -11,13 +11,13 @@ from app.crud.user import create_default_admin_if_not_exists
 
 def create_database_if_not_exists():
     url = urlparse(settings.POSTGRES_URL)
-    db_name = url.path[1:]  # 去掉开头的 /
+    db_name = url.path[1:]  # Remove leading /
     db_user = url.username
     db_password = url.password
     db_host = url.hostname
     db_port = url.port or 5432
 
-    # 先连到默认数据库 postgres
+    # First connect to default database postgres
     conn = psycopg2.connect(
         dbname="postgres",
         user=db_user,

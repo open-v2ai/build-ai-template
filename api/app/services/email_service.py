@@ -35,14 +35,14 @@ def generate_verification_code():
 
 async def send_verification_code(email: str, lang: str, redis: Redis) -> bool:
     """Send verification code to the specified email and store it in Redis, supports multiple language templates"""
-    # dev/test 环境下使用默认 code，不发送邮件
+    # Use default code in dev/test environment, don't send email
     if settings.ENV in ("dev", "test"):
         code = settings.DEBUG_AUTH_CODE
         code_key = f"build-ai-template:code:{email}"
         redis.setex(code_key, 300, code)  # 5 minutes = 300 seconds
         return True
     
-    # prod 环境下发送邮件
+    # Send email in prod environment
     code = generate_verification_code()
     code_key = f"build-ai-template:code:{email}"
     redis.setex(code_key, 300, code)  # 5 minutes = 300 seconds

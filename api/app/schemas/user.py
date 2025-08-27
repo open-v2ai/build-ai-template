@@ -1,8 +1,11 @@
-from pydantic import BaseModel, EmailStr, validator
+import re
 from typing import Optional
 from datetime import datetime
+
+from pydantic import BaseModel, EmailStr, validator
+
 from app.models.user import UserType, MembershipType
-import re
+from app.core.i18n import Language
 
 class EmailRequest(BaseModel):
     email: EmailStr
@@ -11,6 +14,7 @@ class EmailRequest(BaseModel):
 class VerifyCode(BaseModel):
     email: EmailStr
     code: str
+    lang: str = Language.ZH
 
 class UserRegister(BaseModel):
     email: EmailStr
@@ -42,6 +46,7 @@ class PasswordReset(BaseModel):
     email: EmailStr
     code: str
     new_password: str
+    lang: str = Language.ZH
     
     @validator('new_password')
     def validate_password(cls, v):
@@ -54,6 +59,7 @@ class PasswordReset(BaseModel):
 class UserLogin(BaseModel):
     email: EmailStr
     password: str
+    lang: str = Language.ZH
 
 class Token(BaseModel):
     access_token: str
@@ -62,6 +68,7 @@ class Token(BaseModel):
 
 class RefreshToken(BaseModel):
     refresh_token: str
+    lang: str = Language.ZH
 
 
 class UserProfile(BaseModel):

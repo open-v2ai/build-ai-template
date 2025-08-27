@@ -4,14 +4,14 @@ import { useEffect } from 'react';
 
 export default function ThemeProvider() {
   useEffect(() => {
-    // 检查localStorage中的主题设置
+    // Check theme setting in localStorage
     const savedTheme = localStorage.getItem('theme');
-    // 检查系统主题偏好
+    // Check system theme preference
     const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
     
     const initialTheme = savedTheme as 'light' | 'dark' || systemTheme;
     
-    // 应用主题到document
+    // Apply theme to document
     const root = document.documentElement;
     if (initialTheme === 'dark') {
       root.classList.add('dark');

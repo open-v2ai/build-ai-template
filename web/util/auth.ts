@@ -100,13 +100,13 @@ export async function getUserProfile(): Promise<UserProfile | null> {
  */
 export async function checkAdminAccess(): Promise<{ hasAccess: boolean; reason?: string }> {
   try {
-    // 检查是否有有效的访问令牌
+    // Check if there is a valid access token
     const accessToken = await getValidAccessToken();
     if (!accessToken) {
       return { hasAccess: false, reason: 'NO_ACCESS_TOKEN' };
     }
 
-    // 直接使用已获取的 accessToken 来获取用户配置信息
+    // Directly use the obtained accessToken to get user profile information
     const userProfile = await fetcher('/auth/me', {
       method: "GET",
       headers: { 
@@ -119,7 +119,7 @@ export async function checkAdminAccess(): Promise<{ hasAccess: boolean; reason?:
       return { hasAccess: false, reason: 'NO_USER_PROFILE' };
     }
 
-    // 检查用户类型
+    // Check user type
     if (userProfile.user_type !== 'admin' && userProfile.user_type !== 'super_admin') {
       return { hasAccess: false, reason: 'NOT_ADMIN' };
     }

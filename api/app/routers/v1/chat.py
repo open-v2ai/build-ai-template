@@ -8,6 +8,7 @@ from app.schemas.message import MessageOut, MessageCreate
 from app.crud.message import get_all_messages, create_message
 from app.utils.llm import create_llm_response, create_llm_response_stream
 from app.utils.agent import run_agent
+from app.core.i18n import get_message
 
 chat_router = APIRouter(prefix="/chat")
 
@@ -48,15 +49,17 @@ async def create_chat_message_api(message_in: MessageCreate, session: SessionDep
 def update_chat_api(chat_id: int, chat_in: ChatUpdate, session: SessionDep, user: UserDep) -> ChatOut:
     chat = update_chat(chat_id, chat_in, session, user)
     if not chat:
-        raise HTTPException(status_code=404, detail="Chat not found")
+        error_msg = get_message("chat_not_found", chat_in.lang)
+        raise HTTPException(status_code=404, detail=error_msg)
     return chat
 
-@chat_router.delete("/{chat_id}", response_model=ChatOut)
-def delete_chat_api(chat_id: int, session: SessionDep, user: UserDep) -> ChatOut:
+@chat_router.delete("/{chat_id}")
+def delete_chat_api(chat_id: int, session: SessionDep, user: UserDep, lang: str = "zh") -> dict:
     chat = soft_delete_chat(chat_id, session, user)
     if not chat:
-        raise HTTPException(status_code=404, detail="Chat not found")
-    return chat
+        error_msg = get_message("chat_not_found", lang)
+        raise HTTPException(status_code=404, detail=error_msg)
+    return {"message": get_message("chat_deleted", lang)}
 
 @chat_router.get("", response_model=list[ChatOut])
 def get_all_chats_api(session: SessionDep, user: UserDep) -> list[ChatOut]:
@@ -64,10 +67,11 @@ def get_all_chats_api(session: SessionDep, user: UserDep) -> list[ChatOut]:
     return chats
 
 @chat_router.get("/{chat_id}", response_model=ChatOut)
-def get_chat_api(chat_id: int, session: SessionDep, user: UserDep) -> ChatOut:
+def get_chat_api(chat_id: int, session: SessionDep, user: UserDep, lang: str = "zh") -> ChatOut:
     chat = get_chat(chat_id, session, user)
     if not chat:
-        raise HTTPException(status_code=404, detail="Chat not found")
+        error_msg = get_message("chat_not_found", lang)
+        raise HTTPException(status_code=404, detail=error_msg)
     messages = get_all_messages(chat_id, session)
     chat_out = ChatOut.model_validate(chat)
     chat_out.messages = [MessageOut.model_validate(m) for m in messages]

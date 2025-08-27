@@ -16,7 +16,7 @@ def get_dashboard_stats(session: Session) -> AdminDashboard:
     """获取管理员仪表板统计数据"""
     today = datetime.utcnow().date()
     
-    # 用户统计
+    # User statistics
     total_users = session.exec(select(func.count(User.id))).first() or 0
     active_users = session.exec(
         select(func.count(User.id)).where(User.is_deleted == False)
@@ -35,27 +35,27 @@ def get_dashboard_stats(session: Session) -> AdminDashboard:
         select(func.count(User.id)).where(User.is_deleted == True)
     ).first() or 0
     
-    # 今日新用户
+    # Today's new users
     today_new_users = session.exec(
         select(func.count(User.id)).where(
             func.date(User.created_at) == today
         )
     ).first() or 0
     
-    # 对话统计
+    # Chat statistics
     total_chats = session.exec(select(func.count(Chat.id))).first() or 0
     active_chats = session.exec(
         select(func.count(Chat.id)).where(Chat.is_deleted == False)
     ).first() or 0
     
-    # 今日新对话
+    # Today's new chats
     today_new_chats = session.exec(
         select(func.count(Chat.id)).where(
             func.date(Chat.created_at) == today
         )
     ).first() or 0
     
-    # 消息统计
+    # Message statistics
     total_messages = session.exec(select(func.count(Message.id))).first() or 0
     
     return AdminDashboard(
@@ -87,7 +87,7 @@ def get_users_with_stats(session: Session, params: UserSearchParams) -> List[Adm
         func.max(Chat.updated_at).label('last_active')
     ).outerjoin(Chat, User.id == Chat.user_id)
     
-    # 应用筛选条件
+    # Apply filter conditions
     if params.email:
         query = query.where(User.email.contains(params.email))
     if params.user_type is not None:
@@ -97,10 +97,10 @@ def get_users_with_stats(session: Session, params: UserSearchParams) -> List[Adm
     if params.is_deleted is not None:
         query = query.where(User.is_deleted == params.is_deleted)
     
-    # GROUP BY 和排序
+    # GROUP BY and sorting
     query = query.group_by(User.id)
     
-    # 应用排序
+    # Apply sorting
     if hasattr(User, params.sort_by):
         sort_column = getattr(User, params.sort_by)
     else:

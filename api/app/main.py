@@ -1,7 +1,9 @@
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.exceptions import RequestValidationError
+from pydantic import ValidationError
 import uvicorn
 
 from app.routers.v1.auth import auth_router
@@ -9,6 +11,7 @@ from app.routers.v1.chat import chat_router
 from app.routers.v1.admin import admin_router
 from app.routers.v1.system import system_router
 from app.core.config import settings
+from app.core.exceptions import validation_exception_handler, http_exception_handler
 from app.db.base import create_db_and_tables
 from app.utils.db import get_redis_client
 from app.db.init_db import init_db
@@ -30,6 +33,11 @@ app = FastAPI(title=settings.API_NAME, version=settings.API_VERSION, lifespan=li
 @app.get("/health")
 def health_check():
     return {"status": "ok"}
+
+# Register exception handlers
+app.add_exception_handler(RequestValidationError, validation_exception_handler)
+app.add_exception_handler(ValidationError, validation_exception_handler)
+app.add_exception_handler(HTTPException, http_exception_handler)
 
 # add CORS support
 app.add_middleware(

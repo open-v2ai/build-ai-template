@@ -28,14 +28,14 @@ def is_first_user(session: Session) -> bool:
 
 
 def create_user(email: str, session: Session, username: str, password: Optional[str] = None) -> User:
-    # 检查是否为第一个用户，如果是则自动设为超级管理员
+    # Check if this is the first user, if so automatically set as super admin
     user_type = UserType.SUPER_ADMIN if is_first_user(session) else UserType.NORMAL
     
     user = User(
         email=email,
         username=username,
         password_hash=hash_password(password) if password else None,
-        user_type=user_type  # 第一个用户自动成为超级管理员
+        user_type=user_type  # First user automatically becomes super admin
     )
     session.add(user)
     session.commit()
@@ -70,6 +70,6 @@ def create_default_admin_if_not_exists(email: str, session: Session) -> Optional
     """如果默认管理员用户不存在则创建"""
     existing_user = get_user_by_email(email, session)
     if existing_user:
-        return None  # 用户已存在，不需要创建
+        return None  # User already exists, no need to create
     
     return create_admin_user(email, session)

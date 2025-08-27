@@ -3,12 +3,13 @@ from sqlmodel import select, func
 
 from app.dependencies.db import SessionDep
 from app.models.user import User, UserType
+from app.core.i18n import get_message
 
 system_router = APIRouter(prefix="/system")
 
 
 @system_router.get("/status")
-def get_system_status(session: SessionDep):
+def get_system_status(session: SessionDep, lang: str = "zh"):
     """获取系统状态信息"""
     # 检查是否有用户
     user_count = session.exec(select(func.count(User.id))).first() or 0
@@ -25,5 +26,6 @@ def get_system_status(session: SessionDep):
         "has_admin": admin_count > 0,
         "user_count": user_count,
         "admin_count": admin_count,
-        "first_user_will_be_admin": user_count == 0
+        "first_user_will_be_admin": user_count == 0,
+        "message": get_message("system_status", lang)
     }

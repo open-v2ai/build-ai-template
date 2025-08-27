@@ -62,7 +62,7 @@ function ChatDetailModal({ chatId, onClose }: ChatDetailModalProps) {
             <div className="space-y-4">
               {messages.map((message) => (
                 <div key={message.id} className={`p-4 rounded-lg ${
-                  message.role === 'user' 
+                  message.role === 'user'  
                     ? 'bg-blue-50 dark:bg-blue-950 ml-8' 
                     : message.role === 'assistant' 
                     ? 'bg-muted mr-8' 

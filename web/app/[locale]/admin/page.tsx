@@ -41,14 +41,14 @@ export default function AdminPage() {
         return;
       }
 
-      // 通过所有检查，显示管理页面
+      // Passed all checks, show admin page
       setIsChecking(false);
     };
 
     verifyAdminAccess();
   }, [router]);
 
-  // 正在检查权限时显示加载状态
+  // Show loading state while checking permissions
   if (isChecking) {
     return (
       <div className="flex items-center justify-center min-h-screen">

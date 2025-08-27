@@ -185,7 +185,7 @@ export default function LoginPage() {
           localStorage.setItem('access_token', access_token);
           localStorage.setItem('refresh_token', refresh_token);
           
-          // 获取用户详细信息
+          // Get user details
           try {
             const userProfile = await fetcher('/auth/me', {
               method: "GET",
@@ -236,7 +236,7 @@ export default function LoginPage() {
       const userData = await fetcher('/auth/login', {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ email, password, lang }),
       });
 
       if (userData) {
@@ -250,7 +250,7 @@ export default function LoginPage() {
           localStorage.setItem('access_token', access_token);
           localStorage.setItem('refresh_token', refresh_token);
           
-          // 获取用户详细信息
+          // Get user details
           try {
             const userProfile = await fetcher('/auth/me', {
               method: "GET",
@@ -304,7 +304,8 @@ export default function LoginPage() {
         body: JSON.stringify({ 
           email, 
           code, 
-          new_password: newPassword 
+          new_password: newPassword,
+          lang 
         }),
       });
 
@@ -335,7 +336,7 @@ export default function LoginPage() {
         userData = await fetcher('/auth/verify', {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email, code }),
+          body: JSON.stringify({ email, code, lang }),
         });
       } catch (regularError) {
         // If regular login fails, try admin login
@@ -343,7 +344,7 @@ export default function LoginPage() {
           userData = await fetcher('/auth/admin/verify', {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ email, code }),
+            body: JSON.stringify({ email, code, lang }),
           });
           isAdmin = true;
         } catch {
@@ -362,7 +363,7 @@ export default function LoginPage() {
           localStorage.setItem('access_token', access_token);
           localStorage.setItem('refresh_token', refresh_token);
           
-          // 获取用户详细信息来确定实际的用户类型
+          // Get user details to determine actual user type
           try {
             const userProfile = await fetcher('/auth/me', {
               method: "GET",
@@ -373,11 +374,11 @@ export default function LoginPage() {
             });
             
             if (userProfile) {
-              // 基于后端返回的实际用户类型设置 localStorage
+              // Set localStorage based on actual user type returned from backend
               const actualUserType = (userProfile as { user_type: string }).user_type;
               localStorage.setItem('user_type', actualUserType);
               
-              // 触发自定义事件通知组件更新状态
+              // Trigger custom event to notify components to update state
               window.dispatchEvent(new CustomEvent('user-type-changed'));
               
               if (actualUserType === 'admin' || actualUserType === 'super_admin') {
@@ -396,7 +397,7 @@ export default function LoginPage() {
             }
           } catch (profileError) {
             console.error('Failed to get user profile:', profileError);
-            // 如果获取用户信息失败，回退到基于登录端点的判断
+            // If getting user info fails, fallback to endpoint-based judgment
             if (isAdmin) {
               localStorage.setItem('user_type', 'admin');
               window.dispatchEvent(new CustomEvent('user-type-changed'));

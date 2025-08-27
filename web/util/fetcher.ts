@@ -45,7 +45,7 @@ export async function fetcher<T>(
             const error = await res.json();
             errorMessage = error.detail || error.message || `HTTP ${res.status}: ${res.statusText}`;
         } catch (e) {
-            // 如果无法解析JSON，使用HTTP状态信息
+            // If JSON cannot be parsed, use HTTP status information
             errorMessage = `HTTP ${res.status}: ${res.statusText}`;
         }
         throw new Error(errorMessage);

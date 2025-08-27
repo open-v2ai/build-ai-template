@@ -48,13 +48,13 @@ export function NavUser({
   const [isAdmin, setIsAdmin] = useState(false)
   const [userType, setUserType] = useState<string>('normal')
 
-  // 检查用户是否是管理员
+  // Check if user is admin
   useEffect(() => {
     const checkAdminStatus = () => {
-      // 检查 localStorage 中的用户类型
+      // Check user type in localStorage
       const storedUserType = localStorage.getItem('user_type') || 'normal';
       
-      // 检查多种可能的管理员标识
+      // Check multiple possible admin identifiers
       const isAdminUser = storedUserType === 'admin' || 
                          storedUserType === 'super_admin';
       
@@ -66,14 +66,14 @@ export function NavUser({
       checkAdminStatus();
     }
     
-    // 也监听 localStorage 的变化
+    // Also listen for localStorage changes
     const handleStorageChange = (e: StorageEvent) => {
       if (e.key === 'user_type') {
         checkAdminStatus();
       }
     };
     
-    // 监听自定义事件（用于同一个页面内的状态变化）
+    // Listen for custom events (for state changes within the same page)
     const handleUserTypeChange = () => {
       checkAdminStatus();
     };
@@ -87,7 +87,7 @@ export function NavUser({
     };
   }, [user.email])
 
-  // 获取用户类型图标
+  // Get user type icon
   const getUserTypeIcon = (type: string) => {
     switch (type) {
       case 'super_admin':
@@ -101,7 +101,7 @@ export function NavUser({
     }
   };
 
-  // 获取用户类型颜色
+  // Get user type color
   const getUserTypeColor = (type: string) => {
     switch (type) {
       case 'super_admin':
@@ -115,7 +115,7 @@ export function NavUser({
     }
   };
 
-  // 获取用户类型显示文本
+  // Get user type display text
   const getUserTypeText = (type: string) => {
     switch (type) {
       case 'super_admin':

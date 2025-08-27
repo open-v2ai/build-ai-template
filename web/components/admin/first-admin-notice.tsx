@@ -20,7 +20,7 @@ export default function FirstAdminNotice() {
   const t = useTranslations();
 
   useEffect(() => {
-    // 检查系统状态
+    // Check system status
     const checkSystemStatus = async () => {
       try {
         const status = await fetcher('/system/status', {
@@ -28,7 +28,7 @@ export default function FirstAdminNotice() {
         });
         setSystemStatus(status as SystemStatus);
         
-        // 只有在没有用户或没有管理员时才显示通知
+        // Only show notice when there are no users or no admins
         const hasShownNotice = localStorage.getItem('first-admin-notice-shown');
         if (!hasShownNotice && (status as SystemStatus).first_user_will_be_admin) {
           setShowNotice(true);

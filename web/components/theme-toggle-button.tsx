@@ -9,11 +9,11 @@ export default function ThemeToggleButton() {
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
   const t = useTranslations();
 
-  // 初始化主题
+  // Initialize theme
   useEffect(() => {
-    // 检查localStorage中的主题设置
+    // Check theme setting in localStorage
     const savedTheme = localStorage.getItem('theme');
-    // 检查系统主题偏好
+    // Check system theme preference
     const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
     
     const initialTheme = savedTheme as 'light' | 'dark' || systemTheme;
@@ -21,7 +21,7 @@ export default function ThemeToggleButton() {
     applyTheme(initialTheme);
   }, []);
 
-  // 应用主题到document
+  // Apply theme to document
   const applyTheme = (newTheme: 'light' | 'dark') => {
     const root = document.documentElement;
     if (newTheme === 'dark') {
@@ -32,7 +32,7 @@ export default function ThemeToggleButton() {
     localStorage.setItem('theme', newTheme);
   };
 
-  // 切换主题
+  // Toggle theme
   const toggleTheme = () => {
     const newTheme = theme === 'light' ? 'dark' : 'light';
     setTheme(newTheme);

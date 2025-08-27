@@ -50,7 +50,7 @@ export default function CreateUserModal({ isOpen, onClose, onUserCreated }: Crea
         auth: true,
       });
 
-      // 重置表单
+      // Reset form
       setFormData({
         email: '',
         name: '',

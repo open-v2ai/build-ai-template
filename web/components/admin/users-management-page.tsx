@@ -236,7 +236,7 @@ export default function UsersManagementPage() {
     sort_order: 'asc',
   });
 
-  // 模态框状态
+  // Modal state
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [userToDelete, setUserToDelete] = useState<User | null>(null);
 
@@ -287,7 +287,7 @@ export default function UsersManagementPage() {
         body: JSON.stringify(updates),
         auth: true,
       });
-      fetchUsers(); // 重新获取数据
+      fetchUsers(); // Refresh data
     } catch (error) {
       console.error('Failed to update user:', error);
     }
@@ -488,7 +488,7 @@ export default function UsersManagementPage() {
         isOpen={showCreateModal}
         onClose={() => setShowCreateModal(false)}
         onUserCreated={() => {
-          fetchUsers(); // 刷新用户列表
+          fetchUsers(); // Refresh user list
         }}
       />
 
@@ -496,7 +496,7 @@ export default function UsersManagementPage() {
         user={userToDelete}
         onClose={() => setUserToDelete(null)}
         onUserUpdated={() => {
-          fetchUsers(); // 刷新用户列表
+          fetchUsers(); // Refresh user list
         }}
       />
     </div>

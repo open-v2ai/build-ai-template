@@ -49,7 +49,7 @@ export function NavUser({
   const t = useTranslations()
   const [userType, setUserType] = useState<string>('normal')
 
-  // 检查用户类型
+  // Check user type
   useEffect(() => {
     const checkUserType = () => {
       const storedUserType = localStorage.getItem('user_type') || 'normal';
@@ -60,14 +60,14 @@ export function NavUser({
       checkUserType();
     }
     
-    // 监听 localStorage 的变化
+    // Listen for localStorage changes
     const handleStorageChange = (e: StorageEvent) => {
       if (e.key === 'user_type') {
         checkUserType();
       }
     };
     
-    // 监听自定义事件（用于同一个页面内的状态变化）
+    // Listen for custom events (for state changes within the same page)
     const handleUserTypeChange = () => {
       checkUserType();
     };
@@ -81,7 +81,7 @@ export function NavUser({
     };
   }, [user.email])
 
-  // 获取用户类型图标
+  // Get user type icon
   const getUserTypeIcon = (type: string) => {
     switch (type) {
       case 'super_admin':
@@ -95,7 +95,7 @@ export function NavUser({
     }
   };
 
-  // 获取用户类型颜色
+  // Get user type color
   const getUserTypeColor = (type: string) => {
     switch (type) {
       case 'super_admin':
@@ -109,7 +109,7 @@ export function NavUser({
     }
   };
 
-  // 获取用户类型显示文本
+  // Get user type display text
   const getUserTypeText = (type: string) => {
     switch (type) {
       case 'super_admin':
