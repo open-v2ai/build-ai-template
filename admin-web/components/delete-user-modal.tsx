@@ -1,10 +1,9 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useTranslations } from 'next-intl';
 import { AlertTriangle, Trash2, RotateCcw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import {
   Dialog,
   DialogContent,
@@ -28,13 +27,7 @@ export default function DeleteUserModal({ user, onClose, onUserUpdated }: Delete
   const [deleteInfo, setDeleteInfo] = useState<DeleteCheckResponse | null>(null);
 
 
-  useEffect(() => {
-    if (user && !user.is_deleted) {
-      fetchDeleteInfo();
-    }
-  }, [user]);
-
-  const fetchDeleteInfo = async () => {
+  const fetchDeleteInfo = useCallback(async () => {
     if (!user) return;
     
     try {
@@ -43,10 +36,16 @@ export default function DeleteUserModal({ user, onClose, onUserUpdated }: Delete
         auth: true,
       });
       setDeleteInfo(info as DeleteCheckResponse);
-    } catch (err: any) {
-      setError(err.message || t('GET_DELETE_INFO_FAILED'));
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : t('GET_DELETE_INFO_FAILED'));
     }
-  };
+  }, [user, t]);
+
+  useEffect(() => {
+    if (user && !user.is_deleted) {
+      fetchDeleteInfo();
+    }
+  }, [user, fetchDeleteInfo]);
 
   const handleAction = async (action: 'delete' | 'restore') => {
     if (!user) return;
@@ -68,9 +67,9 @@ export default function DeleteUserModal({ user, onClose, onUserUpdated }: Delete
 
       onUserUpdated();
       onClose();
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error(`${action === 'delete' ? '删除' : '恢复'}用户失败:`, err);
-      setError(err.message || (action === 'delete' ? t('DELETE_USER_FAILED') : t('RESTORE_USER_FAILED')));
+      setError((err instanceof Error ? err.message : null) || (action === 'delete' ? t('DELETE_USER_FAILED') : t('RESTORE_USER_FAILED')));
     } finally {
       setLoading(false);
     }
@@ -91,7 +90,6 @@ export default function DeleteUserModal({ user, onClose, onUserUpdated }: Delete
   if (!user) return null;
 
   const isDeleted = user.is_deleted;
-  const actionText = isDeleted ? t('RESTORE') : t('DELETE');
   const actionIcon = isDeleted ? <RotateCcw className="w-5 h-5" /> : <Trash2 className="w-5 h-5" />;
   const actionColor = isDeleted ? 'text-green-600' : 'text-red-600';
 
@@ -123,7 +121,7 @@ export default function DeleteUserModal({ user, onClose, onUserUpdated }: Delete
             <p className="font-medium">{user.name || t('NOT_SET')}</p>
             <p className="text-sm text-gray-600">{user.email}</p>
             <div className="flex items-center gap-2 mt-1">
-              {user.is_admin && (
+              {(user.user_type === 'admin' || user.user_type === 'super_admin') && (
                 <span className="text-xs bg-purple-100 text-purple-800 px-2 py-0.5 rounded">
                   {t('ADMIN_USER')}
                 </span>

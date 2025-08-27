@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useTranslations } from 'next-intl';
 import { Search, Eye } from 'lucide-react';
 
@@ -20,13 +20,7 @@ function ChatDetailModal({ chatId, onClose }: ChatDetailModalProps) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    if (chatId) {
-      fetchChatDetail();
-    }
-  }, [chatId]);
-
-  const fetchChatDetail = async () => {
+  const fetchChatDetail = useCallback(async () => {
     if (!chatId) return;
     
     try {
@@ -41,7 +35,13 @@ function ChatDetailModal({ chatId, onClose }: ChatDetailModalProps) {
     } finally {
       setLoading(false);
     }
-  };
+  }, [chatId]);
+
+  useEffect(() => {
+    if (chatId) {
+      fetchChatDetail();
+    }
+  }, [chatId, fetchChatDetail]);
 
   if (!chatId) return null;
 
@@ -147,11 +147,7 @@ export default function ChatsManagementPage() {
     offset: 0,
   });
 
-  useEffect(() => {
-    fetchChats();
-  }, [searchParams]);
-
-  const fetchChats = async () => {
+  const fetchChats = useCallback(async () => {
     try {
       setLoading(true);
       const queryParams = new URLSearchParams();
@@ -172,7 +168,11 @@ export default function ChatsManagementPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [searchParams]);
+
+  useEffect(() => {
+    fetchChats();
+  }, [fetchChats]);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();

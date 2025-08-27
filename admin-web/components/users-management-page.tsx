@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useTranslations } from 'next-intl';
 import { Search, Shield, UserX, User as UserIcon, Edit2, UserPlus, Trash2, RotateCcw, Crown, Star } from 'lucide-react';
 
@@ -109,7 +109,7 @@ function UserRow({ user, onUpdate, onDelete, onCreate }: UserRowProps) {
         {isEditing ? (
           <select
             value={editData.user_type}
-            onChange={(e) => setEditData({ ...editData, user_type: e.target.value as any })}
+            onChange={(e) => setEditData({ ...editData, user_type: e.target.value as 'normal' | 'premium' | 'admin' | 'super_admin' })}
             className="border border-border rounded px-2 py-1 bg-background text-foreground"
           >
             <option value="normal">{t('NORMAL_USER')}</option>
@@ -128,7 +128,7 @@ function UserRow({ user, onUpdate, onDelete, onCreate }: UserRowProps) {
         {isEditing ? (
           <select
             value={editData.membership_type}
-            onChange={(e) => setEditData({ ...editData, membership_type: e.target.value as any })}
+            onChange={(e) => setEditData({ ...editData, membership_type: e.target.value as 'free' | 'monthly' | 'yearly' | 'lifetime' })}
             className="border border-border rounded px-2 py-1 bg-background text-foreground"
           >
             <option value="free">{t('FREE_MEMBERSHIP')}</option>
@@ -240,11 +240,7 @@ export default function UsersManagementPage() {
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [userToDelete, setUserToDelete] = useState<User | null>(null);
 
-  useEffect(() => {
-    fetchUsers();
-  }, [searchParams]);
-
-  const fetchUsers = async () => {
+  const fetchUsers = useCallback(async () => {
     try {
       setLoading(true);
       const queryParams = new URLSearchParams();
@@ -277,7 +273,11 @@ export default function UsersManagementPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [searchParams]);
+
+  useEffect(() => {
+    fetchUsers();
+  }, [fetchUsers]);
 
   const handleUpdateUser = async (userId: number, updates: UserUpdateRequest) => {
     try {

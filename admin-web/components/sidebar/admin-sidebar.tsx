@@ -3,7 +3,7 @@
 import * as React from "react"
 import { useState, useEffect } from "react"
 import Image from "next/image"
-import { BarChart3, Users, MessageSquare, Shield } from "lucide-react"
+import { BarChart3, Users, MessageSquare } from "lucide-react"
 import { useTranslations } from 'next-intl';
 
 import { NavUser } from "@/components/sidebar/nav-user"

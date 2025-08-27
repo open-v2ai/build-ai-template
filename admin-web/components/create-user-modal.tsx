@@ -11,7 +11,6 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from '@/components/ui/dialog';
 import { fetcher } from '@/util/fetcher';
 import type { UserCreateRequest } from '@/app/[locale]/types';
@@ -61,9 +60,9 @@ export default function CreateUserModal({ isOpen, onClose, onUserCreated }: Crea
       
       onUserCreated();
       onClose();
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('创建用户失败:', err);
-      setError(err.message || t('CREATE_USER_FAILED'));
+      setError(err instanceof Error ? err.message : t('CREATE_USER_FAILED'));
     } finally {
       setLoading(false);
     }
@@ -143,7 +142,7 @@ export default function CreateUserModal({ isOpen, onClose, onUserCreated }: Crea
               </label>
               <select
                 value={formData.user_type}
-                onChange={(e) => setFormData({ ...formData, user_type: e.target.value as any })}
+                onChange={(e) => setFormData({ ...formData, user_type: e.target.value as 'normal' | 'premium' | 'admin' | 'super_admin' })}
                 className="w-full border border-gray-300 rounded-md px-3 py-2 bg-white text-gray-900"
               >
                 <option value="normal">{t('NORMAL_USER')}</option>
@@ -160,7 +159,7 @@ export default function CreateUserModal({ isOpen, onClose, onUserCreated }: Crea
               </label>
               <select
                 value={formData.membership_type}
-                onChange={(e) => setFormData({ ...formData, membership_type: e.target.value as any })}
+                onChange={(e) => setFormData({ ...formData, membership_type: e.target.value as 'free' | 'monthly' | 'yearly' | 'lifetime' })}
                 className="w-full border border-gray-300 rounded-md px-3 py-2 bg-white text-gray-900"
               >
                 <option value="free">{t('FREE_MEMBERSHIP')}</option>

@@ -49,6 +49,49 @@ wheels = [
 ]
 
 [[package]]
+name = "bat-api"
+version = "0.0.1"
+source = { virtual = "." }
+dependencies = [
+    { name = "alembic" },
+    { name = "bcrypt" },
+    { name = "email-validator" },
+    { name = "fastapi" },
+    { name = "fastapi-mail" },
+    { name = "openai" },
+    { name = "openai-agents" },
+    { name = "passlib" },
+    { name = "psycopg2-binary" },
+    { name = "pydantic" },
+    { name = "python-dotenv" },
+    { name = "python-jose" },
+    { name = "redis" },
+    { name = "sqlalchemy" },
+    { name = "sqlmodel" },
+    { name = "uvicorn" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "alembic", specifier = ">=1.15.2" },
+    { name = "bcrypt", specifier = "==3.2" },
+    { name = "email-validator", specifier = ">=2.2.0" },
+    { name = "fastapi", specifier = "~=0.115.12" },
+    { name = "fastapi-mail", specifier = ">=1.4.2" },
+    { name = "openai", specifier = ">=1.78.0" },
+    { name = "openai-agents", specifier = ">=0.0.14" },
+    { name = "passlib", specifier = ">=1.7.4" },
+    { name = "psycopg2-binary", specifier = "==2.9.5" },
+    { name = "pydantic", specifier = "~=2.11.3" },
+    { name = "python-dotenv", specifier = "~=1.1.0" },
+    { name = "python-jose", specifier = ">=3.4.0" },
+    { name = "redis", specifier = ">=6.0.0" },
+    { name = "sqlalchemy", specifier = ">=2.0.40" },
+    { name = "sqlmodel", specifier = ">=0.0.24" },
+    { name = "uvicorn", specifier = "~=0.34.2" },
+]
+
+[[package]]
 name = "bcrypt"
 version = "3.2.0"
 source = { registry = "https://pypi.org/simple" }
@@ -118,49 +161,6 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/f1/47/d7145bf2dc04684935d57d67dff9d6d795b2ba2796806bb109864be3a151/cffi-1.17.1-cp313-cp313-musllinux_1_1_x86_64.whl", hash = "sha256:72e72408cad3d5419375fc87d289076ee319835bdfa2caad331e377589aebba9", size = 488469, upload_time = "2024-09-04T20:44:41.616Z" },
     { url = "https://files.pythonhosted.org/packages/bf/ee/f94057fa6426481d663b88637a9a10e859e492c73d0384514a17d78ee205/cffi-1.17.1-cp313-cp313-win32.whl", hash = "sha256:e03eab0a8677fa80d646b5ddece1cbeaf556c313dcfac435ba11f107ba117b5d", size = 172475, upload_time = "2024-09-04T20:44:43.733Z" },
     { url = "https://files.pythonhosted.org/packages/7c/fc/6a8cb64e5f0324877d503c854da15d76c1e50eb722e320b15345c4d0c6de/cffi-1.17.1-cp313-cp313-win_amd64.whl", hash = "sha256:f6a16c31041f09ead72d69f583767292f750d24913dadacf5756b966aacb3f1a", size = 182009, upload_time = "2024-09-04T20:44:45.309Z" },
-]
-
-[[package]]
-name = "build-ai-template-api"
-version = "0.0.1"
-source = { virtual = "." }
-dependencies = [
-    { name = "alembic" },
-    { name = "bcrypt" },
-    { name = "email-validator" },
-    { name = "fastapi" },
-    { name = "fastapi-mail" },
-    { name = "openai" },
-    { name = "openai-agents" },
-    { name = "passlib" },
-    { name = "psycopg2-binary" },
-    { name = "pydantic" },
-    { name = "python-dotenv" },
-    { name = "python-jose" },
-    { name = "redis" },
-    { name = "sqlalchemy" },
-    { name = "sqlmodel" },
-    { name = "uvicorn" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "alembic", specifier = ">=1.15.2" },
-    { name = "bcrypt", specifier = "==3.2" },
-    { name = "email-validator", specifier = ">=2.2.0" },
-    { name = "fastapi", specifier = "~=0.115.12" },
-    { name = "fastapi-mail", specifier = ">=1.4.2" },
-    { name = "openai", specifier = ">=1.78.0" },
-    { name = "openai-agents", specifier = ">=0.0.14" },
-    { name = "passlib", specifier = ">=1.7.4" },
-    { name = "psycopg2-binary", specifier = "==2.9.5" },
-    { name = "pydantic", specifier = "~=2.11.3" },
-    { name = "python-dotenv", specifier = "~=1.1.0" },
-    { name = "python-jose", specifier = ">=3.4.0" },
-    { name = "redis", specifier = ">=6.0.0" },
-    { name = "sqlalchemy", specifier = ">=2.0.40" },
-    { name = "sqlmodel", specifier = ">=0.0.24" },
-    { name = "uvicorn", specifier = "~=0.34.2" },
 ]
 
 [[package]]

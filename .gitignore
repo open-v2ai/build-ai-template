@@ -163,3 +163,4 @@ plugins.jsonl
 mise.toml
 
 deploy/volumes/
+deploy-test/volumes/

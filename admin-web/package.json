@@ -1,5 +1,5 @@
 {
-  "name": "build-ai-template-admin-web",
+  "name": "bat-admin-web",
   "version": "0.1.0",
   "private": true,
   "scripts": {

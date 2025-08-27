@@ -26,7 +26,7 @@ export interface Message {
   id: number;
   chat_id: number;
   role: 'user' | 'assistant' | 'system';
-  model_conf?: any;
+  model_conf?: Record<string, unknown>;
   content: string;
   created_at: string;
 }
