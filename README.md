@@ -63,7 +63,7 @@ uv sync
 source venv/bin/activate
 
 # 设置环境变量
-cp env.example .env
+cp .env.example .env
 vim .env
 # 修改为你自己的配置
 
@@ -86,7 +86,7 @@ cd build-ai-template/web/
 pnpm install
 
 # 设置环境变量
-cp env.example .env
+cp .env.example .env
 vim .env
 # 修改为你自己的配置
 
@@ -126,7 +126,7 @@ make build-web
 cd build-ai-template/deploy/
 
 # 设置环境变量
-cp env.example .env
+cp .env.example .env
 vim .env
 # 修改为你自己的配置
 

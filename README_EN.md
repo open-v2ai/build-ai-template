@@ -63,7 +63,7 @@ uv sync
 source venv/bin/activate
 
 # set environment variables
-cp env.example .env
+cp .env.example .env
 vim .env
 # change all the values to your own
 
@@ -86,7 +86,7 @@ cd build-ai-template/web/
 pnpm install
 
 # set environment variables
-cp env.example .env
+cp .env.example .env
 vim .env
 # change all the values to your own
 
@@ -126,7 +126,7 @@ make build-web
 cd build-ai-template/deploy/
 
 # set environment variables
-cp env.example .env
+cp .env.example .env
 vim .env
 # change all the values to your own
 

@@ -1,6 +1,7 @@
-from agents import Agent, Runner
 from typing import AsyncGenerator
 import asyncio
+
+from agents import Agent, Runner
 from openai.types.responses import ResponseTextDeltaEvent
 
 # 1. 判断是否为任务型问题的 agent
