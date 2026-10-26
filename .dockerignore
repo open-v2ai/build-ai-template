@@ -1,0 +1,16 @@
+.git
+node_modules
+**/node_modules
+.next
+**/.next
+*.tsbuildinfo
+.env
+.env.*
+**/.env
+**/.env.*
+!.env.example
+**/.DS_Store
+supabase/.temp
+supabase/.branches
+deploy/volumes
+deploy-test/volumes

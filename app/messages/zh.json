@@ -1,0 +1,766 @@
+{
+  "app": {
+    "name": "BAIT",
+    "fullName": "Build AI Template",
+    "slogan": "分分钟构建 AI 应用",
+    "poweredBy": "技术支持"
+  },
+  "common": {
+    "userTypes": {
+      "user": "用户",
+      "admin": "管理员"
+    },
+    "actions": {
+      "save": "保存",
+      "cancel": "取消",
+      "create": "创建",
+      "view": "查看",
+      "close": "关闭",
+      "refresh": "刷新",
+      "loading": "加载中...",
+      "back": "返回",
+      "home": "返回首页",
+      "send": "发送",
+      "delete": "删除",
+      "deleting": "删除中...",
+      "saving": "保存中...",
+      "reset": "重置",
+      "resetChatStatus": "重置对话状态",
+      "loadMore": "点击加载更多",
+      "retry": "重试"
+    },
+    "status": {
+      "normal": "正常",
+      "deleted": "已删除",
+      "all": "全部",
+      "pending": "待处理",
+      "notAvailable": "不可用"
+    },
+    "validation": {
+      "required": "*",
+      "emailRequired": "邮箱地址不能为空",
+      "emailFormat": "请输入正确的邮箱格式",
+      "passwordRequired": "请输入密码",
+      "passwordLength": "密码长度至少6位",
+      "passwordMismatch": "两次输入的密码不一致",
+      "codeLength": "验证码必须是6位数字",
+      "usernameRequired": "用户名不能为空",
+      "usernameLength": "用户名长度必须在4-12位之间",
+      "usernameFormat": "用户名只能包含字母、数字和下划线",
+      "usernameRequirement": "4-12位，仅限字母、数字和下划线"
+    },
+    "placeholders": {
+      "email": "user@example.com",
+      "username": "用户名",
+      "searchEmail": "搜索邮箱...",
+      "enterQuestion": "请输入你的问题... (Shift+Enter 换行)"
+    },
+    "pagination": {
+      "showRecordsWithTotal": "显示第 {start} 到 {end} 条记录，共 {total} 条",
+      "pageInfo": "第 {current} 页，共 {total} 页"
+    },
+    "messages": {
+      "networkError": "网络错误",
+      "loginRequired": "请先登录后再访问此页面",
+      "accessDenied": "您没有权限访问此内容",
+      "copyFailed": "复制失败",
+      "copySuccess": "{item}已复制到剪贴板"
+    },
+    "theme": {
+      "switchToDark": "切换到深色模式",
+      "switchToLight": "切换到浅色模式"
+    },
+    "language": {
+      "switchToEnglish": "Switch to English",
+      "switchToChinese": "切换到中文",
+      "switchSuccess": "切换语言成功"
+    },
+    "values": {
+      "notSet": "未设置",
+      "neverLoggedIn": "从未登录",
+      "neverActive": "从未活跃"
+    },
+    "warning": "警告",
+    "error": {
+      "chatNotFound": "聊天不存在",
+      "chatNotFoundDescription": "您访问的聊天可能已被删除或不存在。",
+      "backToHome": "返回主页",
+      "startNewChat": "开始新对话",
+      "loading": "加载中..."
+    }
+  },
+  "pages": {
+    "home": {
+      "helloWorld": "👋 你好世界",
+      "githubRepo": "GitHub 仓库"
+    },
+    "login": {
+      "login": "登录",
+      "loginButton": "登录",
+      "register": "注册",
+      "registerButton": "注册",
+      "forgotPassword": "忘记密码？",
+      "resetPassword": "重置密码",
+      "resetPasswordButton": "发送重置链接",
+      "passwordLogin": "密码登录",
+      "formDescription": "输入您的邮箱和密码登录",
+      "registerFormDescription": "填写信息创建新账户",
+      "resetFormDescription": "输入您的邮箱，我们将发送密码重置链接",
+      "enterNewPassword": "请输入新密码以完成重置",
+      "alreadyHaveAccount": "已有账户？",
+      "backToLogin": "返回登录",
+      "dontHaveAccount": "还没有账户？",
+      "registerNow": "立即注册",
+      "backToLoginFromReset": "返回登录"
+    },
+    "admin": {
+      "title": "BAIT - 管理后台",
+      "enterPanel": "进入管理后台",
+      "checkingPermissions": "正在检查权限..."
+    }
+  },
+  "auth": {
+    "fields": {
+      "email": "邮箱",
+      "password": "密码",
+      "newPassword": "新密码",
+      "confirmPassword": "确认密码",
+      "username": "用户名"
+    },
+    "actions": {
+      "sending": "发送中...",
+      "loggingIn": "登录中...",
+      "registering": "注册中...",
+      "resettingPassword": "发送重置链接中...",
+      "resetting": "重置中...",
+      "creating": "创建中..."
+    },
+    "placeholders": {
+      "enterEmail": "请输入邮箱",
+      "enterPassword": "请输入密码",
+      "enterNewPassword": "请输入新密码",
+      "enterConfirmPassword": "请再次输入密码",
+      "enterUsername": "请输入用户名"
+    },
+    "messages": {
+      "loginSuccess": "登录成功",
+      "loginFailed": "登录失败",
+      "logoutSuccess": "登出成功",
+      "registerSuccess": "注册成功！正在为您登录...",
+      "registerFailed": "注册失败",
+      "emailAlreadyRegistered": "该邮箱已被注册",
+      "usernameAlreadyTaken": "用户名已被使用",
+      "pleaseLogin": "请使用您的邮箱和密码登录",
+      "resetSuccess": "重置链接已发送到您的邮箱",
+      "resetFailed": "发送重置链接失败",
+      "checkEmailForReset": "请查收邮件并点击链接完成密码重置",
+      "invalidResetLink": "重置链接无效或已过期",
+      "validatingResetLink": "正在验证重置链接...",
+      "passwordResetSuccess": "密码重置成功！正在跳转到登录页...",
+      "passwordResetFailed": "密码重置失败",
+      "adminLoginSuccess": "管理员登录成功，正在跳转到管理后台...",
+      "userLoginSuccess": "登录成功"
+    },
+    "options": {
+      "adminWarning": "⚠️ 管理员用户将拥有系统所有权限，请谨慎设置"
+    }
+  },
+  "chat": {
+    "newChat": "新对话",
+    "newChatPlaceholder": "请输入新的对话内容...",
+    "selectAgent": "选择智能体",
+    "currentAgent": "当前智能体",
+    "ai": {
+      "thinking": "AI正在思考中...",
+      "replying": "AI正在回复中...",
+      "showRawText": "显示原文"
+    },
+    "user": "用户",
+    "system": "系统",
+    "actions": {
+      "copy": "复制",
+      "regenerate": "重新生成",
+      "stopGeneration": "停止生成",
+      "edit": "编辑",
+      "delete": "删除",
+      "editTitle": "编辑标题",
+      "deleteChat": "删除对话",
+      "deleteWarning": "此操作不可撤销，对话中的所有消息都将被永久删除。",
+      "editTitleSuccess": "标题修改成功",
+      "editTitleFailed": "标题修改失败",
+      "deleteChatSuccess": "对话删除成功",
+      "deleteChatFailed": "对话删除失败"
+    },
+    "messages": {
+      "errorOccurred": "抱歉，发生了错误，请重试。"
+    },
+    "tokens": {
+      "input": "输入",
+      "output": "输出", 
+      "total": "总计",
+      "tokens": "tokens"
+    },
+    "limits": {
+      "maxRoundsReached": "已达到最大对话轮次限制",
+      "maxRoundsWarning": "当前对话已进行 {current} 轮对话，最多支持 {max} 轮。超过限制后请开启新的对话。",
+      "startNewChat": "开启新对话",
+      "roundsRemaining": "剩余 {remaining} 轮对话",
+      "globalLockActive": "有对话正在进行中，请等待回复完成后再开始新对话",
+      "dailyTokenLimitReached": "今日Token使用量已达上限，请升级会员或明天再试",
+      "dailyMessageLimitReached": "今日消息数量已达上限，请升级会员或明天再试",
+      "conversationTurnLimitReached": "对话轮次已达上限，请开启新对话"
+    },
+    "chatDetail": "对话详情",
+    "aiAssistant": "AI助手",
+    "noChatData": "暂无对话数据",
+    "noMessages": "暂无消息",
+    "titlePlaceholder": "请输入对话标题",
+    "createdAt": "创建时间",
+    "conversationRounds": "对话轮次",
+    "rounds": "轮",
+    "agent": "AI助手",
+    "allChatsLoaded": "已加载全部对话"
+  },
+  "admin": {
+    "navigation": {
+      "dashboard": "仪表盘",
+      "userManagement": "用户管理",
+      "chatManagement": "对话管理",
+      "agentManagement": "智能体管理",
+      "orderManagement": "订单管理",
+      "logout": "登出"
+    },
+    "dashboard": {
+      "stats": {
+        "totalUsers": "总用户数",
+        "activeUsers": "活跃用户",
+        "adminUsers": "管理员",
+        "deletedUsers": "已删除用户",
+        "freeUsers": "免费用户",
+        "monthlyUsers": "月度用户",
+        "yearlyUsers": "年度用户",
+        "totalChats": "总对话数",
+        "todayNewUsers": "今日新用户",
+        "todayNewChats": "今日新对话",
+        "monthlyChats": "本月对话数",
+        "sevenDaysChats": "7日对话数",
+        "totalOrders": "总订单数",
+        "todayOrders": "今日订单数",
+        "sevenDaysOrders": "7日订单数",
+        "monthlyOrders": "本月订单数",
+        "todayRevenue": "今日收入",
+        "sevenDaysRevenue": "7日收入",
+        "monthlyRevenue": "本月收入",
+        "totalRevenue": "总收入"
+      },
+      "messages": {
+        "failedToLoadDashboard": "加载仪表板数据失败"
+      }
+    },
+    "users": {
+      "createUser": "新建用户",
+      "createNewUser": "新建用户",
+      "createUserDescription": "创建新用户账户并设置基本信息",
+      "createUserMembershipNote": "新用户默认为免费会员，后续可在会员管理中升级",
+      "editUser": "编辑用户",
+      "deleteUser": "删除用户",
+      "restoreUser": "恢复用户",
+      "deleteUserTitle": "删除用户",
+      "restoreUserTitle": "恢复用户",
+      "deleteUserDescription": "删除用户将禁止其登录，但保留所有数据",
+      "restoreUserDescription": "恢复用户将允许其重新登录系统",
+      "search": {
+        "usernamePlaceholder": "搜索用户名..."
+      },
+      "filters": {
+        "userType": "用户类型",
+        "membershipType": "会员类型",
+        "user": "用户",
+        "admin": "管理员",
+        "freeMembership": "免费会员",
+        "monthlyMembership": "月度会员",
+        "yearlyMembership": "年度会员"
+      },
+      "sort": {
+        "sortBy": "排序字段",
+        "sortOrder": "排序方向",
+        "fields": {
+          "id": "ID",
+          "username": "用户名",
+          "email": "邮箱",
+          "user_type": "用户类型",
+          "membership_type": "会员类型",
+          "created_at": "注册时间",
+          "last_login_at": "最后登录",
+          "chat_count": "对话数"
+        },
+        "directions": {
+          "asc": "升序",
+          "desc": "降序"
+        }
+      },
+      "table": {
+        "emailAddress": "邮箱地址",
+        "chatCount": "对话数"
+      },
+      "messages": {
+        "createUserFailed": "创建用户失败，请稍后重试",
+        "deleteUserFailed": "删除用户失败，请稍后重试",
+        "restoreUserFailed": "恢复用户失败，请稍后重试",
+        "getDeleteInfoFailed": "获取删除信息失败",
+        "emailCopied": "邮箱地址已复制到剪贴板",
+        "copyFailed": "复制失败，请手动选择复制"
+      },
+      "actions": {
+        "copyEmail": "复制邮箱地址"
+      },
+      "confirmations": {
+        "deleteConfirm": "确定要删除此用户吗？删除后用户将无法登录，但数据会保留。",
+        "restoreConfirm": "确定要恢复此用户吗？恢复后用户将能够正常登录。",
+        "confirmDelete": "确认删除",
+        "confirmRestore": "确认恢复",
+        "deleting": "删除中...",
+        "restoring": "恢复中..."
+      }
+    },
+    "chats": {
+      "noUsername": "未设置用户名",
+      "search": {
+        "userEmailPlaceholder": "搜索用户邮箱...",
+        "usernamePlaceholder": "搜索用户名...",
+        "chatTitlePlaceholder": "搜索对话标题..."
+      },
+      "sort": {
+        "sortBy": "排序字段",
+        "sortOrder": "排序方向",
+        "fields": {
+          "id": "ID",
+          "title": "标题",
+          "created_at": "创建时间",
+          "updated_at": "更新时间",
+          "user_email": "用户邮箱",
+          "username": "用户名",
+          "message_count": "消息数"
+        },
+        "directions": {
+          "asc": "升序",
+          "desc": "降序"
+        }
+      },
+      "table": {
+        "messageCount": "消息数"
+      }
+    },
+    "agents": {
+      "createAgent": "新建智能体",
+      "editAgent": "编辑智能体",
+      "createAgentDescription": "创建新的AI智能体并配置其参数",
+      "editAgentDescription": "编辑智能体的配置信息",
+      "sort": {
+        "sortBy": "排序字段",
+        "sortOrder": "排序方向",
+        "fields": {
+          "id": "ID",
+          "name": "名称",
+          "source": "来源",
+          "created_at": "创建时间",
+          "updated_at": "更新时间"
+        },
+        "directions": {
+          "asc": "升序",
+          "desc": "降序"
+        }
+      },
+      "fields": {
+        "agentName": "智能体名称",
+        "agentSource": "来源",
+        "apiUrl": "API地址"
+      },
+      "sources": {
+        "llm": "LLM",
+        "dify": "Dify",
+        "fastgpt": "FastGPT",
+        "coze": "Coze",
+        "custom": "自定义"
+      },
+      "placeholders": {
+        "agentNamePlaceholder": "输入智能体名称"
+      },
+      "validation": {
+        "agentNameRequired": "智能体名称不能为空",
+        "apiUrlRequired": "API地址不能为空",
+        "apiKeyRequired": "API密钥不能为空",
+        "modelConfInvalid": "模型配置JSON格式无效"
+      },
+      "messages": {
+        "createAgentFailed": "创建智能体失败",
+        "updateAgentFailed": "更新智能体失败"
+      }
+    },
+    "orders": {
+      "search": {
+        "orderNumberPlaceholder": "搜索订单号...",
+        "username": "用户名",
+        "usernamePlaceholder": "搜索用户名...",
+        "userEmail": "用户邮箱",
+        "userEmailPlaceholder": "搜索用户邮箱..."
+      },
+      "filter": {
+        "userId": "用户ID",
+        "userIdPlaceholder": "输入用户ID",
+        "startDate": "开始日期",
+        "endDate": "结束日期"
+      },
+      "sort": {
+        "sortBy": "排序字段",
+        "sortOrder": "排序方向",
+        "fields": {
+          "created_at": "创建时间",
+          "final_price": "订单金额",
+          "status": "订单状态",
+          "user_id": "用户ID"
+        },
+        "directions": {
+          "desc": "降序",
+          "asc": "升序"
+        }
+      },
+      "table": {
+        "userId": "用户ID",
+        "username": "用户名",
+        "userEmail": "用户邮箱"
+      },
+      "list": {
+        "emptyDescription": "系统中暂无订单记录。"
+      },
+      "loading": {
+        "description": "正在获取订单数据..."
+      },
+      "actions": {
+        "copyOrderNumber": "复制订单号"
+      },
+      "messages": {
+        "orderNumberCopied": "订单号已复制到剪贴板",
+        "copyFailed": "复制失败，请手动选择复制"
+      }
+    }
+  },
+  "ui": {
+    "loading": "加载中...",
+    "search": "搜索",
+    "save": "保存",
+    "cancel": "取消",
+    "close": "关闭",
+    "title": "标题",
+    "enabled": "启用",
+    "disabled": "禁用",
+    "normal": "正常",
+    "deleted": "已删除",
+    "all": "全部",
+    "settings": "设置",
+    "backToApp": "返回应用",
+    "githubRepository": "GitHub 仓库",
+    "logOut": "退出登录"
+  },
+  "table": {
+    "id": "ID",
+    "username": "用户名",
+    "email": "邮箱",
+    "userType": "用户类型",
+    "membership": "会员",
+    "membershipType": "会员类型",
+    "status": "状态",
+    "chatCount": "对话数",
+    "lastLogin": "最后登录",
+    "lastActive": "最后活跃",
+    "registrationTime": "注册时间",
+    "actions": "操作",
+    "chatId": "ID",
+    "messageCount": "消息数",
+    "lastUpdate": "最后更新",
+    "userEmail": "用户邮箱",
+    "userId": "用户ID",
+    "chatTitle": "对话标题",
+    "createdTime": "创建时间"
+  },
+  "pagination": {
+    "previousPage": "上一页",
+    "nextPage": "下一页"
+  },
+  "agent": {
+    "name": "智能体名称",
+    "namePlaceholder": "输入智能体名称",
+    "source": "来源",
+    "apiUrl": "API地址",
+    "apiUrlPlaceholder": "https://api.example.com/v1/chat/completions",
+    "apiKey": "API密钥",
+    "apiKeyPlaceholder": "输入API密钥",
+    "modelConf": "模型配置",
+    "modelConfPlaceholder": "输入模型配置JSON",
+    "thinkingMode": "思考模式",
+    "streamMode": "流式模式",
+    "showThinking": "显示思考过程",
+    "useStreaming": "使用流式响应",
+    "editAgent": "编辑智能体",
+    "restoreAgent": "恢复智能体",
+    "deleteAgent": "删除智能体",
+    "createAgent": "创建智能体",
+    "createAgentButton": "创建智能体",
+    "creatingAgent": "创建中...",
+    "agentSearch": "智能体搜索",
+    "noAgentData": "暂无智能体数据",
+    "restoreAgentFailed": "恢复智能体失败",
+    "deleteAgentFailed": "删除智能体失败",
+    "restoreAgentDescription": "恢复智能体将使其重新可用",
+    "deleteAgentDescription": "删除智能体将使其不可用，但数据会保留",
+    "restoreAgentConfirm": "确定要恢复此智能体吗？恢复后智能体将重新可用。",
+    "deleteAgentConfirm": "确定要删除此智能体吗？删除后智能体将无法使用，但数据会保留。",
+    "availability": "可用性",
+    "testAvailability": "测试可用性",
+    "testing": "测试中",
+    "untested": "未测试",
+    "available": "可用",
+    "unavailable": "不可用",
+    "viewDetails": "查看详情",
+    "availabilityDetails": "可用性详情",
+    "status": "状态",
+    "responseTime": "响应时间",
+    "message": "消息",
+    "model": "模型",
+    "responseContent": "响应内容",
+    "tokenUsage": "Token使用量",
+    "errorType": "错误类型",
+    "errorMessage": "错误信息",
+    "configuration": "配置信息"
+  },
+  "source": {
+    "llm": "LLM",
+    "dify": "Dify",
+    "fastgpt": "FastGPT",
+    "coze": "Coze",
+    "custom": "自定义"
+  },
+  "theme": {
+    "switchToDarkMode": "切换到深色模式",
+    "switchToLightMode": "切换到浅色模式"
+  },
+  "language": {
+    "switchLanguageSuccess": "切换语言成功",
+    "switchToEnglish": "Switch to English",
+    "switchToChinese": "切换到中文"
+  },
+  "setup": {
+    "firstSetupTitle": "🎉 首次设置",
+    "firstSetupDescription": "这是全新的系统！您将是第一个用户，登录后将自动获得管理员权限。"
+  },
+  "user": {
+    "noUserData": "暂无用户数据"
+  },
+  "upgrade": {
+    "buttonText": "升级会员",
+    "title": "选择您的会员",
+    "description": "升级到高级会员，解锁更多强大功能",
+    "popular": "最受欢迎",
+    "savePercent": "节省 {percent}",
+    "upgrading": "升级中...",
+    "currentPlan": "当前会员",
+    "messages": {
+      "planNotFound": "未找到选择的会员计划",
+      "paymentFailed": "创建支付会话失败，请稍后重试"
+    },
+    "features": {
+      "basicChat": "基础对话功能",
+      "dailyMessagesWithCount": "每日 {count} 条消息",
+      "dailyTokensWithCount": "每日 {count} Token",
+      "conversationTurnsWithCount": "单次对话 {count} 轮",
+      "advancedSettings": "高级设置功能",
+      "prioritySupport": "优先客服支持"
+    },
+    "plans": {
+      "free": {
+        "name": "免费版",
+        "price": "¥0",
+        "buttonText": "免费使用"
+      },
+      "monthly": {
+        "name": "月度会员",
+        "price": "¥29",
+        "period": "月",
+        "buttonText": "立即升级"
+      },
+      "yearly": {
+        "name": "年度会员",
+        "price": "¥279",
+        "originalPrice": "¥348",
+        "period": "年",
+        "buttonText": "立即升级"
+      }
+    },
+    "footer": {
+      "securePayment": "🔒 安全支付，支持 Stripe",
+      "cancelAnytime": "随时取消，无隐藏费用"
+    }
+  },
+  "profile": {
+    "title": "个人中心",
+    "membershipStartDate": "会员开始日期",
+    "membershipEndDate": "会员结束日期",
+    "daysLeft": "{days} 天",
+    "expired": "已过期",
+    "expiringToday": "今日到期",
+    "notSet": "未设置",
+    "permanent": "永久",
+    "resetTime": "使用量每日 00:00 重置",
+    "totalMessages": "总消息数",
+    "totalTokens": "总Token数",
+    "totalChats": "总对话数",
+    "todayMessages": "今日消息",
+    "todayTokens": "今日Token",
+    "dailyStats": "今日统计",
+    "overallStats": "历史统计",
+    "membershipDetails": {
+      "freeDescription": "免费版本，享受基础功能",
+      "monthlyDescription": "月度会员，享受更多权益",
+      "yearlyDescription": "年度会员，性价比最高"
+    }
+  },
+  "membership": {
+    "free": "免费会员",
+    "monthly": "月度会员",
+    "yearly": "年度会员",
+    "types": {
+      "free": "免费会员",
+      "monthly": "月度会员",
+      "yearly": "年度会员"
+    },
+    "upgrade": {
+      "cannotUpgradeMonthlyToYearly": "月度会员期间无法开通年付会员，请等待当前会员到期后再升级",
+      "cannotUpgradeYearlyToMonthly": "年付会员期间无法开通月度会员，请等待当前会员到期后再升级"
+    }
+  },
+  "payment": {
+    "loading": "正在处理支付信息...",
+    "success": {
+      "title": "支付成功！",
+      "description": "恭喜您，支付已完成，会员权益已激活。",
+      "message": "支付成功！",
+      "membershipActivated": "会员权益已激活",
+      "welcomeMember": "欢迎成为 {membershipType}！",
+      "startChatting": "开始聊天",
+      "helpText": "如有任何问题，请联系客服。"
+    },
+    "cancel": {
+      "title": "支付已取消",
+      "description": "您取消了支付流程，订单未完成。",
+      "whatHappened": "发生了什么？",
+      "reasons": {
+        "userCancelled": "您主动取消了支付",
+        "paymentFailed": "支付过程中出现问题",
+        "sessionExpired": "支付会话已过期"
+      },
+      "nextSteps": "接下来您可以：",
+      "retryPayment": "重新支付",
+      "backToHome": "返回首页",
+      "freeReminder": "您仍可以继续使用免费版本的所有功能。",
+      "needHelp": "需要帮助？",
+      "contactSupport": "如果遇到支付问题，请联系我们的客服团队。"
+    },
+    "error": {
+      "title": "支付错误",
+      "missingParams": "缺少必要的支付参数",
+      "fetchFailed": "获取支付信息失败"
+    },
+    "processing": {
+      "message": "支付正在处理中，请稍等..."
+    }
+  },
+  "order": {
+    "title": "我的订单",
+    "filter": {
+      "status": "订单状态",
+      "all": "全部状态"
+    },
+    "status": {
+      "pending": "待支付",
+      "processing": "处理中",
+      "completed": "已完成",
+      "cancelled": "已取消",
+      "failed": "支付失败",
+      "refunded": "已退款"
+    },
+    "list": {
+      "empty": "暂无订单",
+      "emptyDescription": "您还没有任何订单记录。"
+    },
+    "table": {
+      "orderNumber": "订单号",
+      "status": "状态",
+      "amount": "金额",
+      "paymentMethod": "支付方式",
+      "createTime": "创建时间",
+      "actions": "操作"
+    },
+    "detail": {
+      "title": "订单详情",
+      "description": "订单号：{orderNumber}",
+      "loading": "正在加载订单详情...",
+      "basicInfo": "基本信息",
+      "orderInfo": "订单信息",
+      "orderNumber": "订单号",
+      "createTime": "创建时间",
+      "priceInfo": "价格信息",
+      "paymentInfo": "支付信息",
+      "timeline": "订单时间线",
+      "additionalInfo": "附加信息",
+      "originalPrice": "原价",
+      "discount": "优惠",
+      "discountAmount": "优惠金额",
+      "finalPrice": "实付金额",
+      "refundAmount": "退款金额",
+      "refundReason": "退款原因",
+      "membershipPlan": "会员计划",
+      "notes": "订单备注",
+      "paymentMethod": "支付方式",
+      "currency": "货币",
+      "paymentTime": "支付时间",
+      "failureReason": "失败原因",
+      "viewInStripe": "在 Stripe 中查看"
+    },
+    "timeline": {
+      "created": "订单创建",
+      "paid": "支付完成",
+      "confirmed": "支付确认",
+      "processed": "开始处理",
+      "completed": "订单完成",
+      "cancelled": "订单取消",
+      "refunded": "订单退款"
+    },
+    "actions": {
+      "cancel": "取消订单",
+      "confirmCancel": "确定要取消这个订单吗？",
+      "continuePayment": "继续支付"
+    },
+    "cancelReason": {
+      "userRequested": "用户主动取消"
+    },
+    "messages": {
+      "fetchFailed": "获取订单列表失败",
+      "fetchDetailFailed": "获取订单详情失败",
+      "cancelSuccess": "订单取消成功",
+      "cancelFailed": "取消订单失败",
+      "orderNumberCopied": "订单号已复制",
+      "hasPendingOrder": "您有支付中的订单，请先完成支付或取消现有订单",
+      "pendingOrderTitle": "存在待支付订单",
+      "pendingOrderDescription": "您当前有一个待支付的订单，请先完成支付或取消该订单后再升级会员。",
+      "viewPendingOrders": "查看待支付订单",
+      "continuePay": "继续支付",
+      "refreshSuccess": "订单状态已刷新",
+      "refreshFailed": "刷新订单状态失败",
+      "noPendingOrders": "当前没有待支付订单",
+      "continuePaymentFailed": "继续支付失败，请稍后重试"
+    },
+    "error": {
+      "notFound": "订单不存在或已被删除"
+    }
+  }
+}

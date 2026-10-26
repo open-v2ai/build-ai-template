@@ -160,12 +160,10 @@ plugins.jsonl
 mise.toml
 
 deploy/volumes/
-deploy-test/volumes/
 
 # Node.js dependencies (root level)
 node_modules/
 
 *.backup*
-!*/.env.example
-*/.env
+!.env.example
 api/storage/*

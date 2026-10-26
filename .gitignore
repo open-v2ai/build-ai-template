@@ -103,6 +103,8 @@ celerybeat.pid
 
 # Environments
 .env
+.env.local
+.env*.local
 .env-local
 .venv
 env/
@@ -111,6 +113,7 @@ ENV/
 env.bak/
 venv.bak/
 .conda/
+supabase/.env
 
 # Spyder project settings
 .spyderproject
@@ -175,3 +178,17 @@ node_modules/
 
 # Pagefind 搜索索引文件 (自动生成的构建产物)
 docs/public/_pagefind/
+
+# Private configuration and generated local files
+.env
+.env.*
+!.env.example
+!.env.*.example
+*.tsbuildinfo
+.DS_Store
+.idea/
+.vscode/
+
+# Next.js generated declarations and local hosting metadata
+next-env.d.ts
+.vercel/
