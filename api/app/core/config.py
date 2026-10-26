@@ -6,11 +6,23 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
+
+def _required_signing_key(name: str) -> str:
+    """Refuse missing, short or example signing keys before the API starts."""
+    value = (os.getenv(name) or "").strip()
+    placeholders = ("replace_", "change_", "your_", "your-", "<")
+    if len(value.encode("utf-8")) < 32 or value.lower().startswith(placeholders):
+        raise RuntimeError(
+            f"{name} must be configured with a unique random secret of at least 32 bytes"
+        )
+    return value
+
+
 class Settings:
     ENV: str = os.getenv("ENV", "dev")  # dev/test/prod
 
     # 认证配置
-    AUTH_SECRET_KEY: str = os.getenv("AUTH_SECRET_KEY", "default-secret")
+    AUTH_SECRET_KEY: str = _required_signing_key("AUTH_SECRET_KEY")
     AUTH_ALGORITHM: str = os.getenv("AUTH_ALGORITHM", "HS256")
     AUTH_ACCESS_TOKEN_EXPIRE_MINUTES: int = int(os.getenv("AUTH_ACCESS_TOKEN_EXPIRE_MINUTES", "60"))
     AUTH_REFRESH_TOKEN_EXPIRE_DAYS: int = int(os.getenv("AUTH_REFRESH_TOKEN_EXPIRE_DAYS", "7"))

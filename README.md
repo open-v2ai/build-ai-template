@@ -417,3 +417,7 @@ build-ai-template/
 ## 许可证
 
 Build AI Template 采用 [Apache License 2.0](LICENSE) 许可证发布。
+
+## JWT signing key
+
+Set `AUTH_SECRET_KEY` to a unique random value before starting the API or Compose stack. Generate it with `openssl rand -hex 32` and store it only in your private environment configuration. Missing, short and example keys are rejected; no fixed signing fallback is provided. If a deployment previously used a shared default, rotate that deployment's key and invalidate its old sessions.
